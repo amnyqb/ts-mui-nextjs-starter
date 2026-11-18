@@ -57,7 +57,7 @@
   {
     "name": "P pauses the simulation",
     "ok": true,
-    "info": "tick 660"
+    "info": "tick 615"
   },
   {
     "name": "P resumes the simulation",
@@ -77,7 +77,7 @@
   {
     "name": "Ctrl+click issues a move order (no right button needed)",
     "ok": true,
-    "info": "move,move,move,move,move,move,move,move,move,move,move"
+    "info": "move,move,move,move,move,move,move,move,move,move"
   },
   {
     "name": "coach shows a tip",
@@ -97,7 +97,7 @@
   {
     "name": "a UI-driven match reaches a conclusion with an end screen",
     "ok": true,
-    "info": "winner=0 title=VICTORY sim=124s flags 6,2"
+    "info": "winner=0 title=VICTORY sim=117s flags 5,1"
   },
   {
     "name": "no console errors (match session)",
@@ -107,7 +107,7 @@
   {
     "name": "match-1-result",
     "ok": true,
-    "info": "{\"winner\":0,\"secs\":124,\"terr\":[6,2]}"
+    "info": "{\"winner\":0,\"secs\":117,\"terr\":[5,1]}"
   },
   {
     "name": "doing nothing ends in DEFEAT",
@@ -117,7 +117,7 @@
   {
     "name": "restart begins a fresh match",
     "ok": true,
-    "info": "tick 204"
+    "info": "tick 167"
   },
   {
     "name": "no console errors (defeat session)",

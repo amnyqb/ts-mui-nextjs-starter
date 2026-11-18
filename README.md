@@ -43,6 +43,10 @@ Measured with a human-style scripted player (`npx vite-node scripts/human.ts 40`
 | P / R | Pause / restart |
 | M | Mute / unmute sound (all sounds are synthesised in the browser, no audio files) |
 
+## Art
+
+All art is original and drawn in code at startup (`src/render/sprites.ts`): funny robots with 8 facing directions and walk cycles, tanks with faces, characterful buildings and shaded terrain. No image files are loaded, so there are no licences to track. Texture keys are stable, so pre-rendered sheets can replace them later.
+
 ## How it works (Stage 1)
 
 - **Territories:** each has a flag. A rifle robot touching an enemy or neutral flag captures it, and every factory in it changes owner and resets progress. Headquarters never change hands; destroy them to win.

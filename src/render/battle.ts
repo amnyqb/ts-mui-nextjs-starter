@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
-import { T_BRIDGE, T_GRASS, T_ROCK, T_WATER } from '../data/maps';
 import { BUILDINGS, TICKS_PER_SEC, UNITS } from '../data/units';
 import { Sfx } from '../audio/sfx';
+import { buildingKey, ensureSprites, makeTerrainCanvas, rifleKey } from './sprites';
 import { Match, type Difficulty } from '../sim/match';
 import type { Building, Unit } from '../sim/types';
 
@@ -12,10 +12,9 @@ const AMBER = 0xffb000;
 const TEAL = 0x00c2b8;
 const NEUTRAL = 0x8a8f98;
 const teamColor = (o: number) => (o === 0 ? AMBER : o === 1 ? TEAL : NEUTRAL);
-const dark = (c: number, f = 0.55) =>
-  (Math.floor(((c >> 16) & 255) * f) << 16) | (Math.floor(((c >> 8) & 255) * f) << 8) | Math.floor((c & 255) * f);
 
-interface Fx { x: number; y: number; ttl: number; life: number; color: number; kind: 'tracer' | 'boom' | 'ring' | 'marker'; x2?: number; y2?: number; big?: boolean }
+interface Fx { x: number; y: number; ttl: number; life: number; color: number; kind: 'tracer' | 'boom' | 'ring' | 'marker' | 'flash' | 'smoke'; x2?: number; y2?: number; big?: boolean }
+interface USprite { img: Phaser.GameObjects.Image; turret?: Phaser.GameObjects.Image; lastAnim: number; lastMove: number; smoke: number }
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 
@@ -47,6 +46,11 @@ export class BattleScene extends Phaser.Scene {
   private myCaptures = 0;
   private coachOn = true;
   private miniTerrain!: HTMLCanvasElement;
+  /** low layer: flags, selection rings (drawn beneath sprites); this.gfx is the top layer: bars, effects */
+  private under!: Phaser.GameObjects.Graphics;
+  private unitSprites = new Map<number, USprite>();
+  private bldSprites = new Map<number, Phaser.GameObjects.Image>();
+  private terrainImg?: Phaser.GameObjects.Image;
   private ended = false;
 
   constructor() {
@@ -55,8 +59,10 @@ export class BattleScene extends Phaser.Scene {
 
   create() {
     this.input.mouse?.disableContextMenu();
+    ensureSprites(this);
+    this.under = this.add.graphics().setDepth(-5);
+    this.gfx = this.add.graphics().setDepth(5000);
     this.newMatch();
-    this.gfx = this.add.graphics().setDepth(2);
 
     this.keys = this.input.keyboard!.addKeys('W,A,S,D,UP,DOWN,LEFT,RIGHT') as Record<string, Phaser.Input.Keyboard.Key>;
     this.input.keyboard!.on('keydown', (e: KeyboardEvent) => this.onKey(e));
@@ -124,6 +130,13 @@ export class BattleScene extends Phaser.Scene {
     this.selBuilding = null;
     this.groups.clear();
     this.fx = [];
+    for (const s of this.unitSprites.values()) {
+      s.img.destroy();
+      s.turret?.destroy();
+    }
+    this.unitSprites.clear();
+    for (const i of this.bldSprites.values()) i.destroy();
+    this.bldSprites.clear();
     this.acc = 0;
     this.ended = false;
     this.paused = false;
@@ -334,6 +347,7 @@ export class BattleScene extends Phaser.Scene {
       if (e.t === 'shot') {
         const l = this.loudness(e.x1, e.y1);
         if (l > 0) (e.unit === 'tank' ? this.sfx.tank(l) : this.sfx.rifle(l));
+        this.fx.push({ x: e.x1 + (e.x2 > e.x1 ? 0.5 : -0.5) * 0.6, y: e.y1, ttl: 90, life: 90, color: 0xfff2b0, kind: 'flash' });
         this.fx.push({ x: e.x1, y: e.y1, x2: e.x2 + (e.hit ? 0 : (Math.random() - 0.5) * 0.8), y2: e.y2 + (e.hit ? 0 : (Math.random() - 0.5) * 0.8), ttl: 90, life: 90, color: teamColor(e.owner), kind: 'tracer' });
       } else if (e.t === 'spawn') {
         if (e.owner === PLAYER) this.sfx.spawn();
@@ -453,60 +467,55 @@ export class BattleScene extends Phaser.Scene {
   // -------------------------------------------------------------- drawing
 
   private drawTerrain() {
-    const w = this.match.world.map;
-    this.children.list.filter((o) => o.getData('terrain')).forEach((o) => o.destroy());
-    const g = this.add.graphics().setDepth(0).setData('terrain', true);
+    // Terrain is painted once into a single texture (see sprites.ts), then shrunk for the minimap.
+    const m = this.match.world.map;
+    this.terrainImg?.destroy();
+    if (this.textures.exists('terrain')) this.textures.remove('terrain');
+    const big = makeTerrainCanvas(m, TS);
+    this.textures.addCanvas('terrain', big);
+    this.terrainImg = this.add.image(0, 0, 'terrain').setOrigin(0).setDepth(-10);
     const mini = document.createElement('canvas');
     mini.width = 224;
     mini.height = 128;
     const mg = mini.getContext('2d', { willReadFrequently: true })!;
-    const k = mini.width / w.w;
-    const hash = (x: number, y: number) => ((Math.imul(x, 73856093) ^ Math.imul(y, 19349663)) >>> 0) % 100;
-    for (let y = 0; y < w.h; y++)
-      for (let x = 0; x < w.w; x++) {
-        const t = w.tiles[y * w.w + x];
-        const n = hash(x, y);
-        let col: number;
-        if (t === T_WATER) col = n < 50 ? 0x1f5a8a : 0x226494;
-        else if (t === T_BRIDGE) col = n < 50 ? 0x8a7650 : 0x7d6a46;
-        else if (t === T_ROCK) col = 0x5d5f66;
-        else col = n < 33 ? 0x4a6b33 : n < 66 ? 0x45652f : 0x4e7036;
-        g.fillStyle(col, 1).fillRect(x * TS, y * TS, TS, TS);
-        mg.fillStyle = '#' + col.toString(16).padStart(6, '0');
-        mg.fillRect(x * k, y * k, Math.ceil(k), Math.ceil(k));
-        if (t === T_GRASS && n % 7 === 0) g.fillStyle(0x3a5a28, 1).fillRect(x * TS + 8 + (n % 5) * 3, y * TS + 10, 3, 6);
-        if (t === T_WATER && n % 5 === 0) g.fillStyle(0x6fb1de, 0.35).fillRect(x * TS + 6, y * TS + 14, 14, 2);
-        if (t === T_BRIDGE) g.lineStyle(2, 0x3f3220, 0.7).strokeRect(x * TS + 1, y * TS + 1, TS - 2, TS - 2);
-        if (t === T_ROCK) {
-          g.fillStyle(0x7a7c85, 1).fillRect(x * TS + 3, y * TS + 3, TS - 10, TS - 10);
-          g.fillStyle(0x3c3d42, 1).fillRect(x * TS + TS - 8, y * TS + 6, 5, TS - 9);
-        }
-      }
+    mg.imageSmoothingEnabled = true;
+    mg.drawImage(big, 0, 0, mini.width, mini.height);
     this.miniTerrain = mini;
   }
 
   private draw(alpha: number) {
     const g = this.gfx;
+    const lo = this.under;
     g.clear();
+    lo.clear();
     const w = this.match.world;
     const time = this.time.now;
 
     for (const t of w.territories) {
       const cx = (t.fx + 0.5) * TS, cy = (t.fy + 0.5) * TS;
-      g.lineStyle(2, teamColor(t.owner), 0.35).strokeCircle(cx, cy, 1.2 * TS);
-      g.lineStyle(3, 0x222222, 1).lineBetween(cx, cy + 6, cx, cy - 26);
+      lo.fillStyle(teamColor(t.owner), 0.12).fillCircle(cx, cy, 1.2 * TS);
+      lo.lineStyle(2, teamColor(t.owner), 0.5).strokeCircle(cx, cy, 1.2 * TS);
+      lo.fillStyle(0x000000, 0.25).fillEllipse(cx + 1, cy + 7, 12, 5);
+      lo.lineStyle(4, 0x15171b, 1).lineBetween(cx, cy + 6, cx, cy - 28);
+      lo.lineStyle(2, 0xc9ccd3, 1).lineBetween(cx, cy + 6, cx, cy - 28);
       const wave = Math.sin(time / 180 + t.id) * 3;
-      g.fillStyle(teamColor(t.owner), 1).fillTriangle(cx, cy - 26, cx + 20, cy - 20 + wave, cx, cy - 12);
-      g.fillStyle(0x222222, 1).fillCircle(cx, cy + 6, 3);
+      lo.fillStyle(teamColor(t.owner), 1).fillTriangle(cx, cy - 28, cx + 22, cy - 22 + wave, cx, cy - 14);
+      lo.lineStyle(1.5, 0x15171b, 1).strokeTriangle(cx, cy - 28, cx + 22, cy - 22 + wave, cx, cy - 14);
+      lo.fillStyle(0x15171b, 1).fillCircle(cx, cy - 29, 2.5);
     }
 
     for (const b of w.buildings) this.drawBuilding(b, time);
 
-    const sorted = [...w.units].sort((a, b) => a.y - b.y);
-    for (const u of sorted) {
+    for (const u of w.units) {
       const x = (u.px + (u.x - u.px) * alpha) * TS;
       const y = (u.py + (u.y - u.py) * alpha) * TS;
-      this.drawUnit(u, x, y);
+      this.drawUnit(u, x, y, time);
+    }
+    for (const [id, s] of this.unitSprites) {
+      if (w.getEntity(id)) continue;
+      s.img.destroy();
+      s.turret?.destroy();
+      this.unitSprites.delete(id);
     }
 
     for (const f of this.fx) this.drawFx(f);
@@ -518,40 +527,53 @@ export class BattleScene extends Phaser.Scene {
     }
   }
 
-  private rot(cx: number, cy: number, a: number, pts: [number, number][]) {
-    const c = Math.cos(a), s = Math.sin(a);
-    return pts.map(([x, y]) => new Phaser.Math.Vector2(cx + x * c - y * s, cy + x * s + y * c));
-  }
-
-  private drawUnit(u: Unit, x: number, y: number) {
+  private drawUnit(u: Unit, x: number, y: number, now: number) {
     const g = this.gfx;
-    const col = teamColor(u.owner);
     const def = UNITS[u.type];
-    g.fillStyle(0x000000, 0.28).fillEllipse(x, y + 8, def.radius * 2.4 * TS, def.radius * 1.2 * TS);
-    if (this.sel.has(u.id)) g.lineStyle(2, 0x6dff7a, 1).strokeEllipse(x, y + 6, def.radius * 2.8 * TS, def.radius * 1.7 * TS);
-    if (u.type === 'rifle') {
-      const bob = Math.sin(u.anim * 6) * 2.5;
-      g.fillStyle(0x23262b, 1).fillRect(x - 5, y + 3, 4, 7 + bob).fillRect(x + 1, y + 3, 4, 7 - bob);
-      g.fillStyle(dark(col), 1).fillCircle(x, y - 1, 8.5);
-      g.fillStyle(col, 1).fillCircle(x, y - 2, 7);
-      g.fillStyle(0xd9dde3, 1).fillCircle(x + Math.cos(u.aim) * 2, y - 8, 3.6);
-      g.fillStyle(0x15171a, 1).fillRect(x + Math.cos(u.aim) * 2 - 2, y - 9, 4, 1.8);
-      g.lineStyle(3, 0x15171a, 1).lineBetween(x, y - 1, x + Math.cos(u.aim) * 13, y - 1 + Math.sin(u.aim) * 13);
-    } else {
-      const hull = this.rot(x, y, u.face, [[-14, -9], [14, -9], [16, 0], [14, 9], [-14, 9]]);
-      g.fillStyle(0x23262b, 1).fillPoints(this.rot(x, y, u.face, [[-15, -13], [15, -13], [15, -9], [-15, -9]]), true);
-      g.fillPoints(this.rot(x, y, u.face, [[-15, 9], [15, 9], [15, 13], [-15, 13]]), true);
-      g.fillStyle(dark(col, 0.7), 1).fillPoints(hull, true);
-      g.lineStyle(2, dark(col, 0.4), 1).strokePoints(hull, true);
-      g.fillStyle(col, 1).fillCircle(x, y, 8);
-      g.lineStyle(4, 0x15171a, 1).lineBetween(x, y, x + Math.cos(u.aim) * 20, y + Math.sin(u.aim) * 20);
-      g.fillStyle(dark(col, 0.8), 1).fillCircle(x, y, 4);
+    const team = u.owner === 0 ? '0' : '1';
+    let s = this.unitSprites.get(u.id);
+    if (!s) {
+      s =
+        u.type === 'rifle'
+          ? { img: this.add.image(0, 0, rifleKey(u.owner), '0_0_0').setOrigin(0.5, 0.68).setScale(1.1), lastAnim: u.anim, lastMove: -1e9, smoke: 0 }
+          : {
+              img: this.add.image(0, 0, 'hull' + team, '0').setScale(1),
+              turret: this.add.image(0, 0, 'turret' + team).setOrigin(0.4375, 0.5).setScale(1),
+              lastAnim: u.anim,
+              lastMove: -1e9,
+              smoke: 0,
+            };
+      this.unitSprites.set(u.id, s);
     }
-    if (u.hp < def.hp || this.sel.has(u.id)) {
-      const wBar = 20;
-      g.fillStyle(0x000000, 0.8).fillRect(x - wBar / 2 - 1, y - 20, wBar + 2, 5);
+    if (u.anim !== s.lastAnim) {
+      s.lastAnim = u.anim;
+      s.lastMove = now;
+    }
+    const moving = now - s.lastMove < 180;
+    const hurt = u.hp < def.hp * 0.35;
+    const selected = this.sel.has(u.id);
+    let top: number;
+    if (u.type === 'rifle') {
+      const d = ((Math.round(u.face / (Math.PI / 4)) % 8) + 8) % 8;
+      const f = moving ? Math.floor(u.anim * 2.4) % 4 : 0;
+      s.img.setFrame(`${d}_${f}_${hurt ? 1 : 0}`).setPosition(x, y).setDepth(y);
+      if (selected) this.under.lineStyle(2.5, 0x6dff7a, 1).strokeEllipse(x, y + 8, 36, 15);
+      top = y - 33;
+    } else {
+      s.img.setFrame(moving ? String(Math.floor(u.anim * 3) % 2) : '0').setPosition(x, y).setRotation(u.face).setDepth(y);
+      s.turret!.setPosition(x, y).setRotation(u.aim).setFlipY(Math.cos(u.aim) < 0).setDepth(y + 0.5);
+      if (selected) this.under.lineStyle(2.5, 0x6dff7a, 1).strokeEllipse(x, y + 3, 66, 44);
+      top = y - 30;
+    }
+    if (hurt && now - s.smoke > 220) {
+      s.smoke = now;
+      this.fx.push({ x: u.x, y: u.y - 0.45, ttl: 750, life: 750, color: 0x555555, kind: 'smoke' });
+    }
+    if (u.hp < def.hp || selected) {
+      const wBar = 24;
+      g.fillStyle(0x000000, 0.85).fillRect(x - wBar / 2 - 1, top, wBar + 2, 6);
       const f = Math.max(0, u.hp / def.hp);
-      g.fillStyle(f > 0.5 ? 0x6dff7a : f > 0.25 ? 0xffd34d : 0xff5a4d, 1).fillRect(x - wBar / 2, y - 19, wBar * f, 3);
+      g.fillStyle(f > 0.5 ? 0x6dff7a : f > 0.25 ? 0xffd34d : 0xff5a4d, 1).fillRect(x - wBar / 2, top + 1, wBar * f, 4);
     }
   }
 
@@ -562,31 +584,25 @@ export class BattleScene extends Phaser.Scene {
     const hs = st.half * TS;
     const x = b.x * TS, y = b.y * TS;
     const ruined = b.bkind === 'hq' && b.hp <= 0;
-    g.fillStyle(0x000000, 0.3).fillRect(x - hs + 4, y - hs + 6, hs * 2, hs * 2);
-    g.fillStyle(ruined ? 0x2a2a2a : 0x3b4048, 1).fillRect(x - hs, y - hs, hs * 2, hs * 2);
-    g.lineStyle(3, ruined ? 0x1a1a1a : col, 1).strokeRect(x - hs, y - hs, hs * 2, hs * 2);
+    const key = buildingKey(b.bkind, b.owner);
+    let img = this.bldSprites.get(b.id);
+    if (!img) {
+      img = this.add.image(x, y, key);
+      this.bldSprites.set(b.id, img);
+    }
+    if (img.texture.key !== key) img.setTexture(key);
+    img.setPosition(x, y).setDepth(y - 24);
     if (ruined) {
-      g.fillStyle(0xff6a1a, 0.6 + 0.3 * Math.sin(time / 90)).fillCircle(x, y, 10);
+      img.setTint(0x3a3a3a);
+      g.fillStyle(0xff6a1a, 0.6 + 0.3 * Math.sin(time / 90)).fillCircle(x, y, 14);
+      g.fillStyle(0xffd34d, 0.7).fillCircle(x + 6, y - 4, 6);
       return;
     }
     if (b.bkind === 'hq') {
-      g.fillStyle(dark(col, 0.6), 1).fillRect(x - hs + 8, y - hs + 8, hs * 2 - 16, hs * 2 - 16);
-      g.fillStyle(col, 1).fillCircle(x, y, 13);
-      g.fillStyle(0x15171a, 1).fillCircle(x, y, 6);
-      g.lineStyle(2, 0xd9dde3, 1).lineBetween(x + hs - 10, y - hs + 10, x + hs - 10, y - hs - 8);
-      g.fillStyle(col, 1).fillCircle(x + hs - 10, y - hs - 8, 3);
       const f = Math.max(0, b.hp / 500);
       g.fillStyle(0x000000, 0.85).fillRect(x - hs, y + hs + 5, hs * 2, 7);
       g.fillStyle(f > 0.5 ? 0x6dff7a : f > 0.25 ? 0xffd34d : 0xff5a4d, 1).fillRect(x - hs + 1, y + hs + 6, (hs * 2 - 2) * f, 5);
       return;
-    }
-    if (b.bkind === 'barracks') {
-      g.fillStyle(dark(col, 0.7), 1).fillRect(x - hs + 6, y - hs + 6, hs * 2 - 12, 12);
-      g.fillStyle(0x15171a, 1).fillRect(x - 7, y + 2, 14, hs - 4);
-    } else {
-      g.fillStyle(dark(col, 0.7), 1).fillRect(x - hs + 6, y - hs + 6, hs * 2 - 12, 10);
-      g.fillStyle(0x15171a, 1).fillRect(x - 12, y, 24, hs - 2);
-      g.lineStyle(1, 0x555a63, 1).lineBetween(x - 12, y + 6, x + 12, y + 6).lineBetween(x - 12, y + 12, x + 12, y + 12);
     }
     const prod = st.produces!;
     const pct = Math.min(1, b.progress / UNITS[prod].buildTicks);
@@ -604,6 +620,11 @@ export class BattleScene extends Phaser.Scene {
     const x = f.x * TS, y = f.y * TS;
     if (f.kind === 'tracer') {
       g.lineStyle(2, 0xfff2b0, 1 - t).lineBetween(x, y, f.x2! * TS, f.y2! * TS);
+    } else if (f.kind === 'flash') {
+      g.fillStyle(0xfff2b0, 1 - t).fillCircle(x, y - 6, 7 * (1 - t) + 2);
+      g.fillStyle(0xff9a1a, 0.8 * (1 - t)).fillCircle(x, y - 6, 4);
+    } else if (f.kind === 'smoke') {
+      g.fillStyle(0x4a4a4a, 0.55 * (1 - t)).fillCircle(x + Math.sin(t * 6 + f.x) * 3, y - 8 - t * 26, 4 + t * 7);
     } else if (f.kind === 'boom') {
       const r = (f.big ? 34 : 18) * (0.4 + t);
       g.fillStyle(0xffd34d, 1 - t).fillCircle(x, y, r * 0.6);
