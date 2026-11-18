@@ -13,10 +13,12 @@ export class SimpleCommander {
     readonly interval = 40,
     readonly offset = 0,
     readonly waveSize = 6,
+    /** ticks to wait before giving any order (a slower opening for easier levels) */
+    readonly startDelay = 0,
   ) {}
 
   update(w: World) {
-    if (w.tick % this.interval !== this.offset) return;
+    if (w.tick < this.startDelay || w.tick % this.interval !== this.offset) return;
     const mine = w.unitsOf(this.side);
     const assigned = new Map<number, number>();
     for (const u of mine) {

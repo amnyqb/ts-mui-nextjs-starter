@@ -18,7 +18,8 @@ npm run build && npm run preview &   # production build on :4173
 node scripts/e2e.cjs                 # browser play test (needs Playwright + the preview server)
 ```
 
-Add `?speed=4` to the URL to run the simulation faster.
+Add `?speed=4` to the URL to run the simulation faster. The AI level is Easy by default; use the **AI** button, or `?ai=normal` / `?ai=hard`.
+Measured with a human-style scripted player (`npx vite-node scripts/human.ts 40`): Easy 40/40 wins, Normal 40/40, Hard 20/40.
 
 ## Deploy (GitHub Pages / any static host)
 
@@ -30,7 +31,9 @@ Add `?speed=4` to the URL to run the simulation faster.
 |---|---|
 | Left-click / drag | Select robot / box-select |
 | Click a factory | Select it, then pause or resume its production |
-| Right-click | Move, attack an enemy or HQ, or capture a flag (by what is under the cursor) |
+| Right-click, or **Ctrl+click** (no right button needed) | Move, attack an enemy or HQ, or capture a flag (by what is under the cursor) |
+| E or Ctrl+A | Select all your robots |
+| H | Hide or show the step-by-step tips |
 | A, then click | Attack-move |
 | S | Stop |
 | Ctrl+1-9 / 1-9 | Save / recall a control group |

@@ -32,6 +32,7 @@
       button { font: inherit; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; color: var(--ink); background: #3a424d; border: 2px solid var(--edge); border-bottom-width: 4px; padding: 5px 10px; margin: 3px 4px 0 0; cursor: pointer; border-radius: 2px; }
       button:hover { background: #4b5563; color: var(--amber); } button:active { border-bottom-width: 2px; transform: translateY(2px); }
       #btns { position: absolute; right: 10px; bottom: 10px; padding: 8px; display: flex; flex-direction: column; }
+      #coach { position: absolute; bottom: 92px; left: 50%; transform: translateX(-50%); max-width: 640px; padding: 8px 16px; font-size: 14px; font-weight: bold; color: #fff3c4; text-align: center; border-color: var(--amber); }
       #feed { position: absolute; left: 10px; top: 10px; width: 300px; font-size: 13px; text-shadow: 0 1px 2px #000; }
       #feed div { background: #0009; border-left: 3px solid var(--amber); padding: 3px 8px; margin-bottom: 3px; }
       #feed div.lost { border-color: #ff5a4d; } #feed div.won { border-color: #6dff7a; }
@@ -52,19 +53,23 @@
         <span>ROBOTS <span id="u-you" class="you">0</span> / <span id="u-foe" class="foe">0</span></span>
         <span id="clock">00:00</span>
       </div>
+      <div id="coach" class="panel"></div>
       <div id="feed"></div>
       <div id="help" class="panel">
-        <b>LMB</b> select / drag box &nbsp; <b>RMB</b> move · attack · capture<br />
+        <b>LMB</b> select / drag box &nbsp; <b>RMB</b> or <b>Ctrl+click</b> move · attack · capture<br />
+        <b>E</b> select all robots &nbsp; <b>H</b> hide tips<br />
         <b>A</b> attack-move &nbsp; <b>S</b> stop &nbsp; <b>Ctrl+1-9</b> group, <b>1-9</b> recall<br />
         <b>WASD</b> / <b>MMB-drag</b> scroll &nbsp; <b>wheel</b> zoom &nbsp; <b>P</b> pause &nbsp; <b>M</b> sound &nbsp; <b>R</b> restart
       </div>
       <div id="minimap-wrap" class="panel"><canvas id="minimap" width="224" height="128"></canvas></div>
       <div id="sel" class="panel"><div class="h">NO SELECTION</div>Drag a box around your robots, or click a factory.</div>
       <div id="btns" class="panel">
+        <button id="b-all">Select all (E)</button>
         <button id="b-attack">Attack-move (A)</button>
         <button id="b-stop">Stop (S)</button>
         <button id="b-pause">Pause (P)</button>
         <button id="b-mute">Sound: ON (M)</button>
+        <button id="b-diff">AI: EASY</button>
         <button id="b-restart">Restart (R)</button>
       </div>
       <div id="end"><h1 id="end-title"></h1><p id="end-sub"></p><button id="end-btn">Play again</button></div>

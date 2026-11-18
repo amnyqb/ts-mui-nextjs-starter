@@ -27,12 +27,12 @@
   {
     "name": "player factories keep producing robots",
     "ok": true,
-    "info": "6 robots at 24s sim time"
+    "info": "7 robots at 24s sim time"
   },
   {
     "name": "sound engine runs and plays effects",
     "ok": true,
-    "info": "running, 27 sounds"
+    "info": "running, 8 sounds"
   },
   {
     "name": "M key mutes and unmutes sound",
@@ -57,7 +57,7 @@
   {
     "name": "P pauses the simulation",
     "ok": true,
-    "info": "tick 650"
+    "info": "tick 660"
   },
   {
     "name": "P resumes the simulation",
@@ -70,6 +70,26 @@
     "info": ""
   },
   {
+    "name": "E selects all robots",
+    "ok": true,
+    "info": ""
+  },
+  {
+    "name": "Ctrl+click issues a move order (no right button needed)",
+    "ok": true,
+    "info": "move,move,move,move,move,move,move,move,move,move,move"
+  },
+  {
+    "name": "coach shows a tip",
+    "ok": true,
+    "info": "STEP 4 — Press E, then A and click the teal base i"
+  },
+  {
+    "name": "difficulty button cycles the AI level",
+    "ok": true,
+    "info": "AI: NORMAL"
+  },
+  {
     "name": "no console errors (controls session)",
     "ok": true,
     "info": ""
@@ -77,7 +97,7 @@
   {
     "name": "a UI-driven match reaches a conclusion with an end screen",
     "ok": true,
-    "info": "winner=1 title=DEFEAT sim=78s flags 0,8"
+    "info": "winner=0 title=VICTORY sim=124s flags 6,2"
   },
   {
     "name": "no console errors (match session)",
@@ -87,7 +107,7 @@
   {
     "name": "match-1-result",
     "ok": true,
-    "info": "{\"winner\":1,\"secs\":78,\"terr\":[0,8]}"
+    "info": "{\"winner\":0,\"secs\":124,\"terr\":[6,2]}"
   },
   {
     "name": "doing nothing ends in DEFEAT",
@@ -97,7 +117,7 @@
   {
     "name": "restart begins a fresh match",
     "ok": true,
-    "info": "tick 191"
+    "info": "tick 204"
   },
   {
     "name": "no console errors (defeat session)",

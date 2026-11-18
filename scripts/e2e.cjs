@@ -140,6 +140,24 @@ async function rightClickTile(page, x, y) {
     await page.keyboard.press('1');
     check('control groups recall selection', (await S(page, () => window.__scrapline.scene.sel.size)) > 0);
 
+    // beginner aids: E selects all, Ctrl+click commands without a right button, coach tips, difficulty button
+    await page.mouse.click(10, 10);
+    await page.keyboard.press('e');
+    const allSel = await S(page, () => window.__scrapline.scene.sel.size === window.__scrapline.scene.match.world.unitsOf(0).length && window.__scrapline.scene.sel.size > 0);
+    check('E selects all robots', allSel);
+    const ground = await screenOf(page, 14.5, 17.5);
+    await page.keyboard.down('Control');
+    await page.mouse.click(ground.x, ground.y);
+    await page.keyboard.up('Control');
+    await sleep(200);
+    const ctrlOrders = await S(page, () => { const w = window.__scrapline.scene.match.world; return [...window.__scrapline.scene.sel].map((id) => w.getEntity(id)).filter(Boolean).map((u) => u.order.kind); });
+    check('Ctrl+click issues a move order (no right button needed)', ctrlOrders.includes('move'), ctrlOrders.join(','));
+    const tip = await page.locator('#coach').innerText();
+    check('coach shows a tip', tip.length > 10, tip.slice(0, 50));
+    await page.click('#b-diff');
+    const diffLabel = await page.locator('#b-diff').innerText();
+    check('difficulty button cycles the AI level', diffLabel === 'AI: NORMAL', diffLabel);
+
     check('no console errors (controls session)', errors.length === 0, errors.slice(0, 3).join(' | '));
     await page.close();
   }

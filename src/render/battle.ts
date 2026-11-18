@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import { T_BRIDGE, T_GRASS, T_ROCK, T_WATER } from '../data/maps';
 import { BUILDINGS, TICKS_PER_SEC, UNITS } from '../data/units';
 import { Sfx } from '../audio/sfx';
-import { Match } from '../sim/match';
+import { Match, type Difficulty } from '../sim/match';
 import type { Building, Unit } from '../sim/types';
 
 const TS = 32;
@@ -38,6 +38,14 @@ export class BattleScene extends Phaser.Scene {
   private hudTimer = 0;
   private panelKey = '';
   private sfx = new Sfx();
+  /** AI level: ?ai=easy|normal|hard in the URL, default easy so new players can learn */
+  private difficulty: Difficulty = ((): Difficulty => {
+    const v = new URLSearchParams(location.search).get('ai');
+    return v === 'normal' || v === 'hard' ? v : 'easy';
+  })();
+  private orderIssued = false;
+  private myCaptures = 0;
+  private coachOn = true;
   private miniTerrain!: HTMLCanvasElement;
   private ended = false;
 
@@ -67,6 +75,12 @@ export class BattleScene extends Phaser.Scene {
     window.addEventListener('pointerdown', unlock);
     window.addEventListener('keydown', unlock);
     $('b-mute').onclick = () => this.toggleMute();
+    $('b-all').onclick = () => this.selectAll();
+    $('b-diff').onclick = () => {
+      const order: Difficulty[] = ['easy', 'normal', 'hard'];
+      this.difficulty = order[(order.indexOf(this.difficulty) + 1) % 3];
+      this.restart();
+    };
 
     $('b-attack').onclick = () => this.armAttack();
     $('b-stop').onclick = () => this.stopSel();
@@ -102,7 +116,10 @@ export class BattleScene extends Phaser.Scene {
   // ------------------------------------------------------------ lifecycle
 
   private newMatch() {
-    this.match = new Match(this.seed, [1]);
+    this.match = new Match(this.seed, [1], this.difficulty);
+    this.orderIssued = false;
+    this.myCaptures = 0;
+    $('b-diff').textContent = `AI: ${this.difficulty.toUpperCase()}`;
     this.sel.clear();
     this.selBuilding = null;
     this.groups.clear();
@@ -124,6 +141,11 @@ export class BattleScene extends Phaser.Scene {
     this.seed++;
     this.newMatch();
   }
+  private selectAll() {
+    this.sel = new Set(this.match.world.unitsOf(PLAYER).map((u) => u.id));
+    this.selBuilding = null;
+  }
+
   private toggleMute() {
     this.sfx.setMuted(!this.sfx.muted);
     $('b-mute').textContent = this.sfx.muted ? 'Sound: OFF (M)' : 'Sound: ON (M)';
@@ -147,7 +169,12 @@ export class BattleScene extends Phaser.Scene {
 
   private onKey(e: KeyboardEvent) {
     const k = e.key.toLowerCase();
-    if (/^[1-9]$/.test(k)) {
+    if ((e.ctrlKey || e.metaKey) && k === 'a') {
+      e.preventDefault();
+      this.selectAll();
+    } else if (k === 'e') this.selectAll();
+    else if (k === 'h') this.coachOn = !this.coachOn;
+    else if (/^[1-9]$/.test(k)) {
       const n = Number(k);
       if (e.ctrlKey || e.metaKey) {
         e.preventDefault();
@@ -180,6 +207,12 @@ export class BattleScene extends Phaser.Scene {
 
   private onDown(p: Phaser.Input.Pointer) {
     if (this.ended) return;
+    const ev = p.event as MouseEvent | undefined;
+    // Ctrl/Cmd+click = right-click, for laptops and trackpads without a right button
+    if (p.button === 0 && (ev?.ctrlKey || ev?.metaKey) && this.sel.size) {
+      this.rightClick(p.worldX / TS, p.worldY / TS);
+      return;
+    }
     if (p.button === 0) {
       this.dragStart = this.pt(p);
       this.dragNow = this.dragStart;
@@ -259,6 +292,7 @@ export class BattleScene extends Phaser.Scene {
   private marker(x: number, y: number, color: number) {
     this.fx.push({ x, y, ttl: 700, life: 700, color, kind: 'marker' });
     this.sfx.command();
+    this.orderIssued = true;
   }
 
   // --------------------------------------------------------------- update
@@ -313,6 +347,7 @@ export class BattleScene extends Phaser.Scene {
         const mine = e.owner === PLAYER;
         const lost = e.prev === PLAYER;
         if (mine || lost) this.sfx.capture(mine);
+        if (mine) this.myCaptures++;
         this.feed(mine ? `Captured ${t.name}.` : lost ? `LOST ${t.name}!` : `Enemy took ${t.name}.`, mine ? 'won' : lost ? 'lost' : '');
       } else if (e.t === 'victory') {
         this.ended = true;
@@ -347,6 +382,20 @@ export class BattleScene extends Phaser.Scene {
     $('u-foe').textContent = String(w.unitsOf(1).length);
     const s = Math.floor(w.tick / TICKS_PER_SEC);
     $('clock').textContent = `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
+
+    // Step-by-step coach: always tells a new player the next useful thing to do (H hides it).
+    const mineN = w.unitsOf(0).length;
+    let tip = '';
+    if (!this.coachOn || this.ended) tip = '';
+    else if (mineN === 0) tip = 'Your factories are building your first robots. Hang on a few seconds...';
+    else if (!this.orderIssued && !this.sel.size) tip = 'STEP 1 — Select your robots: drag a box around the amber robots, or press E.';
+    else if (!this.orderIssued) tip = 'STEP 2 — Right-click (or Ctrl+click) a grey flag. Rifle robots will go and capture it.';
+    else if (this.myCaptures === 0) tip = 'Captured flags give you their factories and speed up production. Send robots to every flag!';
+    else if (mineN < 8) tip = 'STEP 3 — Capture more flags, and let your army grow to 8+ robots before attacking.';
+    else tip = 'STEP 4 — Press E, then A and click the teal base in the east. Keep new robots coming. (H hides tips)';
+    const coach = $('coach');
+    coach.style.display = tip ? 'block' : 'none';
+    if (tip && coach.textContent !== tip) coach.textContent = tip;
 
     // The panel is only re-rendered when its structure changes, so buttons stay clickable between frames.
     const panel = $('sel');
