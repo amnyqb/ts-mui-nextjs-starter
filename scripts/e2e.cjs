@@ -80,6 +80,23 @@ async function rightClickTile(page, x, y) {
     check('capturing a flag changes ownership', flagOwnerBefore !== 0 && flagOwnerAfter === 0, `owner ${flagOwnerBefore} -> ${flagOwnerAfter}`);
     await page.screenshot({ path: path.join(OUT, '2-capture.png') });
 
+    // the war correspondent: intro, reacts to the capture we just made, and can be switched off
+    const repVisible = await page.waitForFunction(() => document.getElementById('rep-text').textContent.length > 8 && getComputedStyle(document.getElementById('reporter')).display !== 'none', null, { timeout: 20000 }).then(() => true).catch(() => false);
+    check('Chuck Sprocket appears with subtitles', repVisible, await page.locator('#rep-text').innerText());
+    await page.waitForFunction(() => window.__scrapline.rep.log.some((l) => l.cat === 'captureMine'), null, { timeout: 40000 }).catch(() => {});
+    const saidCats = await S(page, () => window.__scrapline.rep.log.map((l) => l.cat));
+    check('Chuck opens the broadcast', saidCats[0] === 'intro', saidCats.join(','));
+    check('Chuck reacts to our flag capture', saidCats.includes('captureMine'), saidCats.join(','));
+    await page.keyboard.press('c');
+    const off = await S(page, () => ({ en: window.__scrapline.rep.enabled, shown: getComputedStyle(document.getElementById('reporter')).display }));
+    const repLabel = await page.locator('#b-rep').innerText();
+    await page.keyboard.press('c');
+    check('C key switches commentary off and on', off.en === false && off.shown === 'none' && /OFF/.test(repLabel) && (await S(page, () => window.__scrapline.rep.enabled)) === true, repLabel);
+    await page.keyboard.press('v');
+    const voiceLabel = await page.locator('#b-voice').innerText();
+    await page.keyboard.press('v');
+    check('V key toggles the robot voice', /OFF/.test(voiceLabel), voiceLabel);
+
     await page.waitForFunction(() => window.__scrapline.scene.match.world.tick >= 20 * 24, null, { timeout: 30000 });
     const mine = await S(page, () => window.__scrapline.scene.match.world.unitsOf(0).length);
     check('player factories keep producing robots', mine >= 4, `${mine} robots at 24s sim time`);
@@ -145,9 +162,8 @@ async function rightClickTile(page, x, y) {
     await page.keyboard.press('e');
     const allSel = await S(page, () => window.__scrapline.scene.sel.size === window.__scrapline.scene.match.world.unitsOf(0).length && window.__scrapline.scene.sel.size > 0);
     check('E selects all robots', allSel);
-    const ground = await screenOf(page, 14.5, 17.5);
     await page.keyboard.down('Control');
-    await page.mouse.click(ground.x, ground.y);
+    await page.mouse.click(480, 300); // open ground in the middle of the screen (clear of the HUD panels)
     await page.keyboard.up('Control');
     await sleep(200);
     const ctrlOrders = await S(page, () => { const w = window.__scrapline.scene.match.world; return [...window.__scrapline.scene.sel].map((id) => w.getEntity(id)).filter(Boolean).map((u) => u.order.kind); });

@@ -42,10 +42,15 @@ Measured with a human-style scripted player (`npx vite-node scripts/human.ts 40`
 | Minimap click or drag | Jump the camera |
 | P / R | Pause / restart |
 | M | Mute / unmute sound (all sounds are synthesised in the browser, no audio files) |
+| C / V | Switch the war correspondent on or off / switch his robot voice on or off |
 
 ## Art
 
 All art is original and drawn in code at startup (`src/render/sprites.ts`): funny robots with 8 facing directions and walk cycles, tanks with faces, characterful buildings and shaded terrain. No image files are loaded, so there are no licences to track. Texture keys are stable, so pre-rendered sheets can replace them later.
+
+## The war correspondent
+
+**Chuck Sprocket of WW5 News** narrates the war in short animated TV transmissions with typewriter subtitles and an optional robotic voice (the browser's speech synthesis). He has 110+ original lines (`src/data/lines.ts`) and reacts to real battlefield events: flags won and lost, factories taken, tanks destroyed, bloodbaths, base damage, comebacks, lopsided armies and long quiet spells. `src/ai/reporter.ts` decides what he talks about (tested headless); `src/render/commentator.ts` presents it.
 
 ## How it works (Stage 1)
 

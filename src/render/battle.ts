@@ -1,6 +1,8 @@
 import Phaser from 'phaser';
 import { BUILDINGS, TICKS_PER_SEC, UNITS } from '../data/units';
+import { Director } from '../ai/reporter';
 import { Sfx } from '../audio/sfx';
+import { Commentator } from './commentator';
 import { buildingKey, ensureSprites, makeTerrainCanvas, rifleKey } from './sprites';
 import { Match, type Difficulty } from '../sim/match';
 import type { Building, Unit } from '../sim/types';
@@ -37,6 +39,8 @@ export class BattleScene extends Phaser.Scene {
   private hudTimer = 0;
   private panelKey = '';
   private sfx = new Sfx();
+  private rep!: Commentator;
+  private director = new Director();
   /** AI level: ?ai=easy|normal|hard in the URL, default easy so new players can learn */
   private difficulty: Difficulty = ((): Difficulty => {
     const v = new URLSearchParams(location.search).get('ai');
@@ -60,6 +64,7 @@ export class BattleScene extends Phaser.Scene {
   create() {
     this.input.mouse?.disableContextMenu();
     ensureSprites(this);
+    this.rep = new Commentator(this.sfx);
     this.under = this.add.graphics().setDepth(-5);
     this.gfx = this.add.graphics().setDepth(5000);
     this.newMatch();
@@ -82,6 +87,8 @@ export class BattleScene extends Phaser.Scene {
     window.addEventListener('keydown', unlock);
     $('b-mute').onclick = () => this.toggleMute();
     $('b-all').onclick = () => this.selectAll();
+    $('b-rep').onclick = () => this.toggleReporter();
+    $('b-voice').onclick = () => this.toggleVoice();
     $('b-diff').onclick = () => {
       const order: Difficulty[] = ['easy', 'normal', 'hard'];
       this.difficulty = order[(order.indexOf(this.difficulty) + 1) % 3];
@@ -110,6 +117,7 @@ export class BattleScene extends Phaser.Scene {
     (window as unknown as Record<string, unknown>).__scrapline = {
       scene: this,
       sfx: this.sfx,
+      rep: this.rep,
       tileSize: TS,
       screenOf: (tx: number, ty: number) => {
         const cam = this.cameras.main;
@@ -125,6 +133,8 @@ export class BattleScene extends Phaser.Scene {
     this.match = new Match(this.seed, [1], this.difficulty);
     this.orderIssued = false;
     this.myCaptures = 0;
+    this.director.reset();
+    this.rep.reset();
     $('b-diff').textContent = `AI: ${this.difficulty.toUpperCase()}`;
     this.sel.clear();
     this.selBuilding = null;
@@ -159,6 +169,16 @@ export class BattleScene extends Phaser.Scene {
     this.selBuilding = null;
   }
 
+  private toggleReporter() {
+    this.rep.setEnabled(!this.rep.enabled);
+    $('b-rep').textContent = this.rep.enabled ? 'Reporter: ON (C)' : 'Reporter: OFF (C)';
+  }
+
+  private toggleVoice() {
+    this.rep.setVoice(!this.rep.voiceOn);
+    $('b-voice').textContent = this.rep.voiceOn ? 'Voice: ON (V)' : 'Voice: OFF (V)';
+  }
+
   private toggleMute() {
     this.sfx.setMuted(!this.sfx.muted);
     $('b-mute').textContent = this.sfx.muted ? 'Sound: OFF (M)' : 'Sound: ON (M)';
@@ -176,6 +196,7 @@ export class BattleScene extends Phaser.Scene {
   private togglePause() {
     this.paused = !this.paused;
     $('b-pause').textContent = this.paused ? 'Resume (P)' : 'Pause (P)';
+    this.rep.say(this.paused ? 'pause' : 'resume', 1);
   }
 
   // ---------------------------------------------------------------- input
@@ -201,6 +222,8 @@ export class BattleScene extends Phaser.Scene {
       }
     } else if (k === 'p') this.togglePause();
     else if (k === 'm') this.toggleMute();
+    else if (k === 'c') this.toggleReporter();
+    else if (k === 'v') this.toggleVoice();
     else if (k === 'r') this.restart();
     else if (k === 'a') this.armAttack();
     else if (k === 's') this.stopSel();
@@ -306,6 +329,8 @@ export class BattleScene extends Phaser.Scene {
     this.fx.push({ x, y, ttl: 700, life: 700, color, kind: 'marker' });
     this.sfx.command();
     this.orderIssued = true;
+    const cue = this.director.noteOrder();
+    if (cue) this.rep.say(cue.cat, cue.prio);
   }
 
   // --------------------------------------------------------------- update
@@ -318,9 +343,14 @@ export class BattleScene extends Phaser.Scene {
       while (this.acc >= STEP_MS && n++ < 40) {
         this.match.step();
         this.consumeEvents();
+        for (const c of this.director.consume(w, w.events)) {
+          this.rep.say(c.cat, c.prio);
+          if (c.cat === 'intro') this.rep.say(this.difficulty, 0);
+        }
         this.acc -= STEP_MS;
       }
     }
+    this.rep.update(performance.now());
     const cam = this.cameras.main;
     const sp = (600 * delta) / 1000 / cam.zoom;
     if (this.keys.A.isDown || this.keys.LEFT.isDown) cam.scrollX -= sp;
