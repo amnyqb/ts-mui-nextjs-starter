@@ -18,5 +18,10 @@ if (!jsFile) throw new Error('no bundle found in dist/assets');
 // keep the inline script from being closed or mis-parsed by the HTML parser
 const js = readFileSync(`dist/assets/${jsFile}`, 'utf8').replaceAll('</script', '<\\/script').replaceAll('<!--', '<\\!--');
 
-writeFileSync(out, `<title>${title}</title>\n<style>${style}</style>\n${markup}\n<script type="module">${js}</script>\n`);
-console.log(`wrote ${out} (${(Buffer.byteLength(js) / 1e6).toFixed(2)} MB script, bundle ${jsFile})`);
+// Chuck's voice clips travel inside the page as base64 (a single file cannot serve separate audio files)
+const voice = {};
+for (const f of readdirSync('dist/voice').filter((x) => x.endsWith('.mp3'))) voice[f.replace(/\.mp3$/, '')] = readFileSync(`dist/voice/${f}`).toString('base64');
+const voiceJs = `window.__WW5_VOICE=${JSON.stringify(voice)};`;
+
+writeFileSync(out, `<title>${title}</title>\n<style>${style}</style>\n${markup}\n<script>${voiceJs}</script>\n<script type="module">${js}</script>\n`);
+console.log(`wrote ${out}: ${(Buffer.byteLength(js) / 1e6).toFixed(2)} MB game + ${Object.keys(voice).length} voice clips (${(Buffer.byteLength(voiceJs) / 1e6).toFixed(2)} MB), bundle ${jsFile}`);

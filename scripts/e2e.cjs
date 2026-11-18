@@ -15,13 +15,14 @@ const check = (name, ok, info = '') => {
 };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-async function open(browser, query = '') {
+async function open(browser, query = '', start = true) {
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
   const errors = [];
   page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
   page.on('pageerror', (e) => errors.push(String(e)));
   await page.goto(URL + query);
   await page.waitForFunction(() => window.__scrapline && window.__scrapline.scene.match, null, { timeout: 15000 });
+  if (start) await page.click('#start-btn'); // the title screen: a real player taps Play (this also unlocks audio)
   return { page, errors };
 }
 const S = (page, fn, arg) => page.evaluate(fn, arg);
@@ -46,9 +47,16 @@ async function rightClickTile(page, x, y) {
 
   // ---------------------------------------------------------------- 1. controls
   {
-    const { page, errors } = await open(browser, '?speed=2');
+    const { page, errors } = await open(browser, '?speed=2', false);
     check('game boots and exposes simulation', true);
-    await sleep(500);
+    await sleep(800);
+    const gate = await S(page, () => ({ tick: window.__scrapline.scene.match.world.tick, shown: getComputedStyle(document.getElementById('start')).display }));
+    check('title screen shows and the game waits for Play', gate.shown === 'flex' && gate.tick === 0, `tick ${gate.tick}`);
+    await page.screenshot({ path: path.join(OUT, '0-title.png') });
+    await page.click('#start-btn');
+    await sleep(300);
+    const squads = await S(page, () => { const w = window.__scrapline.scene.match.world; return [w.unitsOf(0).length, w.unitsOf(1).length]; });
+    check('game opens with starting squads on both sides', squads[0] >= 6 && squads[1] >= 6, `${squads[0]} vs ${squads[1]} robots at the start`);
     await page.screenshot({ path: path.join(OUT, '1-start.png') });
 
     // zoom out to see the whole map
@@ -87,6 +95,10 @@ async function rightClickTile(page, x, y) {
     const saidCats = await S(page, () => window.__scrapline.rep.log.map((l) => l.cat));
     check('Chuck opens the broadcast', saidCats[0] === 'intro', saidCats.join(','));
     check('Chuck reacts to our flag capture', saidCats.includes('captureMine'), saidCats.join(','));
+    // the recorded voice: a real clip is decoded and played through the game's audio, not just browser speech
+    const voiced = await page.waitForFunction(() => window.__scrapline.sfx.voicePlayed > 0, null, { timeout: 15000 }).then(() => true).catch(() => false);
+    const clips = await S(page, () => window.__scrapline.rep.log.filter((l) => l.clip).length);
+    check("Chuck's recorded voice clips play", voiced && clips >= 1, `${clips} spoken line(s) with audio`);
     await page.keyboard.press('c');
     const off = await S(page, () => ({ en: window.__scrapline.rep.enabled, shown: getComputedStyle(document.getElementById('reporter')).display }));
     const repLabel = await page.locator('#b-rep').innerText();
@@ -260,6 +272,7 @@ async function rightClickTile(page, x, y) {
     page.on('pageerror', (e) => errors.push(String(e)));
     await page.goto(URL + '?speed=2');
     await page.waitForFunction(() => window.__scrapline && window.__scrapline.scene.match, null, { timeout: 15000 });
+    await page.tap('#start-btn');
     await page.waitForFunction(() => window.__scrapline.scene.match.world.unitsOf(0).length >= 2, null, { timeout: 30000 });
 
     const lay = await page.evaluate(() => {

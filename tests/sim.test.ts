@@ -245,7 +245,7 @@ describe('determinism', () => {
   });
   it('replaying the command log on a fresh world reproduces the state', () => {
     const m = new Match(9, [0, 1]);
-    m.run(2500);
+    for (let t = 0; t < 2500; t++) m.step(); // fixed tick count: run() would stop early if the match ended
     const log = m.world.commandLog.slice();
     expect(log.length).toBeGreaterThan(5);
     const w = new World(buildFrontline(), 9);

@@ -5,6 +5,16 @@
     "info": ""
   },
   {
+    "name": "title screen shows and the game waits for Play",
+    "ok": true,
+    "info": "tick 0"
+  },
+  {
+    "name": "game opens with starting squads on both sides",
+    "ok": true,
+    "info": "6 vs 6 robots at the start"
+  },
+  {
     "name": "mouse wheel zooms the camera",
     "ok": true,
     "info": "zoom 0.66"
@@ -12,12 +22,12 @@
   {
     "name": "drag-box selects own robots",
     "ok": true,
-    "info": "1 selected"
+    "info": "6 selected"
   },
   {
     "name": "right-click on a flag issues a capture order",
     "ok": true,
-    "info": "capture"
+    "info": "capture,capture,capture,capture,move,move"
   },
   {
     "name": "capturing a flag changes ownership",
@@ -27,7 +37,7 @@
   {
     "name": "Chuck Sprocket appears with subtitles",
     "ok": true,
-    "info": "Ca"
+    "info": "Two armies. One field. Zero adults present."
   },
   {
     "name": "Chuck opens the broadcast",
@@ -38,6 +48,11 @@
     "name": "Chuck reacts to our flag capture",
     "ok": true,
     "info": "intro,captureMine"
+  },
+  {
+    "name": "Chuck's recorded voice clips play",
+    "ok": true,
+    "info": "1 spoken line(s) with audio"
   },
   {
     "name": "C key switches commentary off and on",
@@ -52,12 +67,12 @@
   {
     "name": "player factories keep producing robots",
     "ok": true,
-    "info": "7 robots at 24s sim time"
+    "info": "13 robots at 24s sim time"
   },
   {
     "name": "sound engine runs and plays effects",
     "ok": true,
-    "info": "running, 8 sounds"
+    "info": "running, 9 sounds"
   },
   {
     "name": "M key mutes and unmutes sound",
@@ -82,7 +97,7 @@
   {
     "name": "P pauses the simulation",
     "ok": true,
-    "info": "tick 588"
+    "info": "tick 569"
   },
   {
     "name": "P resumes the simulation",
@@ -102,7 +117,7 @@
   {
     "name": "Ctrl+click issues a move order (no right button needed)",
     "ok": true,
-    "info": "move,move,move,move,move,move,move,move,move,move"
+    "info": "move,move,move,move,move,move,move,move,move,move,move,move,move,move,move,move"
   },
   {
     "name": "coach shows a tip",
@@ -122,7 +137,7 @@
   {
     "name": "a UI-driven match reaches a conclusion with an end screen",
     "ok": true,
-    "info": "winner=1 title=DEFEAT sim=177s flags 0,8"
+    "info": "winner=0 title=VICTORY sim=133s flags 3,1"
   },
   {
     "name": "no console errors (match session)",
@@ -132,7 +147,7 @@
   {
     "name": "match-1-result",
     "ok": true,
-    "info": "{\"winner\":1,\"secs\":177,\"terr\":[0,8]}"
+    "info": "{\"winner\":0,\"secs\":133,\"terr\":[3,1]}"
   },
   {
     "name": "doing nothing ends in DEFEAT",
@@ -142,7 +157,7 @@
   {
     "name": "restart begins a fresh match",
     "ok": true,
-    "info": "tick 183"
+    "info": "tick 140"
   },
   {
     "name": "no console errors (defeat session)",
@@ -162,12 +177,12 @@
   {
     "name": "phone: tapping ALL selects the robots",
     "ok": true,
-    "info": "2 selected"
+    "info": "6 selected"
   },
   {
     "name": "phone: tapping a flag with robots selected orders a capture",
     "ok": true,
-    "info": "tapped CANVAS, orders capture,capture"
+    "info": "tapped CANVAS, orders capture,capture,capture,capture,move,move"
   },
   {
     "name": "phone: two-finger pinch zooms the map",

@@ -9,7 +9,8 @@ const COOLDOWN: Partial<Record<Cat, number>> = {
 const GAP_MS = 3500;
 const CHARS_PER_SEC = 42;
 
-interface Item { cat: Cat; text: string; prio: number; at: number }
+interface Item { cat: Cat; text: string; key: string; prio: number; at: number }
+interface Playing extends Item { start: number; dur: number; cps: number; talkUntil: number; waiting: boolean }
 
 /**
  * Chuck Sprocket's TV transmission: animated face, typewriter subtitles, optional robotic voice.
@@ -19,9 +20,9 @@ export class Commentator {
   enabled = true;
   voiceOn = true;
   /** everything he has said, for tests */
-  log: { cat: Cat; text: string }[] = [];
+  log: { cat: Cat; text: string; clip: boolean }[] = [];
 
-  private cur: (Item & { start: number; dur: number }) | null = null;
+  private cur: Playing | null = null;
   private pending: Item[] = [];
   private lastEnd = -1e9;
   private lastCat: Partial<Record<Cat, number>> = {};
@@ -59,7 +60,7 @@ export class Commentator {
   }
 
   /** pick a line without repeating until the whole category has been heard */
-  pick(cat: Cat): string {
+  pick(cat: Cat): { i: number; text: string } {
     const lines = LINES[cat];
     let bag = this.bags.get(cat);
     if (!bag || !bag.length) {
@@ -70,7 +71,8 @@ export class Commentator {
       }
       this.bags.set(cat, bag);
     }
-    return lines[bag.pop()!];
+    const i = bag.pop()!;
+    return { i, text: lines[i] };
   }
 
   say(cat: Cat, prio = 1) {
@@ -78,7 +80,8 @@ export class Commentator {
     const now = performance.now();
     if (prio < 3 && now - (this.lastCat[cat] ?? -1e9) < (COOLDOWN[cat] ?? 15000)) return;
     this.lastCat[cat] = now;
-    const item: Item = { cat, text: this.pick(cat), prio, at: now };
+    const p = this.pick(cat);
+    const item: Item = { cat, text: p.text, key: `${cat}_${p.i}`, prio, at: now };
     if (prio >= 3) {
       this.pending = [];
       this.start(item, now);
@@ -94,11 +97,35 @@ export class Commentator {
   }
 
   private start(item: Item, now: number) {
-    this.cur = { ...item, start: now, dur: (item.text.length / CHARS_PER_SEC) * 1000 + 2600 };
+    const c: Playing = { ...item, start: now, dur: (item.text.length / CHARS_PER_SEC) * 1000 + 2600, cps: CHARS_PER_SEC, talkUntil: 0, waiting: false };
+    const entry = { cat: item.cat, text: item.text, clip: false };
+    this.cur = c;
     this.shown = -1;
-    this.log.push({ cat: item.cat, text: item.text });
+    this.log.push(entry);
     this.panel.style.display = 'block';
-    this.speak(item.text);
+    if (!this.voiceOn || this.sfx.muted) return;
+
+    // Chuck's recorded clip: subtitles and mouth then follow the real length of the audio.
+    // If it cannot be loaded or played within a second (no audio yet, blocked), fall back to browser speech.
+    c.waiting = true;
+    const giveUp = window.setTimeout(() => {
+      if (this.cur !== c || !c.waiting) return;
+      c.waiting = false;
+      c.start = performance.now();
+      this.speak(item.text);
+    }, 1000);
+    void this.sfx.loadVoice(item.key).then((buf) => {
+      if (this.cur !== c || !c.waiting) return;
+      window.clearTimeout(giveUp);
+      c.waiting = false;
+      c.start = performance.now();
+      if (buf && this.sfx.playVoice(buf)) {
+        entry.clip = true;
+        c.cps = item.text.length / buf.duration;
+        c.dur = buf.duration * 1000 + 1800;
+        c.talkUntil = c.start + buf.duration * 1000;
+      } else this.speak(item.text);
+    });
   }
 
   private speak(text: string) {
@@ -117,6 +144,7 @@ export class Commentator {
   }
 
   private stopVoice() {
+    this.sfx.stopVoice();
     try {
       window.speechSynthesis?.cancel();
     } catch {
@@ -128,15 +156,16 @@ export class Commentator {
   update(now: number) {
     if (!this.enabled) return;
     if (this.cur) {
-      const el = now - this.cur.start;
-      const n = Math.min(this.cur.text.length, Math.floor((el / 1000) * CHARS_PER_SEC));
+      const c = this.cur;
+      const el = c.waiting ? 0 : now - c.start;
+      const n = c.waiting ? 0 : Math.min(c.text.length, Math.floor((el / 1000) * c.cps));
       if (n !== this.shown) {
         this.shown = n;
-        this.text.textContent = this.cur.text.slice(0, n);
+        this.text.textContent = c.text.slice(0, n);
       }
-      const talking = n < this.cur.text.length;
+      const talking = !c.waiting && (c.talkUntil ? now < c.talkUntil : n < c.text.length);
       this.draw(now, el, talking);
-      if (el > this.cur.dur) {
+      if (!c.waiting && el > c.dur) {
         this.cur = null;
         this.lastEnd = now;
         this.stopVoice();

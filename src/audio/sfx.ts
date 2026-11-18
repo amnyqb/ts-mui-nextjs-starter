@@ -5,6 +5,9 @@
 export class Sfx {
   private ctx: AudioContext | null = null;
   private master!: GainNode;
+  private voiceBus!: GainNode;
+  private voiceSrc: AudioBufferSourceNode | null = null;
+  private clips = new Map<string, AudioBuffer | null>();
   private noiseBuf!: AudioBuffer;
   private unlocked = false;
   private last: Record<string, number> = {};
@@ -13,6 +16,8 @@ export class Sfx {
   volume = 0.5;
   /** number of sounds actually started (used by the browser test) */
   played = 0;
+  /** number of voice clips actually played */
+  voicePlayed = 0;
 
   /** Call from any user gesture (pointer/key). Safe to call repeatedly. */
   unlock() {
@@ -28,6 +33,69 @@ export class Sfx {
   setMuted(m: boolean) {
     this.muted = m;
     if (this.master) this.master.gain.value = m ? 0 : this.volume;
+    if (this.voiceBus) this.voiceBus.gain.value = m ? 0 : 1;
+    if (m) this.stopVoice();
+  }
+
+  /** Load (and decode) one of Chuck's clips: embedded base64 (single-file build) or voice/<key>.mp3. null if unavailable. */
+  async loadVoice(key: string): Promise<AudioBuffer | null> {
+    const c = this.ensure();
+    if (!c) return null;
+    if (this.clips.has(key)) return this.clips.get(key)!;
+    try {
+      let data: ArrayBuffer;
+      const embedded = (window as unknown as { __WW5_VOICE?: Record<string, string> }).__WW5_VOICE?.[key];
+      if (embedded) {
+        const bin = atob(embedded);
+        const u8 = new Uint8Array(bin.length);
+        for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
+        data = u8.buffer;
+      } else {
+        const r = await fetch(`voice/${key}.mp3`);
+        if (!r.ok) throw new Error(String(r.status));
+        data = await r.arrayBuffer();
+      }
+      const buf = await c.decodeAudioData(data);
+      this.clips.set(key, buf);
+      return buf;
+    } catch {
+      this.clips.set(key, null);
+      return null;
+    }
+  }
+
+  /** Play a clip on the voice bus; game effects duck underneath while he talks. Returns false if audio is not running. */
+  playVoice(buf: AudioBuffer): boolean {
+    const c = this.ensure();
+    if (!c || c.state !== 'running') return false;
+    this.stopVoice();
+    const s = c.createBufferSource();
+    s.buffer = buf;
+    s.connect(this.voiceBus);
+    this.voiceSrc = s;
+    this.master.gain.setTargetAtTime(this.muted ? 0 : this.volume * 0.4, c.currentTime, 0.04);
+    s.onended = () => {
+      if (this.voiceSrc === s) {
+        this.voiceSrc = null;
+        this.master.gain.setTargetAtTime(this.muted ? 0 : this.volume, c.currentTime, 0.15);
+      }
+    };
+    s.start();
+    this.voicePlayed++;
+    return true;
+  }
+
+  stopVoice() {
+    const s = this.voiceSrc;
+    if (!s) return;
+    this.voiceSrc = null;
+    s.onended = null;
+    try {
+      s.stop();
+    } catch {
+      /* already stopped */
+    }
+    if (this.ctx) this.master.gain.setTargetAtTime(this.muted ? 0 : this.volume, this.ctx.currentTime, 0.1);
   }
 
   private ensure(): AudioContext | null {
@@ -39,7 +107,10 @@ export class Sfx {
         this.master = this.ctx.createGain();
         this.master.gain.value = this.muted ? 0 : this.volume;
         const comp = this.ctx.createDynamicsCompressor(); // keeps big battles from clipping
+        this.voiceBus = this.ctx.createGain();
+        this.voiceBus.gain.value = this.muted ? 0 : 1;
         this.master.connect(comp).connect(this.ctx.destination);
+        this.voiceBus.connect(this.ctx.destination); // voice stays clear of the effects compressor
         const len = this.ctx.sampleRate;
         this.noiseBuf = this.ctx.createBuffer(1, len, this.ctx.sampleRate);
         const d = this.noiseBuf.getChannelData(0);

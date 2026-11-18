@@ -19,10 +19,12 @@ export class Match {
     readonly seed: number,
     aiSides: number[] = [1],
     readonly difficulty: Difficulty = 'hard',
+    startingForce = false,
   ) {
     const d = DIFFICULTY[difficulty];
     this.world = new World(buildFrontline(), seed);
-    this.commanders = aiSides.map((s) => new SimpleCommander(s, d.interval, s * 20 % d.interval, d.wave, d.delay));
+    if (startingForce) this.world.spawnStartingForce();
+    this.commanders = aiSides.map((s) => new SimpleCommander(s, d.interval, 0, d.wave, d.delay));
   }
   step() {
     if (this.world.winner === null) for (const c of this.commanders) c.update(this.world);

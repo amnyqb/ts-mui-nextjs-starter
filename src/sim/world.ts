@@ -187,6 +187,20 @@ export class World {
     return u;
   }
 
+  /**
+   * A small opening squad per side (default 4 rifle robots + 2 tanks, in front of each base, mirrored) so a new game
+   * has actors on the field from the first second. Positions are tile centres on the west side, mirrored for the east.
+   */
+  spawnStartingForce(rifles = 4, tanks = 2) {
+    const w = this.map.w;
+    for (const side of [0, 1]) {
+      const west = this.hq(side)!.x < w / 2;
+      const at = (x: number) => (west ? x : w - x);
+      for (let i = 0; i < rifles; i++) this.spawnUnit('rifle', side, at(13.5), 14.5 + i);
+      for (let i = 0; i < tanks; i++) this.spawnUnit('tank', side, at(12.5), i === 0 ? 12.5 : 20.5);
+    }
+  }
+
   // ------------------------------------------------------------------- step
 
   step() {

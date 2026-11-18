@@ -8,7 +8,7 @@ let draws = 0;
 const lens: number[] = [];
 const t0 = performance.now();
 for (let seed = 1; seed <= N; seed++) {
-  const m = new Match(seed, [0, 1]);
+  const m = new Match(seed, [0, 1], 'hard', process.env.START === '1');
   const ticks = m.run(MAX);
   const w = m.world.winner;
   if (w === null) stalemates++;

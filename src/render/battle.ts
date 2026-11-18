@@ -46,6 +46,10 @@ export class BattleScene extends Phaser.Scene {
     const v = new URLSearchParams(location.search).get('ai');
     return v === 'normal' || v === 'hard' ? v : 'easy';
   })();
+  /** the game waits on the title screen until the first tap/click (browsers need a gesture before audio can play) */
+  private started = new URLSearchParams(location.search).get('autostart') === '1';
+  /** each side opens with a small squad; ?start=0 gives the old empty start */
+  private startForce = new URLSearchParams(location.search).get('start') !== '0';
   private pinch: { d: number; zoom: number; mx: number; my: number } | null = null;
   private touch = window.matchMedia?.('(pointer: coarse)').matches ?? false;
   private orderIssued = false;
@@ -86,8 +90,16 @@ export class BattleScene extends Phaser.Scene {
     // browsers only allow audio after a user gesture
     const unlock = () => this.sfx.unlock();
     window.addEventListener('pointerdown', unlock);
+    window.addEventListener('touchend', unlock); // iOS Safari unlocks audio on touchend/click, not pointerdown
+    window.addEventListener('click', unlock);
     window.addEventListener('keydown', unlock);
     $('b-mute').onclick = () => this.toggleMute();
+    $('start').style.display = this.started ? 'none' : 'flex';
+    $('start-btn').onclick = () => {
+      this.sfx.unlock();
+      this.started = true;
+      $('start').style.display = 'none';
+    };
     this.input.addPointer(1); // enables two-finger pan and pinch zoom
     $('q-all').onclick = () => this.selectAll();
     $('q-atk').onclick = () => this.armAttack();
@@ -137,7 +149,7 @@ export class BattleScene extends Phaser.Scene {
   // ------------------------------------------------------------ lifecycle
 
   private newMatch() {
-    this.match = new Match(this.seed, [1], this.difficulty);
+    this.match = new Match(this.seed, [1], this.difficulty, this.startForce);
     this.orderIssued = false;
     this.myCaptures = 0;
     this.director.reset();
@@ -382,7 +394,7 @@ export class BattleScene extends Phaser.Scene {
 
   update(_t: number, delta: number) {
     const w = this.match.world;
-    if (!this.paused && !this.ended) {
+    if (!this.paused && !this.ended && this.started) {
       this.acc += Math.min(delta, 100) * this.speed;
       let n = 0;
       while (this.acc >= STEP_MS && n++ < 40) {
