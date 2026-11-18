@@ -65,7 +65,7 @@ export type Command =
   | { type: 'togglePause'; building: number };
 
 export type SimEvent =
-  | { t: 'shot'; x1: number; y1: number; x2: number; y2: number; hit: boolean; owner: Owner }
+  | { t: 'shot'; x1: number; y1: number; x2: number; y2: number; hit: boolean; owner: Owner; unit: UnitType }
   | { t: 'death'; x: number; y: number; big: boolean; owner: Owner }
   | { t: 'capture'; territory: number; owner: Owner; prev: Owner }
   | { t: 'spawn'; id: number; owner: Owner }

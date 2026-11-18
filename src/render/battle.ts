@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { T_BRIDGE, T_GRASS, T_ROCK, T_WATER } from '../data/maps';
 import { BUILDINGS, TICKS_PER_SEC, UNITS } from '../data/units';
+import { Sfx } from '../audio/sfx';
 import { Match } from '../sim/match';
 import type { Building, Unit } from '../sim/types';
 
@@ -36,6 +37,7 @@ export class BattleScene extends Phaser.Scene {
   private keys!: Record<string, Phaser.Input.Keyboard.Key>;
   private hudTimer = 0;
   private panelKey = '';
+  private sfx = new Sfx();
   private miniTerrain!: HTMLCanvasElement;
   private ended = false;
 
@@ -60,6 +62,12 @@ export class BattleScene extends Phaser.Scene {
       cam.setZoom(Phaser.Math.Clamp(cam.zoom * (dy > 0 ? 0.9 : 1.1), 0.5, 2.5));
     });
 
+    // browsers only allow audio after a user gesture
+    const unlock = () => this.sfx.unlock();
+    window.addEventListener('pointerdown', unlock);
+    window.addEventListener('keydown', unlock);
+    $('b-mute').onclick = () => this.toggleMute();
+
     $('b-attack').onclick = () => this.armAttack();
     $('b-stop').onclick = () => this.stopSel();
     $('b-pause').onclick = () => this.togglePause();
@@ -81,6 +89,7 @@ export class BattleScene extends Phaser.Scene {
     // Test/debug hook: lets the Playwright smoke test drive and inspect the real running game.
     (window as unknown as Record<string, unknown>).__scrapline = {
       scene: this,
+      sfx: this.sfx,
       tileSize: TS,
       screenOf: (tx: number, ty: number) => {
         const cam = this.cameras.main;
@@ -115,6 +124,20 @@ export class BattleScene extends Phaser.Scene {
     this.seed++;
     this.newMatch();
   }
+  private toggleMute() {
+    this.sfx.setMuted(!this.sfx.muted);
+    $('b-mute').textContent = this.sfx.muted ? 'Sound: OFF (M)' : 'Sound: ON (M)';
+  }
+
+  /** 0..1 loudness by distance from what the player is looking at; off-screen fights are faint or silent */
+  private loudness(tx: number, ty: number): number {
+    const v = this.cameras.main.worldView;
+    const d = Math.hypot(tx * TS - (v.x + v.width / 2), ty * TS - (v.y + v.height / 2));
+    const reach = Math.hypot(v.width, v.height) * 0.75;
+    const l = 1 - d / reach;
+    return l < 0.05 ? 0 : Math.min(1, l);
+  }
+
   private togglePause() {
     this.paused = !this.paused;
     $('b-pause').textContent = this.paused ? 'Resume (P)' : 'Pause (P)';
@@ -137,6 +160,7 @@ export class BattleScene extends Phaser.Scene {
         }
       }
     } else if (k === 'p') this.togglePause();
+    else if (k === 'm') this.toggleMute();
     else if (k === 'r') this.restart();
     else if (k === 'a') this.armAttack();
     else if (k === 's') this.stopSel();
@@ -234,6 +258,7 @@ export class BattleScene extends Phaser.Scene {
 
   private marker(x: number, y: number, color: number) {
     this.fx.push({ x, y, ttl: 700, life: 700, color, kind: 'marker' });
+    this.sfx.command();
   }
 
   // --------------------------------------------------------------- update
@@ -273,18 +298,26 @@ export class BattleScene extends Phaser.Scene {
     const w = this.match.world;
     for (const e of w.events) {
       if (e.t === 'shot') {
+        const l = this.loudness(e.x1, e.y1);
+        if (l > 0) (e.unit === 'tank' ? this.sfx.tank(l) : this.sfx.rifle(l));
         this.fx.push({ x: e.x1, y: e.y1, x2: e.x2 + (e.hit ? 0 : (Math.random() - 0.5) * 0.8), y2: e.y2 + (e.hit ? 0 : (Math.random() - 0.5) * 0.8), ttl: 90, life: 90, color: teamColor(e.owner), kind: 'tracer' });
+      } else if (e.t === 'spawn') {
+        if (e.owner === PLAYER) this.sfx.spawn();
       } else if (e.t === 'death') {
+        const l = this.loudness(e.x, e.y);
+        if (l > 0) this.sfx.boom(e.big, l);
         this.fx.push({ x: e.x, y: e.y, ttl: e.big ? 900 : 500, life: e.big ? 900 : 500, color: 0xff8a2a, kind: 'boom', big: e.big });
       } else if (e.t === 'capture') {
         const t = w.territories[e.territory];
         this.fx.push({ x: t.fx + 0.5, y: t.fy + 0.5, ttl: 900, life: 900, color: teamColor(e.owner), kind: 'ring' });
         const mine = e.owner === PLAYER;
         const lost = e.prev === PLAYER;
+        if (mine || lost) this.sfx.capture(mine);
         this.feed(mine ? `Captured ${t.name}.` : lost ? `LOST ${t.name}!` : `Enemy took ${t.name}.`, mine ? 'won' : lost ? 'lost' : '');
       } else if (e.t === 'victory') {
         this.ended = true;
         const win = e.winner === PLAYER;
+        this.sfx.end(win);
         $('end').style.display = 'flex';
         const title = $('end-title');
         title.textContent = e.winner === -1 ? 'DRAW' : win ? 'VICTORY' : 'DEFEAT';

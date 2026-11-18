@@ -38,6 +38,7 @@ Add `?speed=4` to the URL to run the simulation faster.
 | Mouse wheel | Zoom |
 | Minimap click or drag | Jump the camera |
 | P / R | Pause / restart |
+| M | Mute / unmute sound (all sounds are synthesised in the browser, no audio files) |
 
 ## How it works (Stage 1)
 

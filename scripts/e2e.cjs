@@ -84,6 +84,16 @@ async function rightClickTile(page, x, y) {
     const mine = await S(page, () => window.__scrapline.scene.match.world.unitsOf(0).length);
     check('player factories keep producing robots', mine >= 4, `${mine} robots at 24s sim time`);
 
+    // sound: engine unlocked by our clicks, effects started, mute key toggles
+    const au = await S(page, () => ({ state: window.__scrapline.sfx.state, played: window.__scrapline.sfx.played }));
+    check('sound engine runs and plays effects', au.state === 'running' && au.played > 0, `${au.state}, ${au.played} sounds`);
+    await page.keyboard.press('m');
+    const mutedOn = await S(page, () => window.__scrapline.sfx.muted);
+    const label = await page.locator('#b-mute').innerText();
+    await page.keyboard.press('m');
+    const mutedOff = await S(page, () => window.__scrapline.sfx.muted);
+    check('M key mutes and unmutes sound', mutedOn === true && mutedOff === false && /OFF/.test(label), label);
+
     // factory selection + production toggle through the HUD
     const barracks = await S(page, () => {
       const b = window.__scrapline.scene.match.world.buildings.find((q) => q.owner === 0 && q.bkind === 'barracks');

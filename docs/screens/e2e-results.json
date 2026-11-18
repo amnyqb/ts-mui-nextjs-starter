@@ -30,6 +30,16 @@
     "info": "6 robots at 24s sim time"
   },
   {
+    "name": "sound engine runs and plays effects",
+    "ok": true,
+    "info": "running, 27 sounds"
+  },
+  {
+    "name": "M key mutes and unmutes sound",
+    "ok": true,
+    "info": "SOUND: OFF (M)"
+  },
+  {
     "name": "clicking a factory selects it",
     "ok": true,
     "info": ""
@@ -47,7 +57,7 @@
   {
     "name": "P pauses the simulation",
     "ok": true,
-    "info": "tick 621"
+    "info": "tick 650"
   },
   {
     "name": "P resumes the simulation",
@@ -67,7 +77,7 @@
   {
     "name": "a UI-driven match reaches a conclusion with an end screen",
     "ok": true,
-    "info": "winner=1 title=DEFEAT sim=87s flags 0,8"
+    "info": "winner=1 title=DEFEAT sim=78s flags 0,8"
   },
   {
     "name": "no console errors (match session)",
@@ -77,7 +87,7 @@
   {
     "name": "match-1-result",
     "ok": true,
-    "info": "{\"winner\":1,\"secs\":87,\"terr\":[0,8]}"
+    "info": "{\"winner\":1,\"secs\":78,\"terr\":[0,8]}"
   },
   {
     "name": "doing nothing ends in DEFEAT",
@@ -87,7 +97,7 @@
   {
     "name": "restart begins a fresh match",
     "ok": true,
-    "info": "tick 186"
+    "info": "tick 191"
   },
   {
     "name": "no console errors (defeat session)",

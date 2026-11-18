@@ -367,7 +367,7 @@ export class World {
       const armor = isBuilding(t) ? 'building' : UNITS[t.type].armor;
       this.pendingDamage.push([t, def.damage * def.vs[armor]]);
     }
-    this.events.push({ t: 'shot', x1: u.x, y1: u.y, x2: t.x, y2: t.y, hit, owner: u.owner });
+    this.events.push({ t: 'shot', x1: u.x, y1: u.y, x2: t.x, y2: t.y, hit, owner: u.owner, unit: u.type });
   }
 
   // ---------------------------------------------------------- world passes
