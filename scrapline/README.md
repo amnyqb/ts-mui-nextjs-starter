@@ -1,4 +1,6 @@
-# SCRAPLINE
+# WW5
+
+*Humans stopped at World War 3. The robots did not.*
 
 An original territory-control robot RTS for the browser. Capture flags, take over factories, outproduce the opponent.
 Built with TypeScript, Vite and Phaser 3. The simulation is headless and deterministic; Phaser only draws it.
