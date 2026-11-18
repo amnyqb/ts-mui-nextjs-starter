@@ -27,17 +27,17 @@
   {
     "name": "Chuck Sprocket appears with subtitles",
     "ok": true,
-    "info": "Breaking: the factory has produced a soldier"
+    "info": "Ca"
   },
   {
     "name": "Chuck opens the broadcast",
     "ok": true,
-    "info": "intro,firstRobots,captureMine"
+    "info": "intro,captureMine"
   },
   {
     "name": "Chuck reacts to our flag capture",
     "ok": true,
-    "info": "intro,firstRobots,captureMine"
+    "info": "intro,captureMine"
   },
   {
     "name": "C key switches commentary off and on",
@@ -52,12 +52,12 @@
   {
     "name": "player factories keep producing robots",
     "ok": true,
-    "info": "8 robots at 24s sim time"
+    "info": "7 robots at 24s sim time"
   },
   {
     "name": "sound engine runs and plays effects",
     "ok": true,
-    "info": "running, 9 sounds"
+    "info": "running, 8 sounds"
   },
   {
     "name": "M key mutes and unmutes sound",
@@ -82,7 +82,7 @@
   {
     "name": "P pauses the simulation",
     "ok": true,
-    "info": "tick 696"
+    "info": "tick 588"
   },
   {
     "name": "P resumes the simulation",
@@ -102,7 +102,7 @@
   {
     "name": "Ctrl+click issues a move order (no right button needed)",
     "ok": true,
-    "info": "move,move,move,move,move,move,move,move,move,move,move"
+    "info": "move,move,move,move,move,move,move,move,move,move"
   },
   {
     "name": "coach shows a tip",
@@ -122,7 +122,7 @@
   {
     "name": "a UI-driven match reaches a conclusion with an end screen",
     "ok": true,
-    "info": "winner=0 title=VICTORY sim=145s flags 4,2"
+    "info": "winner=1 title=DEFEAT sim=177s flags 0,8"
   },
   {
     "name": "no console errors (match session)",
@@ -132,7 +132,7 @@
   {
     "name": "match-1-result",
     "ok": true,
-    "info": "{\"winner\":0,\"secs\":145,\"terr\":[4,2]}"
+    "info": "{\"winner\":1,\"secs\":177,\"terr\":[0,8]}"
   },
   {
     "name": "doing nothing ends in DEFEAT",
@@ -142,10 +142,40 @@
   {
     "name": "restart begins a fresh match",
     "ok": true,
-    "info": "tick 169"
+    "info": "tick 183"
   },
   {
     "name": "no console errors (defeat session)",
+    "ok": true,
+    "info": ""
+  },
+  {
+    "name": "phone: no horizontal overflow, big buttons, desktop help hidden",
+    "ok": true,
+    "info": "button 46px, top bar 378/390px"
+  },
+  {
+    "name": "phone: Menu opens the extra buttons",
+    "ok": true,
+    "info": ""
+  },
+  {
+    "name": "phone: tapping ALL selects the robots",
+    "ok": true,
+    "info": "2 selected"
+  },
+  {
+    "name": "phone: tapping a flag with robots selected orders a capture",
+    "ok": true,
+    "info": "tapped CANVAS, orders capture,capture"
+  },
+  {
+    "name": "phone: two-finger pinch zooms the map",
+    "ok": true,
+    "info": "zoom 0.50 -> 1.67"
+  },
+  {
+    "name": "no console errors (phone session)",
     "ok": true,
     "info": ""
   }

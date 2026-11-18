@@ -1,6 +1,6 @@
 /* Browser smoke + play test. Needs: `npm run build` first and `npm run preview` running on :4173.
    Uses real mouse/keyboard events against the real build. Run: node scripts/e2e.cjs */
-const { chromium } = require('playwright');
+const { chromium, devices } = require('playwright');
 const fs = require('fs');
 const path = require('path');
 
@@ -249,6 +249,55 @@ async function rightClickTile(page, x, y) {
     check('restart begins a fresh match', tick < 400, `tick ${tick}`);
     check('no console errors (defeat session)', errors.length === 0, errors.slice(0, 3).join(' | '));
     await page.close();
+  }
+
+  // ------------------------------------------------ 4. phone: touch controls and layout (iPhone 13)
+  {
+    const ctx = await browser.newContext({ ...devices['iPhone 13'] });
+    const page = await ctx.newPage();
+    const errors = [];
+    page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
+    page.on('pageerror', (e) => errors.push(String(e)));
+    await page.goto(URL + '?speed=2');
+    await page.waitForFunction(() => window.__scrapline && window.__scrapline.scene.match, null, { timeout: 15000 });
+    await page.waitForFunction(() => window.__scrapline.scene.match.world.unitsOf(0).length >= 2, null, { timeout: 30000 });
+
+    const lay = await page.evaluate(() => {
+      const r = (id) => document.getElementById(id).getBoundingClientRect();
+      return { overflow: document.documentElement.scrollWidth > innerWidth, btnH: r('q-all').height, helpHidden: getComputedStyle(document.getElementById('help')).display === 'none', topW: r('top').width, vw: innerWidth };
+    });
+    check('phone: no horizontal overflow, big buttons, desktop help hidden', !lay.overflow && lay.btnH >= 40 && lay.helpHidden && lay.topW <= lay.vw, `button ${Math.round(lay.btnH)}px, top bar ${Math.round(lay.topW)}/${lay.vw}px`);
+
+    await page.tap('#q-menu');
+    check('phone: Menu opens the extra buttons', await page.locator('#btns').isVisible());
+    await page.tap('#q-menu');
+
+    await page.tap('#q-all');
+    const sel = await S(page, () => window.__scrapline.scene.sel.size);
+    check('phone: tapping ALL selects the robots', sel >= 1, `${sel} selected`);
+
+    const fp = await screenOf(page, 14.5, 26.5);
+    const covered = await page.evaluate(([x, y]) => document.elementFromPoint(x, y)?.tagName, [fp.x, fp.y]);
+    await page.touchscreen.tap(fp.x, fp.y);
+    await sleep(300);
+    const touchOrders = await S(page, () => { const w = window.__scrapline.scene.match.world; return [...window.__scrapline.scene.sel].map((id) => w.getEntity(id)).filter(Boolean).map((u) => u.order.kind); });
+    check('phone: tapping a flag with robots selected orders a capture', touchOrders.includes('capture'), `tapped ${covered}, orders ${touchOrders.join(',')}`);
+
+    // two-finger pinch zoom through real touch events
+    const cdp = await ctx.newCDPSession(page);
+    const z0 = await S(page, () => window.__scrapline.scene.cameras.main.zoom);
+    const cx = 195, cy = 330;
+    const pts = (d) => [{ x: cx - d, y: cy, id: 1 }, { x: cx + d, y: cy, id: 2 }];
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: pts(30) });
+    for (const d of [45, 60, 80, 100]) await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: pts(d) });
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+    await sleep(200);
+    const z1 = await S(page, () => window.__scrapline.scene.cameras.main.zoom);
+    check('phone: two-finger pinch zooms the map', z1 > z0 * 1.4, `zoom ${z0.toFixed(2)} -> ${z1.toFixed(2)}`);
+
+    check('no console errors (phone session)', errors.length === 0, errors.slice(0, 3).join(' | '));
+    await page.screenshot({ path: path.join(OUT, 'phone.png') });
+    await ctx.close();
   }
 
   await browser.close();

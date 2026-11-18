@@ -44,6 +44,10 @@ Measured with a human-style scripted player (`npx vite-node scripts/human.ts 40`
 | M | Mute / unmute sound (all sounds are synthesised in the browser, no audio files) |
 | C / V | Switch the war correspondent on or off / switch his robot voice on or off |
 
+## Phone and tablet
+
+Touch is supported: tap a robot or **ALL** to select, drag to box-select, tap the ground, an enemy or a grey flag to command the selected robots, **ATTACK** then tap for attack-move, two fingers to pan and pinch to zoom. The layout switches to a compact phone HUD automatically. `node scripts/make-artifact.mjs out.html` (after `npm run build`) packages the game as one self-contained HTML file.
+
 ## Art
 
 All art is original and drawn in code at startup (`src/render/sprites.ts`): funny robots with 8 facing directions and walk cycles, tanks with faces, characterful buildings and shaded terrain. No image files are loaded, so there are no licences to track. Texture keys are stable, so pre-rendered sheets can replace them later.

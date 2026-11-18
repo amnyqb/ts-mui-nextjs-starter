@@ -46,6 +46,8 @@ export class BattleScene extends Phaser.Scene {
     const v = new URLSearchParams(location.search).get('ai');
     return v === 'normal' || v === 'hard' ? v : 'easy';
   })();
+  private pinch: { d: number; zoom: number; mx: number; my: number } | null = null;
+  private touch = window.matchMedia?.('(pointer: coarse)').matches ?? false;
   private orderIssued = false;
   private myCaptures = 0;
   private coachOn = true;
@@ -86,6 +88,11 @@ export class BattleScene extends Phaser.Scene {
     window.addEventListener('pointerdown', unlock);
     window.addEventListener('keydown', unlock);
     $('b-mute').onclick = () => this.toggleMute();
+    this.input.addPointer(1); // enables two-finger pan and pinch zoom
+    $('q-all').onclick = () => this.selectAll();
+    $('q-atk').onclick = () => this.armAttack();
+    $('q-stop').onclick = () => this.stopSel();
+    $('q-menu').onclick = () => $('btns').classList.toggle('open');
     $('b-all').onclick = () => this.selectAll();
     $('b-rep').onclick = () => this.toggleReporter();
     $('b-voice').onclick = () => this.toggleVoice();
@@ -156,7 +163,7 @@ export class BattleScene extends Phaser.Scene {
     const hq = this.match.world.hq(PLAYER)!;
     const cam = this.cameras.main;
     cam.setBounds(-TS * 2, -TS * 2, (this.match.world.map.w + 4) * TS, (this.match.world.map.h + 4) * TS);
-    cam.setZoom(1);
+    cam.setZoom(Phaser.Math.Clamp(window.innerWidth / 900, 0.5, 1)); // see more of the map on a phone
     cam.centerOn(hq.x * TS + 6 * TS, hq.y * TS + 4 * TS);
   }
 
@@ -243,6 +250,19 @@ export class BattleScene extends Phaser.Scene {
 
   private onDown(p: Phaser.Input.Pointer) {
     if (this.ended) return;
+    // second finger down: switch from selecting to pan/pinch-zoom
+    const f1 = this.input.pointer1;
+    const f2 = this.input.pointer2;
+    if (f1?.isDown && f2?.isDown) {
+      this.pinch = {
+        d: Math.hypot(f1.x - f2.x, f1.y - f2.y) || 1,
+        zoom: this.cameras.main.zoom,
+        mx: (f1.x + f2.x) / 2,
+        my: (f1.y + f2.y) / 2,
+      };
+      this.dragStart = this.dragNow = null;
+      return;
+    }
     const ev = p.event as MouseEvent | undefined;
     // Ctrl/Cmd+click = right-click, for laptops and trackpads without a right button
     if (p.button === 0 && (ev?.ctrlKey || ev?.metaKey) && this.sel.size) {
@@ -255,19 +275,39 @@ export class BattleScene extends Phaser.Scene {
     } else if (p.button === 2) this.rightClick(p.worldX / TS, p.worldY / TS);
   }
   private onMove(p: Phaser.Input.Pointer) {
+    if (this.pinch) {
+      const f1 = this.input.pointer1;
+      const f2 = this.input.pointer2;
+      if (f1.isDown && f2.isDown) {
+        const cam = this.cameras.main;
+        const d = Math.hypot(f1.x - f2.x, f1.y - f2.y) || 1;
+        const mx = (f1.x + f2.x) / 2;
+        const my = (f1.y + f2.y) / 2;
+        cam.scrollX -= (mx - this.pinch.mx) / cam.zoom;
+        cam.scrollY -= (my - this.pinch.my) / cam.zoom;
+        cam.setZoom(Phaser.Math.Clamp((this.pinch.zoom * d) / this.pinch.d, 0.5, 2.5));
+        this.pinch.mx = mx;
+        this.pinch.my = my;
+      }
+      return;
+    }
     if (p.isDown && (p.button === 1 || p.middleButtonDown())) {
       const cam = this.cameras.main;
       cam.scrollX -= (p.x - p.prevPosition.x) / cam.zoom;
       cam.scrollY -= (p.y - p.prevPosition.y) / cam.zoom;
     }
-    if (this.dragStart && p.leftButtonDown()) this.dragNow = this.pt(p);
+    if (this.dragStart && p.isDown) this.dragNow = this.pt(p);
   }
   private onUp(p: Phaser.Input.Pointer) {
+    if (this.pinch) {
+      if (!(this.input.pointer1.isDown && this.input.pointer2.isDown)) this.pinch = null;
+      return;
+    }
     if (p.button !== 0 || !this.dragStart) return;
     const a = this.dragStart;
     const b = this.pt(p);
     this.dragStart = this.dragNow = null;
-    const dragged = Math.hypot(b.sx - a.sx, b.sy - a.sy) > 8;
+    const dragged = Math.hypot(b.sx - a.sx, b.sy - a.sy) > (p.wasTouch ? 16 : 8);
     const w = this.match.world;
     if (this.armedAttack && !dragged && this.sel.size) {
       w.issue({ type: 'attackmove', ids: [...this.sel], x: b.wx / TS, y: b.wy / TS });
@@ -293,6 +333,11 @@ export class BattleScene extends Phaser.Scene {
     }
     if (best) { this.sel = new Set([best.id]); this.selBuilding = null; return; }
     const bld = w.buildings.find((q) => q.owner === PLAYER && BUILDINGS[q.bkind].produces && Math.hypot(q.x - tx, q.y - ty) < BUILDINGS[q.bkind].half + 0.2);
+    // touch has no right button: with robots selected, a tap on the ground or a target is the command
+    if (p.wasTouch && !bld && this.sel.size) {
+      this.rightClick(tx, ty);
+      return;
+    }
     this.sel.clear();
     this.selBuilding = bld ? bld.id : null;
   }
@@ -432,11 +477,11 @@ export class BattleScene extends Phaser.Scene {
     let tip = '';
     if (!this.coachOn || this.ended) tip = '';
     else if (mineN === 0) tip = 'Your factories are building your first robots. Hang on a few seconds...';
-    else if (!this.orderIssued && !this.sel.size) tip = 'STEP 1 — Select your robots: drag a box around the amber robots, or press E.';
-    else if (!this.orderIssued) tip = 'STEP 2 — Right-click (or Ctrl+click) a grey flag. Rifle robots will go and capture it.';
+    else if (!this.orderIssued && !this.sel.size) tip = this.touch ? 'STEP 1 — Tap ALL to select your robots (or drag a box around them).' : 'STEP 1 — Select your robots: drag a box around the amber robots, or press E.';
+    else if (!this.orderIssued) tip = this.touch ? 'STEP 2 — Tap a grey flag. Rifle robots will go and capture it.' : 'STEP 2 — Right-click (or Ctrl+click) a grey flag. Rifle robots will go and capture it.';
     else if (this.myCaptures === 0) tip = 'Captured flags give you their factories and speed up production. Send robots to every flag!';
     else if (mineN < 8) tip = 'STEP 3 — Capture more flags, and let your army grow to 8+ robots before attacking.';
-    else tip = 'STEP 4 — Press E, then A and click the teal base in the east. Keep new robots coming. (H hides tips)';
+    else tip = this.touch ? 'STEP 4 — Tap ALL, then ATTACK, then tap the teal base in the east. Keep new robots coming.' : 'STEP 4 — Press E, then A and click the teal base in the east. Keep new robots coming. (H hides tips)';
     const coach = $('coach');
     coach.style.display = tip ? 'block' : 'none';
     if (tip && coach.textContent !== tip) coach.textContent = tip;
@@ -469,7 +514,7 @@ export class BattleScene extends Phaser.Scene {
       const html = `<div class="h">${this.sel.size} SELECTED</div>${Object.entries(counts).map(([k, v]) => `${v} × ${k}`).join(' · ')}<br/><small>RMB: move / attack / capture flag</small>${this.armedAttack ? '<br/><b style="color:#ff5a4d">ATTACK-MOVE: click a target point</b>' : ''}`;
       render('s:' + html, html);
     } else {
-      render('none', '<div class="h">NO SELECTION</div>Drag a box around your robots, or click a factory.');
+      render('none' + this.touch, this.touch ? '<div class="h">NO SELECTION</div>Tap ALL, or drag a box around your robots. Tap a factory to manage it.' : '<div class="h">NO SELECTION</div>Drag a box around your robots, or click a factory.');
     }
   }
 
