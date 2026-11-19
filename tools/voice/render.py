@@ -47,7 +47,7 @@ def treat(src: str, dst: str, m: dict) -> None:
     gain = m["lufs"] - measure_lufs(shaped)
     subprocess.run(
         ["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-i", shaped, "-af", f"volume={gain:.2f}dB,alimiter=limit=0.95:level=disabled",
-         "-ac", "1", "-ar", "22050", "-c:a", "libmp3lame", "-b:a", "40k", dst],
+         "-ac", "1", "-ar", "22050", "-c:a", "libmp3lame", "-b:a", "32k", dst],
         check=True,
     )
     pathlib.Path(shaped).unlink()

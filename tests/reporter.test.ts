@@ -10,8 +10,8 @@ const world = () => new World(buildFrontline(), 1);
 const cats = (d: Director, w: World, ev: SimEvent[] = []) => d.consume(w, ev).map((c) => c.cat);
 
 describe('reporter script', () => {
-  it('has at least 80 original lines, all non-empty, short enough for subtitles, none duplicated', () => {
-    expect(LINE_COUNT).toBeGreaterThanOrEqual(80);
+  it('has 300+ original lines, all non-empty, short, none duplicated', () => {
+    expect(LINE_COUNT).toBeGreaterThanOrEqual(300);
     const all = Object.values(LINES).flat();
     expect(new Set(all).size).toBe(all.length);
     for (const l of all) {
@@ -22,6 +22,13 @@ describe('reporter script', () => {
     }
     expect(all.reduce((n, l) => n + l.length, 0) / all.length, 'average line length').toBeLessThan(50);
     for (const [cat, lines] of Object.entries(LINES)) expect(lines.length, cat).toBeGreaterThan(0);
+  });
+
+  it('gives frequent events big banks so they rarely repeat', () => {
+    const frequent: Cat[] = ['captureMine', 'captureLost', 'unitLost', 'idle', 'firstRobots', 'order', 'enemyTook', 'bloodbath', 'tankKill'];
+    for (const c of frequent) expect(LINES[c].length, c).toBeGreaterThanOrEqual(12);
+    for (const c of ['captureMine', 'unitLost', 'idle', 'captureLost'] as Cat[]) expect(LINES[c].length, c).toBeGreaterThanOrEqual(18);
+    for (const [cat, lines] of Object.entries(LINES)) expect(lines.length, cat).toBeGreaterThanOrEqual(3);
   });
 
   it('gives every category a mood, and uses all the moods (calm, deadpan, excited, shout, worried)', () => {

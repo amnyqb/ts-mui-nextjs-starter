@@ -42,7 +42,7 @@
   {
     "name": "Chuck Sprocket appears with subtitles",
     "ok": true,
-    "info": "Good evening. I'm Chuck Sprocket. I'm very brave. Ask"
+    "info": "This is Chuck Sprocket. If you can hear me, it's going"
   },
   {
     "name": "Chuck opens the broadcast",
@@ -57,7 +57,7 @@
   {
     "name": "Chuck's recorded voice clips play",
     "ok": true,
-    "info": "2 spoken line(s) with audio"
+    "info": "1 spoken line(s) with audio"
   },
   {
     "name": "C key switches commentary off and on",
@@ -102,7 +102,7 @@
   {
     "name": "P pauses the simulation",
     "ok": true,
-    "info": "tick 573"
+    "info": "tick 575"
   },
   {
     "name": "P resumes the simulation",
@@ -157,7 +157,7 @@
   {
     "name": "a UI-driven match reaches a conclusion with an end screen",
     "ok": true,
-    "info": "winner=0 title=VICTORY sim=137s flags 5,3"
+    "info": "winner=0 title=VICTORY sim=139s flags 6,2"
   },
   {
     "name": "no console errors (match session)",
@@ -167,7 +167,7 @@
   {
     "name": "match-1-result",
     "ok": true,
-    "info": "{\"winner\":0,\"secs\":137,\"terr\":[5,3]}"
+    "info": "{\"winner\":0,\"secs\":139,\"terr\":[6,2]}"
   },
   {
     "name": "doing nothing ends in DEFEAT",
@@ -177,7 +177,7 @@
   {
     "name": "restart begins a fresh match",
     "ok": true,
-    "info": "tick 170"
+    "info": "tick 183"
   },
   {
     "name": "no console errors (defeat session)",

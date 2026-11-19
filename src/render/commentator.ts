@@ -1,5 +1,6 @@
 import type { Sfx } from '../audio/sfx';
 import { LINES, MOOD, type Cat, type Mood } from '../data/lines';
+import { ShuffleBag } from '../data/shuffle';
 
 /** minimum real-time gap (ms) before the same category may be spoken again */
 const COOLDOWN: Partial<Record<Cat, number>> = {
@@ -26,7 +27,7 @@ export class Commentator {
   private pending: Item[] = [];
   private lastEnd = -1e9;
   private lastCat: Partial<Record<Cat, number>> = {};
-  private bags = new Map<Cat, number[]>();
+  private bags = new Map<Cat, ShuffleBag>();
   private shown = -1;
   private panel = document.getElementById('reporter') as HTMLElement;
   private text = document.getElementById('rep-text') as HTMLElement;
@@ -63,15 +64,8 @@ export class Commentator {
   pick(cat: Cat): { i: number; text: string } {
     const lines = LINES[cat];
     let bag = this.bags.get(cat);
-    if (!bag || !bag.length) {
-      bag = lines.map((_, i) => i);
-      for (let i = bag.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [bag[i], bag[j]] = [bag[j], bag[i]];
-      }
-      this.bags.set(cat, bag);
-    }
-    const i = bag.pop()!;
+    if (!bag) this.bags.set(cat, (bag = new ShuffleBag(lines.length)));
+    const i = bag.next();
     return { i, text: lines[i] };
   }
 
