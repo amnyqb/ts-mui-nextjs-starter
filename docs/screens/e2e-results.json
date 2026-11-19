@@ -15,6 +15,11 @@
     "info": "6 vs 6 robots at the start"
   },
   {
+    "name": "HUD starts uncluttered: no empty selection panel, settings tucked into the Menu",
+    "ok": true,
+    "info": "selection panel none, menu none"
+  },
+  {
     "name": "mouse wheel zooms the camera",
     "ok": true,
     "info": "zoom 0.66"
@@ -37,7 +42,7 @@
   {
     "name": "Chuck Sprocket appears with subtitles",
     "ok": true,
-    "info": "Two armies. One field. Zero adults present."
+    "info": "I am told we are the amber side. The teal side is also told th"
   },
   {
     "name": "Chuck opens the broadcast",
@@ -57,12 +62,12 @@
   {
     "name": "C key switches commentary off and on",
     "ok": true,
-    "info": "REPORTER: OFF (C)"
+    "info": "Reporter: OFF"
   },
   {
     "name": "V key toggles the robot voice",
     "ok": true,
-    "info": "VOICE: OFF (V)"
+    "info": "Voice: OFF"
   },
   {
     "name": "player factories keep producing robots",
@@ -77,7 +82,7 @@
   {
     "name": "M key mutes and unmutes sound",
     "ok": true,
-    "info": "SOUND: OFF (M)"
+    "info": "Sound: OFF"
   },
   {
     "name": "clicking a factory selects it",
@@ -97,7 +102,7 @@
   {
     "name": "P pauses the simulation",
     "ok": true,
-    "info": "tick 569"
+    "info": "tick 567"
   },
   {
     "name": "P resumes the simulation",
@@ -110,19 +115,34 @@
     "info": ""
   },
   {
-    "name": "E selects all robots",
+    "name": "the All button selects every robot",
     "ok": true,
     "info": ""
   },
   {
-    "name": "Ctrl+click issues a move order (no right button needed)",
+    "name": "selection panel appears once robots are selected",
+    "ok": true,
+    "info": ""
+  },
+  {
+    "name": "left-clicking the ground sends the selected robots there",
     "ok": true,
     "info": "move,move,move,move,move,move,move,move,move,move,move,move,move,move,move,move"
   },
   {
     "name": "coach shows a tip",
     "ok": true,
-    "info": "STEP 4 — Press E, then A and click the teal base i"
+    "info": "STEP 4 — Press ALL, then ATTACK, then click the te"
+  },
+  {
+    "name": "pushing the mouse to the screen edge scrolls the map",
+    "ok": true,
+    "info": "274 -> 631"
+  },
+  {
+    "name": "Menu opens the settings and the controls help",
+    "ok": true,
+    "info": ""
   },
   {
     "name": "difficulty button cycles the AI level",
@@ -137,7 +157,7 @@
   {
     "name": "a UI-driven match reaches a conclusion with an end screen",
     "ok": true,
-    "info": "winner=0 title=VICTORY sim=133s flags 3,1"
+    "info": "winner=0 title=VICTORY sim=127s flags 6,2"
   },
   {
     "name": "no console errors (match session)",
@@ -147,7 +167,7 @@
   {
     "name": "match-1-result",
     "ok": true,
-    "info": "{\"winner\":0,\"secs\":133,\"terr\":[3,1]}"
+    "info": "{\"winner\":0,\"secs\":127,\"terr\":[6,2]}"
   },
   {
     "name": "doing nothing ends in DEFEAT",
@@ -157,7 +177,7 @@
   {
     "name": "restart begins a fresh match",
     "ok": true,
-    "info": "tick 140"
+    "info": "tick 146"
   },
   {
     "name": "no console errors (defeat session)",

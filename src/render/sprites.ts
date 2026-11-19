@@ -486,10 +486,10 @@ export function makeTerrainCanvas(map: MapDef, TS: number): HTMLCanvasElement {
       const py = y * TS;
       if (t !== T_WATER && t !== T_BRIDGE) {
         for (let k = 0; k < 3; k++) {
-          if (hash(x, y, k + 20) > 0.55) continue;
+          if (hash(x, y, k + 20) > 0.2) continue; // sparse tufts: the field should read as calm ground, not texture noise
           const tx = px + 4 + hash(x, y, k + 23) * (TS - 8);
           const ty = py + 8 + hash(x, y, k + 29) * (TS - 10);
-          g.strokeStyle = hash(x, y, k + 31) > 0.5 ? '#35532a' : '#7da654';
+          g.strokeStyle = hash(x, y, k + 31) > 0.5 ? '#3f5f30' : '#628c46';
           g.lineWidth = 1.6;
           g.beginPath();
           g.moveTo(tx, ty);
@@ -500,7 +500,7 @@ export function makeTerrainCanvas(map: MapDef, TS: number): HTMLCanvasElement {
           g.lineTo(tx + 2.5, ty - 4);
           g.stroke();
         }
-        if (hash(x, y, 40) > 0.93) {
+        if (hash(x, y, 40) > 0.985) {
           const fx = px + 6 + hash(x, y, 41) * (TS - 12);
           const fy = py + 6 + hash(x, y, 42) * (TS - 12);
           g.fillStyle = ['#ffffff', '#ffd84d', '#ff9ac8'][Math.floor(hash(x, y, 43) * 3)];

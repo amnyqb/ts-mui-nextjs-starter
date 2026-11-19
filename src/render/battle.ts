@@ -52,6 +52,9 @@ export class BattleScene extends Phaser.Scene {
   private startForce = new URLSearchParams(location.search).get('start') !== '0';
   private pinch: { d: number; zoom: number; mx: number; my: number } | null = null;
   private touch = window.matchMedia?.('(pointer: coarse)').matches ?? false;
+  private tipsDone = false;
+  /** mouse is over the game (not a HUD panel): edge scrolling only applies then */
+  private overGame = false;
   private orderIssued = false;
   private myCaptures = 0;
   private coachOn = true;
@@ -100,12 +103,15 @@ export class BattleScene extends Phaser.Scene {
       this.started = true;
       $('start').style.display = 'none';
     };
+    // track whether the mouse is over the map itself; HUD panels sit above the canvas, so entering one counts as leaving
+    const cv = this.game.canvas;
+    cv.addEventListener('pointerenter', (e) => (this.overGame = e.pointerType === 'mouse'));
+    cv.addEventListener('pointerleave', () => (this.overGame = false));
     this.input.addPointer(1); // enables two-finger pan and pinch zoom
     $('q-all').onclick = () => this.selectAll();
     $('q-atk').onclick = () => this.armAttack();
     $('q-stop').onclick = () => this.stopSel();
     $('q-menu').onclick = () => $('btns').classList.toggle('open');
-    $('b-all').onclick = () => this.selectAll();
     $('b-rep').onclick = () => this.toggleReporter();
     $('b-voice').onclick = () => this.toggleVoice();
     $('b-diff').onclick = () => {
@@ -114,8 +120,6 @@ export class BattleScene extends Phaser.Scene {
       this.restart();
     };
 
-    $('b-attack').onclick = () => this.armAttack();
-    $('b-stop').onclick = () => this.stopSel();
     $('b-pause').onclick = () => this.togglePause();
     $('b-restart').onclick = () => this.restart();
     $('end-btn').onclick = () => this.restart();
@@ -151,6 +155,7 @@ export class BattleScene extends Phaser.Scene {
   private newMatch() {
     this.match = new Match(this.seed, [1], this.difficulty, this.startForce);
     this.orderIssued = false;
+    this.tipsDone = false;
     this.myCaptures = 0;
     this.director.reset();
     this.rep.reset();
@@ -190,17 +195,17 @@ export class BattleScene extends Phaser.Scene {
 
   private toggleReporter() {
     this.rep.setEnabled(!this.rep.enabled);
-    $('b-rep').textContent = this.rep.enabled ? 'Reporter: ON (C)' : 'Reporter: OFF (C)';
+    $('b-rep').textContent = this.rep.enabled ? 'Reporter: ON' : 'Reporter: OFF';
   }
 
   private toggleVoice() {
     this.rep.setVoice(!this.rep.voiceOn);
-    $('b-voice').textContent = this.rep.voiceOn ? 'Voice: ON (V)' : 'Voice: OFF (V)';
+    $('b-voice').textContent = this.rep.voiceOn ? 'Voice: ON' : 'Voice: OFF';
   }
 
   private toggleMute() {
     this.sfx.setMuted(!this.sfx.muted);
-    $('b-mute').textContent = this.sfx.muted ? 'Sound: OFF (M)' : 'Sound: ON (M)';
+    $('b-mute').textContent = this.sfx.muted ? 'Sound: OFF' : 'Sound: ON';
   }
 
   /** 0..1 loudness by distance from what the player is looking at; off-screen fights are faint or silent */
@@ -214,7 +219,7 @@ export class BattleScene extends Phaser.Scene {
 
   private togglePause() {
     this.paused = !this.paused;
-    $('b-pause').textContent = this.paused ? 'Resume (P)' : 'Pause (P)';
+    $('b-pause').textContent = this.paused ? 'Resume' : 'Pause';
     this.rep.say(this.paused ? 'pause' : 'resume', 1);
   }
 
@@ -345,8 +350,9 @@ export class BattleScene extends Phaser.Scene {
     }
     if (best) { this.sel = new Set([best.id]); this.selBuilding = null; return; }
     const bld = w.buildings.find((q) => q.owner === PLAYER && BUILDINGS[q.bkind].produces && Math.hypot(q.x - tx, q.y - ty) < BUILDINGS[q.bkind].half + 0.2);
-    // touch has no right button: with robots selected, a tap on the ground or a target is the command
-    if (p.wasTouch && !bld && this.sel.size) {
+    // mouse and touch alike: with robots selected, a click on the map is the command
+    // (ground = move, grey or enemy flag = capture, enemy robot or base = attack). Drag a box on empty ground to deselect.
+    if (!bld && this.sel.size) {
       this.rightClick(tx, ty);
       return;
     }
@@ -414,6 +420,17 @@ export class BattleScene extends Phaser.Scene {
     if (this.keys.D.isDown || this.keys.RIGHT.isDown) cam.scrollX += sp;
     if (this.keys.W.isDown || this.keys.UP.isDown) cam.scrollY -= sp;
     if (this.keys.S.isDown || this.keys.DOWN.isDown) cam.scrollY += sp;
+    // mouse-only scrolling: push the pointer against the edge of the map view (never while dragging or over a HUD panel)
+    const ptr = this.input.activePointer;
+    if (this.overGame && !ptr.isDown && !this.touch && this.started) {
+      const edge = 22;
+      const W = this.scale.width;
+      const H = this.scale.height;
+      if (ptr.x < edge) cam.scrollX -= sp;
+      else if (ptr.x > W - edge) cam.scrollX += sp;
+      if (ptr.y < edge) cam.scrollY -= sp;
+      else if (ptr.y > H - edge) cam.scrollY += sp;
+    }
 
     for (const id of [...this.sel]) if (!w.getEntity(id)) this.sel.delete(id);
     for (const f of this.fx) f.ttl -= delta;
@@ -449,7 +466,8 @@ export class BattleScene extends Phaser.Scene {
         const lost = e.prev === PLAYER;
         if (mine || lost) this.sfx.capture(mine);
         if (mine) this.myCaptures++;
-        this.feed(mine ? `Captured ${t.name}.` : lost ? `LOST ${t.name}!` : `Enemy took ${t.name}.`, mine ? 'won' : lost ? 'lost' : '');
+        // only news that concerns you; Chuck covers the rest
+        if (mine || lost) this.feed(mine ? `Captured ${t.name}.` : `LOST ${t.name}!`, mine ? 'won' : 'lost');
       } else if (e.t === 'victory') {
         this.ended = true;
         const win = e.winner === PLAYER;
@@ -469,8 +487,8 @@ export class BattleScene extends Phaser.Scene {
     if (cls) el.className = cls;
     const feed = $('feed');
     feed.prepend(el);
-    while (feed.children.length > 5) feed.lastChild!.remove();
-    setTimeout(() => el.remove(), 8000);
+    while (feed.children.length > 2) feed.lastChild!.remove();
+    setTimeout(() => el.remove(), 5000);
   }
 
   // ------------------------------------------------------------------ HUD
@@ -487,19 +505,21 @@ export class BattleScene extends Phaser.Scene {
     // Step-by-step coach: always tells a new player the next useful thing to do (H hides it).
     const mineN = w.unitsOf(0).length;
     let tip = '';
-    if (!this.coachOn || this.ended) tip = '';
+    if (this.myCaptures >= 3) this.tipsDone = true; // you have the hang of it: the coach retires
+    if (!this.coachOn || this.ended || this.tipsDone) tip = '';
     else if (mineN === 0) tip = 'Your factories are building your first robots. Hang on a few seconds...';
-    else if (!this.orderIssued && !this.sel.size) tip = this.touch ? 'STEP 1 — Tap ALL to select your robots (or drag a box around them).' : 'STEP 1 — Select your robots: drag a box around the amber robots, or press E.';
-    else if (!this.orderIssued) tip = this.touch ? 'STEP 2 — Tap a grey flag. Rifle robots will go and capture it.' : 'STEP 2 — Right-click (or Ctrl+click) a grey flag. Rifle robots will go and capture it.';
-    else if (this.myCaptures === 0) tip = 'Captured flags give you their factories and speed up production. Send robots to every flag!';
-    else if (mineN < 8) tip = 'STEP 3 — Capture more flags, and let your army grow to 8+ robots before attacking.';
-    else tip = this.touch ? 'STEP 4 — Tap ALL, then ATTACK, then tap the teal base in the east. Keep new robots coming.' : 'STEP 4 — Press E, then A and click the teal base in the east. Keep new robots coming. (H hides tips)';
+    else if (!this.orderIssued && !this.sel.size) tip = 'STEP 1 — Press ALL to select your robots.';
+    else if (!this.orderIssued) tip = 'STEP 2 — Click a grey flag. Your rifle robots will go and capture it.';
+    else if (this.myCaptures === 0) tip = 'Captured flags give you their factories. Click more flags!';
+    else if (mineN < 8) tip = 'STEP 3 — Keep capturing flags and let your army grow before attacking.';
+    else tip = 'STEP 4 — Press ALL, then ATTACK, then click the teal base in the east.';
     const coach = $('coach');
     coach.style.display = tip ? 'block' : 'none';
     if (tip && coach.textContent !== tip) coach.textContent = tip;
 
     // The panel is only re-rendered when its structure changes, so buttons stay clickable between frames.
     const panel = $('sel');
+    panel.style.display = this.selBuilding !== null || this.sel.size ? 'block' : 'none'; // nothing selected, nothing shown
     const render = (key: string, html: string) => {
       if (key === this.panelKey) return false;
       this.panelKey = key;
@@ -523,10 +543,10 @@ export class BattleScene extends Phaser.Scene {
         const u = w.getEntity(id) as Unit | undefined;
         if (u && 'type' in u) counts[UNITS[u.type].name] = (counts[UNITS[u.type].name] ?? 0) + 1;
       }
-      const html = `<div class="h">${this.sel.size} SELECTED</div>${Object.entries(counts).map(([k, v]) => `${v} × ${k}`).join(' · ')}<br/><small>RMB: move / attack / capture flag</small>${this.armedAttack ? '<br/><b style="color:#ff5a4d">ATTACK-MOVE: click a target point</b>' : ''}`;
+      const html = `<div class="h">${this.sel.size} SELECTED &nbsp;·&nbsp; ${Object.entries(counts).map(([k, v]) => `${v} × ${k}`).join(' · ')}</div><small>${this.armedAttack ? '<b style="color:#ff5a4d">ATTACK-MOVE: click where to fight your way to</b>' : 'Click the map: move, capture a flag, or attack'}</small>`;
       render('s:' + html, html);
     } else {
-      render('none' + this.touch, this.touch ? '<div class="h">NO SELECTION</div>Tap ALL, or drag a box around your robots. Tap a factory to manage it.' : '<div class="h">NO SELECTION</div>Drag a box around your robots, or click a factory.');
+      render('none', '');
     }
   }
 
@@ -580,8 +600,8 @@ export class BattleScene extends Phaser.Scene {
 
     for (const t of w.territories) {
       const cx = (t.fx + 0.5) * TS, cy = (t.fy + 0.5) * TS;
-      lo.fillStyle(teamColor(t.owner), 0.12).fillCircle(cx, cy, 1.2 * TS);
-      lo.lineStyle(2, teamColor(t.owner), 0.5).strokeCircle(cx, cy, 1.2 * TS);
+      lo.fillStyle(teamColor(t.owner), 0.07).fillCircle(cx, cy, 1.2 * TS);
+      lo.lineStyle(2, teamColor(t.owner), 0.35).strokeCircle(cx, cy, 1.2 * TS);
       lo.fillStyle(0x000000, 0.25).fillEllipse(cx + 1, cy + 7, 12, 5);
       lo.lineStyle(4, 0x15171b, 1).lineBetween(cx, cy + 6, cx, cy - 28);
       lo.lineStyle(2, 0xc9ccd3, 1).lineBetween(cx, cy + 6, cx, cy - 28);
@@ -656,7 +676,7 @@ export class BattleScene extends Phaser.Scene {
       s.smoke = now;
       this.fx.push({ x: u.x, y: u.y - 0.45, ttl: 750, life: 750, color: 0x555555, kind: 'smoke' });
     }
-    if (u.hp < def.hp || selected) {
+    if (u.hp < def.hp) {
       const wBar = 24;
       g.fillStyle(0x000000, 0.85).fillRect(x - wBar / 2 - 1, top, wBar + 2, 6);
       const f = Math.max(0, u.hp / def.hp);

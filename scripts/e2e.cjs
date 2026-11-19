@@ -37,9 +37,10 @@ async function dragBox(page, x0, y0, x1, y1) {
   await page.mouse.move(b.x, b.y, { steps: 4 });
   await page.mouse.up();
 }
+/** the game is mouse-only now: with robots selected, a plain left-click on the map is the command */
 async function rightClickTile(page, x, y) {
   const p = await screenOf(page, x, y);
-  await page.mouse.click(p.x, p.y, { button: 'right' });
+  await page.mouse.click(p.x, p.y);
 }
 
 (async () => {
@@ -57,6 +58,8 @@ async function rightClickTile(page, x, y) {
     await sleep(300);
     const squads = await S(page, () => { const w = window.__scrapline.scene.match.world; return [w.unitsOf(0).length, w.unitsOf(1).length]; });
     check('game opens with starting squads on both sides', squads[0] >= 6 && squads[1] >= 6, `${squads[0]} vs ${squads[1]} robots at the start`);
+    const hud = await S(page, () => ({ sel: getComputedStyle(document.getElementById('sel')).display, menu: getComputedStyle(document.getElementById('btns')).display }));
+    check('HUD starts uncluttered: no empty selection panel, settings tucked into the Menu', hud.sel === 'none' && hud.menu === 'none', `selection panel ${hud.sel}, menu ${hud.menu}`);
     await page.screenshot({ path: path.join(OUT, '1-start.png') });
 
     // zoom out to see the whole map
@@ -169,19 +172,33 @@ async function rightClickTile(page, x, y) {
     await page.keyboard.press('1');
     check('control groups recall selection', (await S(page, () => window.__scrapline.scene.sel.size)) > 0);
 
-    // beginner aids: E selects all, Ctrl+click commands without a right button, coach tips, difficulty button
-    await page.mouse.click(10, 10);
-    await page.keyboard.press('e');
+    // mouse-only play: the All button selects everything, then a plain left-click on the map is the command
+    await page.click('#q-all');
     const allSel = await S(page, () => window.__scrapline.scene.sel.size === window.__scrapline.scene.match.world.unitsOf(0).length && window.__scrapline.scene.sel.size > 0);
-    check('E selects all robots', allSel);
-    await page.keyboard.down('Control');
+    check('the All button selects every robot', allSel);
+    const selShown = await S(page, () => getComputedStyle(document.getElementById('sel')).display);
+    check('selection panel appears once robots are selected', selShown !== 'none');
     await page.mouse.click(480, 300); // open ground in the middle of the screen (clear of the HUD panels)
-    await page.keyboard.up('Control');
     await sleep(200);
-    const ctrlOrders = await S(page, () => { const w = window.__scrapline.scene.match.world; return [...window.__scrapline.scene.sel].map((id) => w.getEntity(id)).filter(Boolean).map((u) => u.order.kind); });
-    check('Ctrl+click issues a move order (no right button needed)', ctrlOrders.includes('move'), ctrlOrders.join(','));
+    const clickOrders = await S(page, () => { const w = window.__scrapline.scene.match.world; return [...window.__scrapline.scene.sel].map((id) => w.getEntity(id)).filter(Boolean).map((u) => u.order.kind); });
+    check('left-clicking the ground sends the selected robots there', clickOrders.length > 0 && clickOrders.every((k) => k === 'move' || k === 'none'), clickOrders.join(','));
     const tip = await page.locator('#coach').innerText();
     check('coach shows a tip', tip.length > 10, tip.slice(0, 50));
+
+    // edge scrolling: no keyboard needed to look around
+    await page.mouse.move(640, 300);
+    for (let i = 0; i < 6; i++) await page.mouse.wheel(0, -100);
+    await sleep(200);
+    const sx0 = await S(page, () => window.__scrapline.scene.cameras.main.scrollX);
+    await page.mouse.move(1276, 300, { steps: 3 });
+    await sleep(700);
+    const sx1 = await S(page, () => window.__scrapline.scene.cameras.main.scrollX);
+    await page.mouse.move(640, 300);
+    check('pushing the mouse to the screen edge scrolls the map', sx1 > sx0 + 20, `${Math.round(sx0)} -> ${Math.round(sx1)}`);
+
+    await page.click('#q-menu');
+    const menuOpen = await page.locator('#btns').isVisible();
+    check('Menu opens the settings and the controls help', menuOpen && (await page.locator('#help').isVisible()));
     await page.click('#b-diff');
     const diffLabel = await page.locator('#b-diff').innerText();
     check('difficulty button cycles the AI level', diffLabel === 'AI: NORMAL', diffLabel);
