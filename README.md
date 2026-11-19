@@ -1,58 +1,80 @@
-# Netlify Next.js + TypeScript + MUI Starter  
+# WW5
 
-![Netlify Next.js + TS + MUI Starter](https://assets.stackbit.com/docs/ts-nextjs-starter-thumb.png)
+*Humans stopped at World War 3. The robots did not.*
 
-This is a minimal starting point for new Netlify projects with visual editing. It is built with Next.js, TypeScript, and [MUI](https://mui.com/), and is equipped with [visual editing capabilities](https://docs.netlify.com/visual-editor/visual-editing/). It uses markdown files as the the [Git Content Source](https://docs.netlify.com/create/content-sources/git/).
+An original territory-control robot RTS for the browser. Capture flags, take over factories, outproduce the opponent.
+Built with TypeScript, Vite and Phaser 3. The simulation is headless and deterministic; Phaser only draws it.
 
-**⚡ View demo:** [ts-mui-starter.netlify.app](https://ts-mui-starter.netlify.app/)
+**Status: Stage 1 (Foundation) complete.** See `docs/stage1-report.md`.
 
-## Deploying to Netlify
+## Run
 
-If you click "Deploy to Netlify" button, it will create a new repo for you that looks exactly like this one, and sets that repo up immediately for deployment on Netlify.
-
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/netlify-templates/ts-mui-nextjs-starter)
-
-## Features
-
-This is meant to be a simple starting point that demonstrates the use of bringing your own component library, such as MUI.
-
-In addition to MUI support, this project contains the following:
-
-- **Flexible Pages:** Simple and flexible page model that lets editors add new pages.
-- **Basic Components:** A few basic components to add to new pages.
-- **Layout Elements:** Header and footer elements automatically added to pages.
-- **Component & Template Presets:** Predefined arrangements of content and components for faster editing. [Learn more](https://docs.netlify.com/create/content-presets/).
-- **TypeScript Support:** Components and content are type-safe. (See `types` directory for definitions.)
-
-## Getting Started
-
-The typical development process is to begin by working locally. Clone this repository, then run `npm install` in its root directory.
-
-Run the Next.js development server:
-
-```txt
-cd ts-mui-nextjs-starter
-npm run dev
+```bash
+npm install
+npm run dev        # http://localhost:5173
+npm test           # 24 headless simulation tests
+npm run batch 100  # 100 AI-vs-AI matches, prints win rates
+npm run build && npm run preview &   # production build on :4173
+node scripts/e2e.cjs                 # browser play test (needs Playwright + the preview server)
 ```
 
-Install the [Netlify Create CLI](https://www.npmjs.com/package/@stackbit/cli). Then open a new terminal window in the same project directory and run the Netlify Create Dev server:
+Add `?speed=4` to the URL to run the simulation faster. The AI level is Easy by default; use the **AI** button, or `?ai=normal` / `?ai=hard`.
+Measured with a human-style scripted player (`npx vite-node scripts/human.ts 40`): Easy 40/40 wins, Normal 40/40, Hard 20/40.
 
-```txt
-npm install -g @stackbit/cli
-stackbit dev
+## Deploy (GitHub Pages / any static host)
+
+`npm run build` writes `dist/`, which uses relative paths (`base: './'`). Upload the contents of `dist/` to any static host.
+
+## Controls
+
+| Input | Action |
+|---|---|
+| Left-click / drag | Select robot / box-select |
+| Click a factory | Select it, then pause or resume its production |
+| Right-click, or **Ctrl+click** (no right button needed) | Move, attack an enemy or HQ, or capture a flag (by what is under the cursor) |
+| E or Ctrl+A | Select all your robots |
+| H | Hide or show the step-by-step tips |
+| A, then click | Attack-move |
+| S | Stop |
+| Ctrl+1-9 / 1-9 | Save / recall a control group |
+| WASD, arrows, middle-drag | Scroll |
+| Mouse wheel | Zoom |
+| Minimap click or drag | Jump the camera |
+| P / R | Pause / restart |
+| M | Mute / unmute sound (all sounds are synthesised in the browser, no audio files) |
+| C / V | Switch the war correspondent on or off / switch his robot voice on or off |
+
+## Phone and tablet
+
+Touch is supported: tap a robot or **ALL** to select, drag to box-select, tap the ground, an enemy or a grey flag to command the selected robots, **ATTACK** then tap for attack-move, two fingers to pan and pinch to zoom. The layout switches to a compact phone HUD automatically. `node scripts/make-artifact.mjs out.html` (after `npm run build`) packages the game as one self-contained HTML file.
+
+## Art
+
+All art is original and drawn in code at startup (`src/render/sprites.ts`): funny robots with 8 facing directions and walk cycles, tanks with faces, characterful buildings and shaded terrain. No image files are loaded, so there are no licences to track. Texture keys are stable, so pre-rendered sheets can replace them later.
+
+## The war correspondent
+
+**Chuck Sprocket of WW5 News** narrates the war in short animated TV transmissions with typewriter subtitles and a recorded voice. He has 300+ short original lines (`src/data/lines.ts`), served in shuffled order so a line never repeats until the whole bank has been heard (busy events like captures and casualties have 18-22 each) and reacts to real battlefield events: he shouts when your robots die or the enemy reaches your base, and cheers when you capture flags, destroy tanks or hit their headquarters. Each line has a mood (calm, deadpan, excited, shout, worried) that changes the delivery (pace, pitch, loudness) and his face. `src/ai/reporter.ts` decides what he talks about (tested headless); `src/render/commentator.ts` presents it.
+
+**Voice:** every line has its own clip in `public/voice/`, rendered offline by `scripts/make-voice.ts` with Piper neural TTS (voice `en_US-joe-medium`, CC0) and ffmpeg: `VOICE_MODEL=en_US-joe-medium.onnx PYTHON=.venv/bin/python npx vite-node scripts/make-voice.ts` (see the script header for setup). Re-run it when the lines change; a test checks they match. `tools/voice/eval.py` transcribes the clips with a speech recogniser as a sanity check. Browser speech is only a fallback.
+
+**General Grandiose** (`src/data/general.ts`) is an original fictional character: a gold-plated robot general who barges into the broadcast on about a third of events with his own face, his own deeper voice (Piper `en_US-norman-medium`, public domain) and 150+ lines. He brags, claims credit for everything, inflates numbers ("gazillions of robots"), addresses the enemy directly ("Hey, teal! Yes, you!"), and blames Chuck when things go wrong. He is not based on any real person's words, and a test keeps real names and borrowed catchphrases out of his script.
+
+## How it works (Stage 1)
+
+- **Territories:** each has a flag. A rifle robot touching an enemy or neutral flag captures it, and every factory in it changes owner and resets progress. Headquarters never change hands; destroy them to win.
+- **Production:** owned factories build for free. Each extra owned territory speeds every factory up by 15% (`productionRate` in `src/data/units.ts`).
+- **Units:** Rifle Robot (captures, weak to tanks) and Light Tank (cannot capture, strong vs vehicles and buildings). Damage uses armour-class multipliers.
+- **Win/lose:** destroy the enemy HQ, or leave the enemy with no units and no factories.
+- **Determinism:** one seeded PRNG, 20 ticks/s fixed step, no wall-clock use in `src/sim`. Same seed plus same command log gives the same state hash.
+
+## Layout
+
 ```
-
-This outputs your own Netlify visual editor URL. Open this, register, or sign in, and you will be directed to the Netlify visual editor for your new project.
-
-![Next.js Dev + Netlify Create Dev](https://assets.stackbit.com/docs/next-dev-stackbit-dev.png)
-
-## Next Steps
-
-Here are a few suggestions on what to do next if you're new to Netlify visual editor:
-
-- Learn [how Netlify visual editor works](https://docs.netlify.com/visual-editor/overview/)
-- Check [Netlify visual editor reference documentation](https://visual-editor-reference.netlify.com/)
-
-## Support
-
-If you get stuck along the way, get help in our [support forums](https://answers.netlify.com/).
+src/sim      world, pathfinding (A* + string-pulling), spatial hash, PRNG
+src/ai       Stage-1 commander (replaced by the full hierarchy in Stage 2)
+src/data     unit stats, map
+src/render   Phaser scene, HUD, minimap
+tests        Vitest simulation tests
+scripts      batch runner, browser test
+```

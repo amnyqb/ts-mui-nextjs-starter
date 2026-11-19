@@ -1,0 +1,2816 @@
+[
+ {
+  "key": "intro_0",
+  "text": "Good evening. I'm Chuck Sprocket, reporting from a safe distance.",
+  "mood": "calm",
+  "speaker": "chuck"
+ },
+ {
+  "key": "intro_1",
+  "text": "Welcome to World War Five. The humans were invited. They declined.",
+  "mood": "calm",
+  "speaker": "chuck"
+ },
+ {
+  "key": "intro_2",
+  "text": "Tonight: two armies, one field, and nobody in charge.",
+  "mood": "calm",
+  "speaker": "chuck"
+ },
+ {
+  "key": "intro_3",
+  "text": "I'm at the front. By front, I mean a bunker. By bunker, a cupboard.",
+  "mood": "calm",
+  "speaker": "chuck"
+ },
+ {
+  "key": "intro_4",
+  "text": "The forecast is clear, with a ninety percent chance of explosions.",
+  "mood": "calm",
+  "speaker": "chuck"
+ },
+ {
+  "key": "intro_5",
+  "text": "I'd like to remind viewers that I'm press. Please don't shoot me.",
+  "mood": "calm",
+  "speaker": "chuck"
+ },
+ {
+  "key": "intro_6",
+  "text": "This is Chuck Sprocket. If you can hear me, it's going badly.",
+  "mood": "calm",
+  "speaker": "chuck"
+ },
+ {
+  "key": "intro_7",
+  "text": "Another day, another war. I've stopped asking why.",
+  "mood": "calm",
+  "speaker": "chuck"
+ },
+ {
+  "key": "intro_8",
+  "text": "Command promised this would be quick. Command promises a lot.",
+  "mood": "calm",
+  "speaker": "chuck"
+ },
+ {
+  "key": "intro_9",
+  "text": "Live from the field of battle. Well, a field. Near some battling.",
+  "mood": "calm",
+  "speaker": "chuck"
+ },
+ {
+  "key": "intro2_0",
+  "text": "Press All, then click a flag. That's the entire strategy.",
+  "mood": "calm",
+  "speaker": "chuck"
+ },
+ {
+  "key": "intro2_1",
+  "text": "Capture flags. Take factories. Avoid dying. Those are the rules.",
+  "mood": "calm",
+  "speaker": "chuck"
+ },
+ {
+  "key": "intro2_2",
+  "text": "Your orders are to win. Command couldn't think of a second order.",
+  "mood": "calm",
+  "speaker": "chuck"
+ },
+ {
+  "key": "intro2_3",
+  "text": "Pro tip: robots perform better when they're not on fire.",
+  "mood": "calm",
+  "speaker": "chuck"
+ },
+ {
+  "key": "intro2_4",
+  "text": "Click a flag. The robots do the rest. Or nothing. We will see.",
+  "mood": "calm",
+  "speaker": "chuck"
+ },
+ {
+  "key": "intro2_5",
+  "text": "Take flags, take factories, and the war mostly wins itself.",
+  "mood": "calm",
+  "speaker": "chuck"
+ },
+ {
+  "key": "intro2_6",
+  "text": "The enemy base is the big building in the east. You can't miss it.",
+  "mood": "calm",
+  "speaker": "chuck"
+ },
+ {
+  "key": "intro2_7",
+  "text": "Select robots, click somewhere. You are now a general.",
+  "mood": "calm",
+  "speaker": "chuck"
+ },
+ {
+  "key": "easy_0",
+  "text": "Easy mode. The enemy is asleep. Please be gentle.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "easy_1",
+  "text": "Easy mode. They'll wait a minute. Out of respect.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "easy_2",
+  "text": "Easy difficulty. Think of it as a warm-up war.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "normal_0",
+  "text": "Normal mode. The enemy is awake and has opinions.",
+  "mood": "calm",
+  "speaker": "chuck"
+ },
+ {
+  "key": "normal_1",
+  "text": "Normal difficulty. A fair fight. Nobody likes those.",
+  "mood": "calm",
+  "speaker": "chuck"
+ },
+ {
+  "key": "normal_2",
+  "text": "Normal mode. The enemy has had breakfast.",
+  "mood": "calm",
+  "speaker": "chuck"
+ },
+ {
+  "key": "hard_0",
+  "text": "Hard mode! The enemy has had ALL the coffee!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "hard_1",
+  "text": "Hard difficulty! They're fast, angry, and well rested!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "hard_2",
+  "text": "Hard mode! I would run, but my legs are in the bunker!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "firstRobots_0",
+  "text": "Our first robot is online! He's already in danger!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "firstRobots_1",
+  "text": "A new robot! Hello, little guy! Don't get comfortable!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "firstRobots_2",
+  "text": "The factory delivers! A new soldier! Batteries included!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "firstRobots_3",
+  "text": "Reinforcements! Young, keen, and statistically doomed!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "firstRobots_4",
+  "text": "A robot is born! Nobody asked his opinion!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "firstRobots_5",
+  "text": "Fresh recruit! Eager! Slightly confused! Perfect!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "firstRobots_6",
+  "text": "Another robot! We're practically a startup!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "firstRobots_7",
+  "text": "He's alive! He's shiny! He has no idea what's going on!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "firstRobots_8",
+  "text": "A fresh robot rolls out! Do not name the new ones!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "firstRobots_9",
+  "text": "The factory's working! Best news all week!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "firstRobots_10",
+  "text": "Welcome to the war, little guy! Here is a gun!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "firstRobots_11",
+  "text": "New robot! He still has the sticker on!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "order_0",
+  "text": "Orders given. The robots are thinking about it.",
+  "mood": "calm",
+  "speaker": "chuck"
+ },
+ {
+  "key": "order_1",
+  "text": "They're off! Someone asked where. Nobody answered.",
+  "mood": "calm",
+  "speaker": "chuck"
+ },
+ {
+  "key": "order_2",
+  "text": "Orders received. Interpreted loosely.",
+  "mood": "calm",
+  "speaker": "chuck"
+ },
+ {
+  "key": "order_3",
+  "text": "The troops are moving. It's a start.",
+  "mood": "calm",
+  "speaker": "chuck"
+ },
+ {
+  "key": "order_4",
+  "text": "Excellent. They've begun walking in a direction.",
+  "mood": "calm",
+  "speaker": "chuck"
+ },
+ {
+  "key": "order_5",
+  "text": "Strategy in motion. Possibly the wrong motion.",
+  "mood": "calm",
+  "speaker": "chuck"
+ },
+ {
+  "key": "order_6",
+  "text": "And they are off, like a herd of very organized sheep.",
+  "mood": "calm",
+  "speaker": "chuck"
+ },
+ {
+  "key": "order_7",
+  "text": "Command given. Command obeyed. Mostly.",
+  "mood": "calm",
+  "speaker": "chuck"
+ },
+ {
+  "key": "order_8",
+  "text": "They're moving out. I'm moving back. For balance.",
+  "mood": "calm",
+  "speaker": "chuck"
+ },
+ {
+  "key": "order_9",
+  "text": "The robots heard you. Some of them.",
+  "mood": "calm",
+  "speaker": "chuck"
+ },
+ {
+  "key": "order_10",
+  "text": "A decisive order! They're pretending to understand it.",
+  "mood": "calm",
+  "speaker": "chuck"
+ },
+ {
+  "key": "order_11",
+  "text": "The army advances, with confidence and no map.",
+  "mood": "calm",
+  "speaker": "chuck"
+ },
+ {
+  "key": "army_0",
+  "text": "Fifteen robots! That's more than we have plans!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "army_1",
+  "text": "Look at that army! So shiny! So breakable!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "army_2",
+  "text": "A big army! Somebody point at something!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "army_3",
+  "text": "Our forces are growing! So is what can go wrong!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "army_4",
+  "text": "That's a lot of robots! Please, nobody trip!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "army_5",
+  "text": "We now have an army! Legally, it is a crowd!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "army_6",
+  "text": "Strength in numbers! Specifically, fifteen numbers!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "army_7",
+  "text": "A massive army! I count it twice to feel safer!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureMine_0",
+  "text": "We now own that flag. I'm told it's a significant flag!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureMine_1",
+  "text": "Flag secured! It will feature in my memoir!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureMine_2",
+  "text": "Another flag falls! It didn't even fight back! It's a flag!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureMine_3",
+  "text": "We've captured territory! Nobody knows what it's for!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureMine_4",
+  "text": "One more flag than we started with! A statistical triumph!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureMine_5",
+  "text": "Our robots took the flag! The flag has no comment!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureMine_6",
+  "text": "Territory gained! Paperwork incoming!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureMine_7",
+  "text": "A flag changes hands! History will not remember!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureMine_8",
+  "text": "Ours now! Possession is nine tenths of warfare!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureMine_9",
+  "text": "Excellent! Now we have to defend it! Hmm!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureMine_10",
+  "text": "The flag is ours! Somebody tell the flag!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureMine_11",
+  "text": "We took the flag! I took the credit! We all win!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureMine_12",
+  "text": "Splendid! The factory comes with it! Like a free toaster!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureMine_13",
+  "text": "Flag captured! Morale is up nine percent! I made that up!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureMine_14",
+  "text": "We've captured it! Command will rename it after themselves!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureMine_15",
+  "text": "Another flag! We're collecting them! For no reason!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureMine_16",
+  "text": "The flag surrendered immediately! Cowards! Like me!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureMine_17",
+  "text": "A great day for flag ownership!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureMine_18",
+  "text": "That flag is ours! The grass came free!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureMine_19",
+  "text": "We've taken the flag! Frankly, it was lying around!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureLost_0",
+  "text": "They took the flag! Our flag! The one we had!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureLost_1",
+  "text": "We lost a flag! I knew it! Okay, I didn't! But I'm upset!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureLost_2",
+  "text": "The enemy stole a flag! Call someone! Call anyone!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureLost_3",
+  "text": "Territory lost! Command says it was a trap! There was no trap!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureLost_4",
+  "text": "They're taking our flags! None left for the ceremony!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureLost_5",
+  "text": "Our factory switched sides! Without notice! Unprofessional!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureLost_6",
+  "text": "We've been outflanked! By a flag! Somehow!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureLost_7",
+  "text": "That flag had sentimental value! To me! I named it!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureLost_8",
+  "text": "Retreat! Strategic retreat! Fast strategic retreat!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureLost_9",
+  "text": "We lost it! It was right there! We had it! We had it!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureLost_10",
+  "text": "They've taken the flag! I'd like to speak to a manager!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureLost_11",
+  "text": "Our territory fell! I'm going to need a minute! And a snack!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureLost_12",
+  "text": "They took it quietly! Like thieves! Very efficient thieves!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureLost_13",
+  "text": "This is a disaster! A mild one! But still!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureLost_14",
+  "text": "A flag is lost! A moment of silence! No, scream instead!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureLost_15",
+  "text": "We've lost ground! I'd go get it, but I'm very far away!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureLost_16",
+  "text": "They captured our flag! Somebody get the flag a lawyer!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "captureLost_17",
+  "text": "Our flag is gone! Our beautiful, slightly crooked flag!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "enemyTook_0",
+  "text": "Teal took a flag. I'll be monitoring the situation. From here.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "enemyTook_1",
+  "text": "The enemy expanded. Rude. But efficient.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "enemyTook_2",
+  "text": "A neutral flag has picked a side. Not ours. Noted.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "enemyTook_3",
+  "text": "Teal now owns more. I'm filing a complaint.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "enemyTook_4",
+  "text": "Another flag goes teal. It's their color. Of course.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "enemyTook_5",
+  "text": "The enemy took a flag. Somewhere, a map is rearranging itself.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "enemyTook_6",
+  "text": "They claimed a flag. We'll get ours. Eventually. Probably.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "enemyTook_7",
+  "text": "Teal expands. We observe. It is called journalism.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "enemyTook_8",
+  "text": "The enemy grabbed a flag. Greedy, but I admire it.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "enemyTook_9",
+  "text": "Another one for teal. I have started to take it personally.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "enemyTook_10",
+  "text": "A flag goes to the other side. We watched. We did nothing.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "enemyTook_11",
+  "text": "Teal is collecting flags. It is almost sweet.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "firstLoss_0",
+  "text": "Casualty! We have a casualty! Everybody stay calm! Except me!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "firstLoss_1",
+  "text": "We lost a robot! First one! I'm not ready for this!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "firstLoss_2",
+  "text": "Man down! Robot down! Whatever he is, he's down!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "firstLoss_3",
+  "text": "Oh no! Someone got hurt! I mean broken! Wait, that is worse!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "firstLoss_4",
+  "text": "Our first loss! Somebody tell his emotional support robot!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "firstLoss_5",
+  "text": "That's our first one gone! He was fine! He was just fine!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "firstKill_0",
+  "text": "First kill! I felt that! In my wiring!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "firstKill_1",
+  "text": "We got one! Take that, teal! And so on!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "firstKill_2",
+  "text": "An enemy robot has been defeated! Possibly for good!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "firstKill_3",
+  "text": "One down! The enemy is minus a robot! Math!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "firstKill_4",
+  "text": "Our first kill! I was there! In spirit! From the bunker!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "firstKill_5",
+  "text": "That's the first of many! Or the first of one! We'll see!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "unitLost_0",
+  "text": "Gary's down! Gary! Gary, say something!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "unitLost_1",
+  "text": "Brenda! Not Brenda! She had a dental plan!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "unitLost_2",
+  "text": "We lost another one! Tell his family! Do robots have families?",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "unitLost_3",
+  "text": "They got Kevin! Kevin was due a promotion!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "unitLost_4",
+  "text": "Steve is gone! Steve was fine! Steve was always fine!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "unitLost_5",
+  "text": "Down! Another one is down! He had a nice antenna!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "unitLost_6",
+  "text": "Oh no, oh no, oh no! That one was in my fantasy league!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "unitLost_7",
+  "text": "Casualty! Medic! There is no medic! Sorry!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "unitLost_8",
+  "text": "He's gone! He's just scrap! Expensive scrap!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "unitLost_9",
+  "text": "Another robot down! I didn't catch his name! Dave, probably!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "unitLost_10",
+  "text": "Nooo! He had so much left to not do!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "unitLost_11",
+  "text": "That one owed me lunch! Now I will never know!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "unitLost_12",
+  "text": "We're losing guys! Specifically, our guys!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "unitLost_13",
+  "text": "Rest in pieces, little buddy!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "unitLost_14",
+  "text": "Someone get a dustpan! He's all over the field!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "unitLost_15",
+  "text": "He fell bravely! Or tripped! The footage is unclear!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "unitLost_16",
+  "text": "Gary again! Why is it always Gary?!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "unitLost_17",
+  "text": "Another one lost! I will remember him! For about a minute!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "unitLost_18",
+  "text": "He's down! He's very down! He's in several places!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "unitLost_19",
+  "text": "They got him! They got him in the face! Which he used to have!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "tankLost_0",
+  "text": "Our tank is gone! The little face! The little face!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "tankLost_1",
+  "text": "They blew up our tank! It was seventy percent paid off!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "tankLost_2",
+  "text": "Tank down! Somebody tell the tank's mother! It's a tank!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "tankLost_3",
+  "text": "We lost a tank! That's a lot of money! Not mine!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "tankLost_4",
+  "text": "That tank had a name! It was Tank! Tank is gone!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "tankLost_5",
+  "text": "Boom! There goes the tank! And the budget!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "tankLost_6",
+  "text": "They've destroyed our tank! The monsters! The beautiful monsters!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "tankLost_7",
+  "text": "A tank is lost! I'd salute but I'm hiding!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "tankLost_8",
+  "text": "Our tank is on fire! It is still trying to drive!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "tankLost_9",
+  "text": "There goes the tank! It had such a determined little face!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "tankKill_0",
+  "text": "Enemy tank destroyed! I'm told that's good!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "tankKill_1",
+  "text": "Their tank exploded! Like a firework with paperwork!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "tankKill_2",
+  "text": "Boom! One tank is now a lot of small tanks!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "tankKill_3",
+  "text": "Good news! Their tank has stopped existing!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "tankKill_4",
+  "text": "One fewer tank! They have to explain that to someone!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "tankKill_5",
+  "text": "Spectacular! A tank became smoke! I love smoke!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "tankKill_6",
+  "text": "Their tank is toast! Smart toast, but still!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "tankKill_7",
+  "text": "Tank kill! I'm taking partial credit!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "tankKill_8",
+  "text": "That tank came apart beautifully! A lot of it came apart!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "tankKill_9",
+  "text": "The enemy tank is gone! Tell its tiny face I said hello!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "tankKill_10",
+  "text": "Their tank is scrap! Tiny face and all!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "tankKill_11",
+  "text": "Boom! The tank had a good life! A short one!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "bloodbath_0",
+  "text": "It's chaos! Explosions everywhere! Robots! Parts of robots!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "bloodbath_1",
+  "text": "I've never seen so many things on fire! At once!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "bloodbath_2",
+  "text": "Everyone's shooting! I can't tell who's winning! I can't see!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "bloodbath_3",
+  "text": "Total mayhem! The scrap merchants will be thrilled!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "bloodbath_4",
+  "text": "Screaming! Bangs! A lot of metal! I'm going to need a minute!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "bloodbath_5",
+  "text": "It's a scrap storm! Duck! Do ducks exist here?!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "bloodbath_6",
+  "text": "This is a real battle! I'm getting emotional!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "bloodbath_7",
+  "text": "Robots are falling apart! Literally! Not metaphorically!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "bloodbath_8",
+  "text": "It's absolute pandemonium! Is that the word? I'm panicking!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "bloodbath_9",
+  "text": "So much debris! Somebody should clean this up!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "bloodbath_10",
+  "text": "Everybody is firing at everybody! It is wonderful! It is awful!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "bloodbath_11",
+  "text": "Bits are flying everywhere! Please, nobody catch one!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "baseAttack_0",
+  "text": "Intruders at the base! I'm hiding behind the base! Oh no!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "baseAttack_1",
+  "text": "They are at our gates! The door is a suggestion! Defend it!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "baseAttack_2",
+  "text": "The enemy is here! At our house! I was just about to relax!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "baseAttack_3",
+  "text": "Enemy at the base! Somebody lock the door! Is there a door?!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "baseAttack_4",
+  "text": "They are coming for the headquarters! Think of the carpets!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "baseAttack_5",
+  "text": "We are being invaded! Please send help! Or snacks!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "baseAttack_6",
+  "text": "Alert! Alert! The base is being approached! Rudely!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "baseAttack_7",
+  "text": "Enemy at the base! I'm moving to a safer bunker! Further back!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "baseAttack_8",
+  "text": "They are in the yard! They are in the YARD!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "baseAttack_9",
+  "text": "Attack at the base! Quick! Do the thing! Whatever the thing is!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "hqHurt_0",
+  "text": "Our base is taking hits! Smoke! Fire! I am not a fan!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "hqHurt_1",
+  "text": "Our base is on fire! Hot take! Literally!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "hqHurt_2",
+  "text": "They are hitting our base! Where we keep the base things!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "hqHurt_3",
+  "text": "Somebody help the headquarters! It is only a building!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "hqHurt_4",
+  "text": "Base under attack! I'm not brave! Do something!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "hqHurt_5",
+  "text": "The base is on fire! That is not a feature!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "hqHurt_6",
+  "text": "The headquarters is being damaged! It has feelings! Probably!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "hqHurt_7",
+  "text": "They are wrecking the base! My desk is in there!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "hqHurt_8",
+  "text": "The base is hurt! Somebody get it a medic! Or a roof!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "hqHurt_9",
+  "text": "Smoke over headquarters! Bad sign! Tell me I am wrong!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "hqCritical_0",
+  "text": "The base is dying! Do something! Anything!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "hqCritical_1",
+  "text": "The base is almost gone! Panic time!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "hqCritical_2",
+  "text": "We're doomed! Probably! Maybe! HELP!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "hqCritical_3",
+  "text": "It is about to fall! I can feel it! I am sweating oil!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "hqCritical_4",
+  "text": "The base is nearly gone! Please, I have a family! Of robots!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "hqCritical_5",
+  "text": "This is the end! Or a very big setback! It is the end!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "hqCritical_6",
+  "text": "One more hit and we are finished! No pressure! Lots!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "hqCritical_7",
+  "text": "The base is on its last wall! Last wall!",
+  "mood": "shout",
+  "speaker": "chuck"
+ },
+ {
+  "key": "enemyHqHurt_0",
+  "text": "Their base is on fire! I smell victory! And toast!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "enemyHqHurt_1",
+  "text": "We're smashing their base! Beautiful!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "enemyHqHurt_2",
+  "text": "Their headquarters is crumbling! Love it!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "enemyHqHurt_3",
+  "text": "Hit the base! Hit it more!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "enemyHqHurt_4",
+  "text": "Their base is taking damage! They need a bigger broom!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "enemyHqHurt_5",
+  "text": "We are hurting them! In the building! Where it counts!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "enemyHqHurt_6",
+  "text": "Their headquarters is cracking! I said it properly!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "enemyHqHurt_7",
+  "text": "Smoke over the enemy base! A very smoky, beautiful sight!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "enemyHqHurt_8",
+  "text": "The enemy base is falling apart! Slowly! Beautifully!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "enemyHqHurt_9",
+  "text": "That is their base burning! Roast them!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "enemyHqCritical_0",
+  "text": "It's almost dead! Finish it! Finish it!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "enemyHqCritical_1",
+  "text": "One more push! You can do it!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "enemyHqCritical_2",
+  "text": "Victory is right there! Grab it!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "enemyHqCritical_3",
+  "text": "The enemy base is hanging on by a hinge! Kick the hinge!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "enemyHqCritical_4",
+  "text": "They are nearly beaten! Keep going! Do not stop!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "enemyHqCritical_5",
+  "text": "So close! The base is begging for it!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "enemyHqCritical_6",
+  "text": "Almost there! Please, do not get distracted by a flag!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "enemyHqCritical_7",
+  "text": "Their headquarters is gasping! Put it out of its misery!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "comeback_0",
+  "text": "We were dead! Now we are slightly less dead! Progress!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "comeback_1",
+  "text": "Comeback time! I knew it! I did not!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "comeback_2",
+  "text": "We're winning?! Nobody tell the enemy!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "comeback_3",
+  "text": "The tide has turned! Which way was it going again?!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "comeback_4",
+  "text": "We are back in this! I never lost faith! I lost it twice!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "comeback_5",
+  "text": "A comeback! Please remember I stayed calm! I did not!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "comeback_6",
+  "text": "Against all odds! The odds are furious!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "comeback_7",
+  "text": "We are winning! I will pretend that was the plan!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "crushing_0",
+  "text": "We have so many robots! They have so few!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "crushing_1",
+  "text": "We're winning so hard it's embarrassing! For them!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "crushing_2",
+  "text": "We're crushing them! I feel a little bad! A little!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "crushing_3",
+  "text": "Total domination! Please try to look humble!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "crushing_4",
+  "text": "The enemy is outnumbered, outgunned, and regretting it!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "crushing_5",
+  "text": "We are running this war! Command just found out!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "crushing_6",
+  "text": "A ten out of ten performance! I am not allowed to score!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "crushing_7",
+  "text": "We are so far ahead! I can barely see the enemy! Good!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "losing_0",
+  "text": "We're outnumbered. By a lot. Like, a lot.",
+  "mood": "worried",
+  "speaker": "chuck"
+ },
+ {
+  "key": "losing_1",
+  "text": "They have more robots. That's just unfair.",
+  "mood": "worried",
+  "speaker": "chuck"
+ },
+ {
+  "key": "losing_2",
+  "text": "We need more robots. Like, now.",
+  "mood": "worried",
+  "speaker": "chuck"
+ },
+ {
+  "key": "losing_3",
+  "text": "Tell my mom I was brave. Or tell her nothing.",
+  "mood": "worried",
+  "speaker": "chuck"
+ },
+ {
+  "key": "losing_4",
+  "text": "This is going badly. I will deny saying that.",
+  "mood": "worried",
+  "speaker": "chuck"
+ },
+ {
+  "key": "losing_5",
+  "text": "We are being outnumbered. Specifically, a lot.",
+  "mood": "worried",
+  "speaker": "chuck"
+ },
+ {
+  "key": "losing_6",
+  "text": "The numbers are against us. All of them.",
+  "mood": "worried",
+  "speaker": "chuck"
+ },
+ {
+  "key": "losing_7",
+  "text": "I have seen better armies. I have seen better lunches.",
+  "mood": "worried",
+  "speaker": "chuck"
+ },
+ {
+  "key": "losing_8",
+  "text": "We are in trouble. A reasonable amount. A lot, actually.",
+  "mood": "worried",
+  "speaker": "chuck"
+ },
+ {
+  "key": "losing_9",
+  "text": "Somebody has to say it. We need a miracle. Or lunch.",
+  "mood": "worried",
+  "speaker": "chuck"
+ },
+ {
+  "key": "idle_0",
+  "text": "Nothing's happening. I've never been so busy.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "idle_1",
+  "text": "A quiet moment on the front. Even the grass is tense.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "idle_2",
+  "text": "Both armies stare at each other like a tense bus stop.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "idle_3",
+  "text": "I'm told to keep talking. Today's weather: windy. And war-y.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "idle_4",
+  "text": "Silence. Nobody knows what to do. Accurate depiction of war.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "idle_5",
+  "text": "If you're just joining us: nothing has happened. Welcome.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "idle_6",
+  "text": "I could use a coffee. Does anyone have a coffee? Hello?",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "idle_7",
+  "text": "A long pause in the fighting. Possibly lunch.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "idle_8",
+  "text": "I've counted the flags. There are still flags.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "idle_9",
+  "text": "A robot just scratched its head. Big news. Back to you.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "idle_10",
+  "text": "The war continues. Gently.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "idle_11",
+  "text": "I'd like to remind everyone that I am a microphone with legs.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "idle_12",
+  "text": "It's quiet. I don't like quiet. Quiet means paperwork.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "idle_13",
+  "text": "Reports of a lull. The lull is confirmed. It is very lull-ish.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "idle_14",
+  "text": "Is anybody going to fight? We are on a schedule.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "idle_15",
+  "text": "Using the downtime to reflect on my choices. Mostly the war.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "idle_16",
+  "text": "Still nothing. I will describe the silence. It is quiet and beige.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "idle_17",
+  "text": "Somewhere, a robot is trying to remember what a flag is for.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "idle_18",
+  "text": "No news is good news. It is also no news. Which is bad for me.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "idle_19",
+  "text": "I have seen more action at a flag convention.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "idle_20",
+  "text": "Even the explosions called in sick.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "idle_21",
+  "text": "The robots are thinking. It sounds like humming.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "pause_0",
+  "text": "Paused! I will use this time to panic quietly.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "pause_1",
+  "text": "The war is paused. Nobody blink!",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "pause_2",
+  "text": "A break? Finally. My legs hurt.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "pause_3",
+  "text": "Time stops. The robots hold very still. They are good at it.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "pause_4",
+  "text": "The war is on hold. Please remain on the line.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "pause_5",
+  "text": "We interrupt this war for a brief moment of cowardice.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "pause_6",
+  "text": "Paused. I'll be in the bunker. Taking notes. And a nap.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "pause_7",
+  "text": "Everybody freeze! Especially the explosions!",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "resume_0",
+  "text": "And we're back! Go go go!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "resume_1",
+  "text": "Resume panicking!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "resume_2",
+  "text": "The war resumes! Please return seats to the upright position!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "resume_3",
+  "text": "Back to the fighting! I will be watching! From a distance!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "resume_4",
+  "text": "We are live again! Everything is fine! Probably!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "resume_5",
+  "text": "Time starts again! Somebody do something!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "victory_0",
+  "text": "VICTORY! We did it! Command will take the credit!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "victory_1",
+  "text": "We won! I'm crying! It's oil! Just oil!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "victory_2",
+  "text": "We won! I never doubted! Okay, I doubted!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "victory_3",
+  "text": "Their base is gone! Somebody make a parade!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "victory_4",
+  "text": "Command reports a glorious victory. Nobody told the troops!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "victory_5",
+  "text": "We won! My agent will hear about this!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "victory_6",
+  "text": "It is over! We win! I am going to cry! Then go home!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "victory_7",
+  "text": "Victory! I called it! I did not call it! But I was here!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "victory_8",
+  "text": "We did it! The war is over! I can finally leave the bunker!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "victory_9",
+  "text": "Triumph! I want it known I was brave! In a general sense!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "victory_10",
+  "text": "The enemy is beaten! Do not tell them it was close!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "victory_11",
+  "text": "We won! History will remember this! Briefly! In a footnote!",
+  "mood": "excited",
+  "speaker": "chuck"
+ },
+ {
+  "key": "defeat_0",
+  "text": "Defeat. Our base is gone. This is fine.",
+  "mood": "worried",
+  "speaker": "chuck"
+ },
+ {
+  "key": "defeat_1",
+  "text": "We lost. Command says it's not their fault.",
+  "mood": "worried",
+  "speaker": "chuck"
+ },
+ {
+  "key": "defeat_2",
+  "text": "It's over. I'm going to hide now.",
+  "mood": "worried",
+  "speaker": "chuck"
+ },
+ {
+  "key": "defeat_3",
+  "text": "The enemy wins. I knew it. I said it. Quietly.",
+  "mood": "worried",
+  "speaker": "chuck"
+ },
+ {
+  "key": "defeat_4",
+  "text": "Game over, folks. Please exit the war.",
+  "mood": "worried",
+  "speaker": "chuck"
+ },
+ {
+  "key": "defeat_5",
+  "text": "We lost. I'd blame Command, but they are blaming me.",
+  "mood": "worried",
+  "speaker": "chuck"
+ },
+ {
+  "key": "defeat_6",
+  "text": "That is the end. I will be in the bunker. Do not come looking.",
+  "mood": "worried",
+  "speaker": "chuck"
+ },
+ {
+  "key": "defeat_7",
+  "text": "We have been beaten. Thoroughly. In several languages.",
+  "mood": "worried",
+  "speaker": "chuck"
+ },
+ {
+  "key": "defeat_8",
+  "text": "The war is lost. At least the snacks are still here.",
+  "mood": "worried",
+  "speaker": "chuck"
+ },
+ {
+  "key": "defeat_9",
+  "text": "Defeat. I would like to thank the robots for trying. Mostly.",
+  "mood": "worried",
+  "speaker": "chuck"
+ },
+ {
+  "key": "draw_0",
+  "text": "A draw! Everyone loses! Equal opportunity!",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "draw_1",
+  "text": "Both bases are gone! Teamwork, sort of!",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "draw_2",
+  "text": "Nobody wins. I am calling it a draw. Or a tie. Or nothing.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "draw_3",
+  "text": "Both sides destroyed. What a lovely, pointless afternoon.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "draw_4",
+  "text": "A draw. The most diplomatic form of disaster.",
+  "mood": "deadpan",
+  "speaker": "chuck"
+ },
+ {
+  "key": "g_intro2_0",
+  "text": "Welcome to my war! It is a beautiful war! The best!",
+  "mood": "calm",
+  "speaker": "general"
+ },
+ {
+  "key": "g_intro2_1",
+  "text": "I'm General Grandiose. Very rich. Very smart. Very shiny.",
+  "mood": "calm",
+  "speaker": "general"
+ },
+ {
+  "key": "g_intro2_2",
+  "text": "Win the war. It is easy. I do it all the time.",
+  "mood": "calm",
+  "speaker": "general"
+ },
+ {
+  "key": "g_intro2_3",
+  "text": "Pay attention, folks. I'm about to be great.",
+  "mood": "calm",
+  "speaker": "general"
+ },
+ {
+  "key": "g_intro2_4",
+  "text": "The flags are great. The factories are greater. I am the greatest.",
+  "mood": "calm",
+  "speaker": "general"
+ },
+ {
+  "key": "g_intro2_5",
+  "text": "Here is my strategy: win. It is a great strategy.",
+  "mood": "calm",
+  "speaker": "general"
+ },
+ {
+  "key": "g_intro2_6",
+  "text": "Hey, you! Yes, you! Click the flag! Win the war!",
+  "mood": "calm",
+  "speaker": "general"
+ },
+ {
+  "key": "g_hard_0",
+  "text": "Hard mode! I love hard! I am very good at hard!",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_hard_1",
+  "text": "They want a challenge? I am the challenge!",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_hard_2",
+  "text": "Hard mode! Nobody does hard like me! Nobody!",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_hard_3",
+  "text": "Fantastic. The harder, the better. For me. Not for you.",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_hard_4",
+  "text": "Hey, teal! Yes, you! Hard mode! I'll make you sick of me!",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_firstRobots_0",
+  "text": "A new robot! Beautiful! He will be a winner! Like me!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_firstRobots_1",
+  "text": "Fantastic factory! I built that factory! In spirit!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_firstRobots_2",
+  "text": "Look at him! A handsome robot! Not as handsome as me!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_firstRobots_3",
+  "text": "That is a quality robot. The best robot. For this price.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_firstRobots_4",
+  "text": "Another soldier! Gold stars for everyone!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_firstRobots_5",
+  "text": "He has my energy. He has my everything.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_firstRobots_6",
+  "text": "Ding, ding, ding! Robots! More robots! Ding!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_army_0",
+  "text": "Look at this army! The biggest army ever! Believe me!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_army_1",
+  "text": "It is a tremendous army. Very strong. Very handsome.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_army_2",
+  "text": "Nobody has an army like this. Nobody. Many people say.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_army_3",
+  "text": "An army of winners. All winners. All gold adjacent.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_army_4",
+  "text": "I built this army myself. Out of pure greatness.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_army_5",
+  "text": "That is more robots than anyone has ever had. Check.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_army_6",
+  "text": "A huge army! The size! You would not believe the size!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_army_7",
+  "text": "These robots love me. They love me! They told me!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_army_8",
+  "text": "Billions and billions of robots! Okay, fifteen. A very big fifteen.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_army_9",
+  "text": "Gazillions of robots. I counted. Twice. Both times, gazillions.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_captureMine_0",
+  "text": "Beautiful flag! The best flag! I captured it personally!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_captureMine_1",
+  "text": "Nobody captures flags like us. Nobody. Ask anyone.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_captureMine_2",
+  "text": "We took it. So easy. The easiest flag ever, believe me.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_captureMine_3",
+  "text": "Many people say this is the greatest flag capture in history.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_captureMine_4",
+  "text": "I called it. I called the flag. Check the tapes.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_captureMine_5",
+  "text": "A tremendous flag. It is getting gold plated. I am having it done.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_captureMine_6",
+  "text": "We own so many flags now. Nobody has this many flags.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_captureMine_7",
+  "text": "I took that flag in a very smart way. Very, very smart.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_captureMine_8",
+  "text": "The flag loves us. I can tell. It told me.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_captureMine_9",
+  "text": "Another flag! I'm very good at flags. People ask how.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_captureMine_10",
+  "text": "Perfect capture. No notes. I have checked the notes.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_captureMine_11",
+  "text": "A big, beautiful territory. I'll put my name on it.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_captureMine_12",
+  "text": "They said we couldn't. We did. Because I'm me.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_captureMine_13",
+  "text": "Greatest territory ever taken. Top two. Okay, top one.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_captureMine_14",
+  "text": "Ding, ding, ding! That is the sound of winning!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_captureMine_15",
+  "text": "Flag, flag, flag! Ding! Flag! I own them all!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_captureMine_16",
+  "text": "Hey, teal! Yes, you! That flag is mine now!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_captureMine_17",
+  "text": "So much winning. You will need a lie down.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_captureLost_0",
+  "text": "Not my fault! The flag was weak! A very weak flag!",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_captureLost_1",
+  "text": "That flag was a disaster before I got here!",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_captureLost_2",
+  "text": "They took it! Cheaters! Total cheaters! Probably!",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_captureLost_3",
+  "text": "I never liked that flag. Great riddance! Great!",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_captureLost_4",
+  "text": "We lost it, but we won it. Think about that.",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_captureLost_5",
+  "text": "Somebody gave the enemy our flag. I won't say who. Chuck.",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_captureLost_6",
+  "text": "Counterfeit flag! It was a counterfeit flag all along!",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_captureLost_7",
+  "text": "The pole was wobbly! Totally wobbly! Not my fault!",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_captureLost_8",
+  "text": "Who knew flags could be stolen? Terrible! Unfair!",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_captureLost_9",
+  "text": "I'll get it back. Bigger. Better. With a nicer flag.",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_captureLost_10",
+  "text": "They're laughing at us! Terrible robots! Sleepy ones, but still!",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_captureLost_11",
+  "text": "It was a very small flag. Tiny. Barely a flag.",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_captureLost_12",
+  "text": "Very unsoldierly, stealing a flag. So rude. Not nice.",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_captureLost_13",
+  "text": "Hey, teal! Yes, you! Give back the flag! It is mine!",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_unitLost_0",
+  "text": "Great guy! The best robot! Terrible what happened!",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_unitLost_1",
+  "text": "He wasn't a real soldier. I mean, he was great. Mostly.",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_unitLost_2",
+  "text": "Nobody loved that robot more than I did. Nobody.",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_unitLost_3",
+  "text": "He was losing anyway. Lots of people say it.",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_unitLost_4",
+  "text": "Very sad. Tremendously sad. I'll make a statement. Later.",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_unitLost_5",
+  "text": "That's the enemy's fault. And Chuck's. Mostly Chuck's.",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_unitLost_6",
+  "text": "We lost zero robots. Zero. That one was already scrap.",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_unitLost_7",
+  "text": "He'd have been a general. Probably. I'd have promoted him.",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_unitLost_8",
+  "text": "A moment of silence. Okay, that's enough. Back to winning.",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_unitLost_9",
+  "text": "I knew him very well. Very well. Not his name though.",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_unitLost_10",
+  "text": "Great robot. Not my best one. But great.",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_unitLost_11",
+  "text": "Do not worry! We have so many robots! The best robots!",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_unitLost_12",
+  "text": "Very unsoldierly, shooting my robot. Terrible manners.",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_unitLost_13",
+  "text": "Boom, boom, boom! Robot, robot, robot! Down, down, down!",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_firstKill_0",
+  "text": "First one! Easy! I told you! It is so easy!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_firstKill_1",
+  "text": "We got one! Beautiful! More tomorrow! More today!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_firstKill_2",
+  "text": "A great kill! My best kill! Today!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_firstKill_3",
+  "text": "The enemy lost a robot. Terrible for them. Great for me.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_firstKill_4",
+  "text": "One down! Many to go! Nobody wins like us!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_firstKill_5",
+  "text": "I felt that one from here! Beautiful!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_tankKill_0",
+  "text": "Boom! Did you see that? That was me. Mostly me.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_tankKill_1",
+  "text": "I destroyed that tank. Personally. With my mind.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_tankKill_2",
+  "text": "Beautiful explosion! The best explosion! Gold plated!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_tankKill_3",
+  "text": "Their tank is gone. Gone! Because of my leadership!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_tankKill_4",
+  "text": "That was a huge, beautiful tank. Now it is a small, sad pile.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_tankKill_5",
+  "text": "We're blowing up tanks like nobody's blown up tanks.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_tankKill_6",
+  "text": "Fantastic! Another tank! I'll put it on my resume.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_tankKill_7",
+  "text": "The enemy tank said it was strong. It was not strong.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_tankKill_8",
+  "text": "Kaboom! That is what I call a tremendous bang!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_tankKill_9",
+  "text": "Great tank kill. I'm taking credit. I'm allowed.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_tankKill_10",
+  "text": "Boom, boom, boom! Tank, tank, tank! Tremendous!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_tankKill_11",
+  "text": "Hey, teal! Yes, you! Where is your tank? I see smoke.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_baseAttack_0",
+  "text": "They're at my base! My beautiful, gold-ish base!",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_baseAttack_1",
+  "text": "Intruders! Get out of my yard! It is very nice!",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_baseAttack_2",
+  "text": "Not the base! Anything but the base! It has gold taps!",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_baseAttack_3",
+  "text": "Defend it! Defend it with everything! Not me, though!",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_baseAttack_4",
+  "text": "Somebody call security! I'll call security! Where is security?",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_baseAttack_5",
+  "text": "They're coming for the base! Terrible people! Terrible!",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_baseAttack_6",
+  "text": "Hey, you, intruder! Yes, you! Get off my gold lawn!",
+  "mood": "shout",
+  "speaker": "general"
+ },
+ {
+  "key": "g_enemyHqHurt_0",
+  "text": "Their base is burning! It is going to be so beautiful!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_enemyHqHurt_1",
+  "text": "Terrible building anyway. Terrible architecture! Smash it!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_enemyHqHurt_2",
+  "text": "I'd have built a better base. A tremendous base. Gold!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_enemyHqHurt_3",
+  "text": "Hit it! Hit that base! It is not even gold!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_enemyHqHurt_4",
+  "text": "Their base is falling apart. Cheap construction. Sad.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_enemyHqHurt_5",
+  "text": "Fire! Smoke! The best base fire I've ever seen!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_enemyHqHurt_6",
+  "text": "That base is ugly. Very ugly. It deserves this.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_enemyHqHurt_7",
+  "text": "We are destroying their base in the greatest way.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_enemyHqHurt_8",
+  "text": "Hey, you in the base! Yes, you! It is on fire!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_enemyHqHurt_9",
+  "text": "Very unsoldierly, a base like that. It collapses. Sad.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_enemyHqCritical_0",
+  "text": "It's almost over! Because of me! It's me!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_enemyHqCritical_1",
+  "text": "One more hit! I'd do it myself but I'm very busy.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_enemyHqCritical_2",
+  "text": "They're finished! Done! Gone! Say thank you to me!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_enemyHqCritical_3",
+  "text": "The base is gasping! A little push! A beautiful push!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_enemyHqCritical_4",
+  "text": "Victory is so close! I can taste it! It tastes like gold.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_enemyHqCritical_5",
+  "text": "We are about to win. Big. Huge. Tremendous.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_crushing_0",
+  "text": "We are winning so much! Winning everywhere! Even in the bunker!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_crushing_1",
+  "text": "They're destroyed! Totally destroyed! Sleepy little robots!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_crushing_2",
+  "text": "The enemy's finished. I'm sorry. Not that sorry.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_crushing_3",
+  "text": "This is the best performance in war history. History!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_crushing_4",
+  "text": "We have so many more robots. They have, like, four.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_crushing_5",
+  "text": "A total demolition! Beautiful! I'd like to thank myself.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_crushing_6",
+  "text": "They said we could not win this hard. We are winning harder.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_crushing_7",
+  "text": "It's not even close. Not even close! It's like a joke!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_crushing_8",
+  "text": "We will win so much you will beg me to stop. I will not stop.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_crushing_9",
+  "text": "Gazillions of robots! Zillions! Jillions! More than numbers!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_crushing_10",
+  "text": "Ding, ding, ding! That is another win! Ding!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_comeback_0",
+  "text": "We were never losing! We were winning in reverse!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_comeback_1",
+  "text": "Incredible comeback! I planned it! Day one!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_comeback_2",
+  "text": "The greatest comeback ever! I'm the comeback guy!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_comeback_3",
+  "text": "They counted us out! Now look! Look at it!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_comeback_4",
+  "text": "We're back! Bigger! Better! More gold!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_comeback_5",
+  "text": "I told you we would win. I told everyone. Check the tapes.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_comeback_6",
+  "text": "Hey, teal! Yes, you! We're back! Surprise! Billions!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_losing_0",
+  "text": "We're doing great! Terrific! Just very, very behind!",
+  "mood": "worried",
+  "speaker": "general"
+ },
+ {
+  "key": "g_losing_1",
+  "text": "It is all going to plan. The plan is to look behind.",
+  "mood": "worried",
+  "speaker": "general"
+ },
+ {
+  "key": "g_losing_2",
+  "text": "We're only losing because we're being so nice.",
+  "mood": "worried",
+  "speaker": "general"
+ },
+ {
+  "key": "g_losing_3",
+  "text": "They have more robots. Cheap robots. Low quality!",
+  "mood": "worried",
+  "speaker": "general"
+ },
+ {
+  "key": "g_losing_4",
+  "text": "I've seen worse. Honestly I haven't. But I've said it.",
+  "mood": "worried",
+  "speaker": "general"
+ },
+ {
+  "key": "g_losing_5",
+  "text": "Don't worry. Tremendous things are coming. Soon. Maybe.",
+  "mood": "worried",
+  "speaker": "general"
+ },
+ {
+  "key": "g_losing_6",
+  "text": "Billions and billions of robots are coming. Just very slowly.",
+  "mood": "worried",
+  "speaker": "general"
+ },
+ {
+  "key": "g_victory_0",
+  "text": "We won! Biggest win ever! Nobody's ever won like this!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_victory_1",
+  "text": "Victory! I'd say it was my best victory. Out of all of them.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_victory_2",
+  "text": "That's it! We won! I'd like a parade. Gold floats.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_victory_3",
+  "text": "Total victory! The greatest in history! Statues, please!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_victory_4",
+  "text": "We won so big. They'll talk about it forever. Forever!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_victory_5",
+  "text": "Thank you, thank you! I'd like to thank me!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_victory_6",
+  "text": "A perfect victory! No notes! Perfect!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_victory_7",
+  "text": "We did it! And by we, I mean me.",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_victory_8",
+  "text": "Ding, ding, ding! We won! Ding! I said ding!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_victory_9",
+  "text": "We won so much! Now you must be sick of winning! Too bad!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_victory_10",
+  "text": "Hey, teal! Yes, you! You lost! Say it! Say it nicely!",
+  "mood": "excited",
+  "speaker": "general"
+ },
+ {
+  "key": "g_defeat_0",
+  "text": "We didn't lose. We just ended early. Very smart ending.",
+  "mood": "worried",
+  "speaker": "general"
+ },
+ {
+  "key": "g_defeat_1",
+  "text": "This is Chuck's fault. All Chuck's fault. Probably!",
+  "mood": "worried",
+  "speaker": "general"
+ },
+ {
+  "key": "g_defeat_2",
+  "text": "An unfair battlefield! Totally lopsided! I demand a rematch!",
+  "mood": "worried",
+  "speaker": "general"
+ },
+ {
+  "key": "g_defeat_3",
+  "text": "We lost. But we won in spirit. A tremendous spirit.",
+  "mood": "worried",
+  "speaker": "general"
+ },
+ {
+  "key": "g_defeat_4",
+  "text": "The enemy cheated. I can't prove it. I know it.",
+  "mood": "worried",
+  "speaker": "general"
+ },
+ {
+  "key": "g_defeat_5",
+  "text": "I'll be back. Bigger. Better. With more gold.",
+  "mood": "worried",
+  "speaker": "general"
+ },
+ {
+  "key": "g_defeat_6",
+  "text": "Very unsoldierly, winning like that. So rude. I am upset.",
+  "mood": "worried",
+  "speaker": "general"
+ }
+]

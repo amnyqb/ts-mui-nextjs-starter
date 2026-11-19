@@ -1,0 +1,222 @@
+[
+  {
+    "name": "game boots and exposes simulation",
+    "ok": true,
+    "info": ""
+  },
+  {
+    "name": "title screen shows and the game waits for Play",
+    "ok": true,
+    "info": "tick 0"
+  },
+  {
+    "name": "game opens with starting squads on both sides",
+    "ok": true,
+    "info": "6 vs 6 robots at the start"
+  },
+  {
+    "name": "HUD starts uncluttered: no empty selection panel, settings tucked into the Menu",
+    "ok": true,
+    "info": "selection panel none, menu none"
+  },
+  {
+    "name": "mouse wheel zooms the camera",
+    "ok": true,
+    "info": "zoom 0.66"
+  },
+  {
+    "name": "drag-box selects own robots",
+    "ok": true,
+    "info": "6 selected"
+  },
+  {
+    "name": "right-click on a flag issues a capture order",
+    "ok": true,
+    "info": "capture,capture,capture,capture,move,move"
+  },
+  {
+    "name": "capturing a flag changes ownership",
+    "ok": true,
+    "info": "owner -1 -> 0"
+  },
+  {
+    "name": "Chuck Sprocket appears with subtitles",
+    "ok": true,
+    "info": "Live from the field of battle. Well, a field. Near some ba"
+  },
+  {
+    "name": "Chuck opens the broadcast",
+    "ok": true,
+    "info": "intro,captureMine"
+  },
+  {
+    "name": "Chuck reacts to our flag capture",
+    "ok": true,
+    "info": "intro,captureMine"
+  },
+  {
+    "name": "Chuck's recorded voice clips play",
+    "ok": true,
+    "info": "1 spoken line(s) with audio"
+  },
+  {
+    "name": "General Grandiose takes over with his own voice clip, name and frame",
+    "ok": true,
+    "info": "GENERAL GRANDIOSE / panel excited general"
+  },
+  {
+    "name": "C key switches commentary off and on",
+    "ok": true,
+    "info": "Reporter: OFF"
+  },
+  {
+    "name": "V key toggles the robot voice",
+    "ok": true,
+    "info": "Voice: OFF"
+  },
+  {
+    "name": "player factories keep producing robots",
+    "ok": true,
+    "info": "13 robots at 24s sim time"
+  },
+  {
+    "name": "sound engine runs and plays effects",
+    "ok": true,
+    "info": "running, 9 sounds"
+  },
+  {
+    "name": "M key mutes and unmutes sound",
+    "ok": true,
+    "info": "Sound: OFF"
+  },
+  {
+    "name": "clicking a factory selects it",
+    "ok": true,
+    "info": ""
+  },
+  {
+    "name": "factory panel toggles production",
+    "ok": true,
+    "info": ""
+  },
+  {
+    "name": "minimap click moves the camera",
+    "ok": true,
+    "info": "361 -> 755"
+  },
+  {
+    "name": "P pauses the simulation",
+    "ok": true,
+    "info": "tick 574"
+  },
+  {
+    "name": "P resumes the simulation",
+    "ok": true,
+    "info": ""
+  },
+  {
+    "name": "control groups recall selection",
+    "ok": true,
+    "info": ""
+  },
+  {
+    "name": "the All button selects every robot",
+    "ok": true,
+    "info": ""
+  },
+  {
+    "name": "selection panel appears once robots are selected",
+    "ok": true,
+    "info": ""
+  },
+  {
+    "name": "left-clicking the ground sends the selected robots there",
+    "ok": true,
+    "info": "move,move,move,move,move,move,move,move,move,move,move,move,move,move,move,move"
+  },
+  {
+    "name": "coach shows a tip",
+    "ok": true,
+    "info": "STEP 4 — Press ALL, then ATTACK, then click the te"
+  },
+  {
+    "name": "pushing the mouse to the screen edge scrolls the map",
+    "ok": true,
+    "info": "274 -> 631"
+  },
+  {
+    "name": "Menu opens the settings and the controls help",
+    "ok": true,
+    "info": ""
+  },
+  {
+    "name": "difficulty button cycles the AI level",
+    "ok": true,
+    "info": "AI: NORMAL"
+  },
+  {
+    "name": "no console errors (controls session)",
+    "ok": true,
+    "info": ""
+  },
+  {
+    "name": "a UI-driven match reaches a conclusion with an end screen",
+    "ok": true,
+    "info": "winner=0 title=VICTORY sim=183s flags 5,3"
+  },
+  {
+    "name": "no console errors (match session)",
+    "ok": true,
+    "info": ""
+  },
+  {
+    "name": "match-1-result",
+    "ok": true,
+    "info": "{\"winner\":0,\"secs\":183,\"terr\":[5,3]}"
+  },
+  {
+    "name": "doing nothing ends in DEFEAT",
+    "ok": true,
+    "info": "winner=1 title=DEFEAT"
+  },
+  {
+    "name": "restart begins a fresh match",
+    "ok": true,
+    "info": "tick 154"
+  },
+  {
+    "name": "no console errors (defeat session)",
+    "ok": true,
+    "info": ""
+  },
+  {
+    "name": "phone: no horizontal overflow, big buttons, desktop help hidden",
+    "ok": true,
+    "info": "button 46px, top bar 378/390px"
+  },
+  {
+    "name": "phone: Menu opens the extra buttons",
+    "ok": true,
+    "info": ""
+  },
+  {
+    "name": "phone: tapping ALL selects the robots",
+    "ok": true,
+    "info": "6 selected"
+  },
+  {
+    "name": "phone: tapping a flag with robots selected orders a capture",
+    "ok": true,
+    "info": "tapped CANVAS, orders capture,capture,capture,capture,move,move"
+  },
+  {
+    "name": "phone: two-finger pinch zooms the map",
+    "ok": true,
+    "info": "zoom 0.50 -> 1.67"
+  },
+  {
+    "name": "no console errors (phone session)",
+    "ok": true,
+    "info": ""
+  }
+]
