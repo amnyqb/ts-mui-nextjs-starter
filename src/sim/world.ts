@@ -478,7 +478,7 @@ export class World {
     for (const b of this.buildings) {
       if (b.bkind === 'hq' && b.hp <= 0 && b.maxHp > 0) {
         b.maxHp = 0; // mark as already announced
-        this.events.push({ t: 'death', x: b.x, y: b.y, big: true, owner: b.owner });
+        this.events.push({ t: 'death', x: b.x, y: b.y, big: true, owner: b.owner, hq: true });
       }
     }
   }

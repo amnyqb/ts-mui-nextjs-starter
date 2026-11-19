@@ -1,0 +1,617 @@
+[
+ {
+  "key": "intro_0",
+  "text": "Good evening. I'm Chuck Sprocket. I'm very brave. Ask me from the bunker.",
+  "mood": "calm"
+ },
+ {
+  "key": "intro_1",
+  "text": "Welcome to World War Five. The humans declined the invitation.",
+  "mood": "calm"
+ },
+ {
+  "key": "intro_2",
+  "text": "Tonight's forecast: explosions, with a chance of more explosions.",
+  "mood": "calm"
+ },
+ {
+  "key": "intro_3",
+  "text": "I'm live at the front. Okay, forty miles behind it. With snacks.",
+  "mood": "calm"
+ },
+ {
+  "key": "intro_4",
+  "text": "Two armies, no adults. What could possibly go wrong?",
+  "mood": "calm"
+ },
+ {
+  "key": "intro_5",
+  "text": "Remember: I'm press. Please don't shoot the microphone.",
+  "mood": "calm"
+ },
+ {
+  "key": "intro2_0",
+  "text": "Capture the flags. Dodge the explosions. Revolutionary.",
+  "mood": "calm"
+ },
+ {
+  "key": "intro2_1",
+  "text": "Press All. Click a flag. That's the whole strategy.",
+  "mood": "calm"
+ },
+ {
+  "key": "intro2_2",
+  "text": "Your mission: win. Command never sent a second order.",
+  "mood": "calm"
+ },
+ {
+  "key": "intro2_3",
+  "text": "Pro tip: robots work much better when alive.",
+  "mood": "calm"
+ },
+ {
+  "key": "easy_0",
+  "text": "Easy mode. The enemy's napping. Try not to feel bad.",
+  "mood": "deadpan"
+ },
+ {
+  "key": "normal_0",
+  "text": "Normal mode. The enemy just had coffee.",
+  "mood": "calm"
+ },
+ {
+  "key": "hard_0",
+  "text": "Hard mode! The enemy had ALL the coffee!",
+  "mood": "shout"
+ },
+ {
+  "key": "firstRobots_0",
+  "text": "A baby robot! Isn't he precious! Don't name him. He'll die.",
+  "mood": "excited"
+ },
+ {
+  "key": "firstRobots_1",
+  "text": "Fresh from the factory! Smells like oil and optimism!",
+  "mood": "excited"
+ },
+ {
+  "key": "firstRobots_2",
+  "text": "Reinforcements! Shiny, eager, and totally unaware!",
+  "mood": "excited"
+ },
+ {
+  "key": "firstRobots_3",
+  "text": "Another soldier born! Congratulations! Sorry!",
+  "mood": "excited"
+ },
+ {
+  "key": "order_0",
+  "text": "They're moving! Nobody read the orders, but they're moving.",
+  "mood": "calm"
+ },
+ {
+  "key": "order_1",
+  "text": "Orders issued! They will be misread within seconds.",
+  "mood": "calm"
+ },
+ {
+  "key": "order_2",
+  "text": "Off they go! Left foot, right foot. Tactics!",
+  "mood": "calm"
+ },
+ {
+  "key": "army_0",
+  "text": "Fifteen robots! My math is in the bunker, but wow!",
+  "mood": "excited"
+ },
+ {
+  "key": "army_1",
+  "text": "Look at that army! So shiny! So breakable!",
+  "mood": "excited"
+ },
+ {
+  "key": "army_2",
+  "text": "Big army! Somebody point at something!",
+  "mood": "excited"
+ },
+ {
+  "key": "captureMine_0",
+  "text": "Flag captured! It hated the old management!",
+  "mood": "excited"
+ },
+ {
+  "key": "captureMine_1",
+  "text": "Ours! Finders keepers! That is international law!",
+  "mood": "excited"
+ },
+ {
+  "key": "captureMine_2",
+  "text": "Territory taken! The factory came free! Bonus!",
+  "mood": "excited"
+ },
+ {
+  "key": "captureMine_3",
+  "text": "Another flag! At this rate we'll need a bigger flagpole!",
+  "mood": "excited"
+ },
+ {
+  "key": "captureMine_4",
+  "text": "Captured! The enemy is crying! Quietly! Mostly!",
+  "mood": "excited"
+ },
+ {
+  "key": "captureMine_5",
+  "text": "Ours now! I'd shake its hand, but I'm a coward!",
+  "mood": "excited"
+ },
+ {
+  "key": "captureMine_6",
+  "text": "That flag was begging for a better owner!",
+  "mood": "excited"
+ },
+ {
+  "key": "captureMine_7",
+  "text": "Mine! Ours! Whatever! Great job, everyone!",
+  "mood": "excited"
+ },
+ {
+  "key": "captureLost_0",
+  "text": "They took our flag! Give it back! It was ours!",
+  "mood": "shout"
+ },
+ {
+  "key": "captureLost_1",
+  "text": "We lost a flag! Put it on my tab!",
+  "mood": "shout"
+ },
+ {
+  "key": "captureLost_2",
+  "text": "Our factory switched sides! The traitor!",
+  "mood": "shout"
+ },
+ {
+  "key": "captureLost_3",
+  "text": "They stole a flag! Who steals a flag?! Barbarians!",
+  "mood": "shout"
+ },
+ {
+  "key": "captureLost_4",
+  "text": "Lost ground! We want it back! With tanks!",
+  "mood": "shout"
+ },
+ {
+  "key": "captureLost_5",
+  "text": "Retreat! I mean, advance. Backwards. Quickly!",
+  "mood": "shout"
+ },
+ {
+  "key": "captureLost_6",
+  "text": "That flag was my favorite flag!",
+  "mood": "shout"
+ },
+ {
+  "key": "captureLost_7",
+  "text": "They're taking everything! Even the paperwork!",
+  "mood": "shout"
+ },
+ {
+  "key": "enemyTook_0",
+  "text": "Teal grabs a flag. Greedy little robots.",
+  "mood": "deadpan"
+ },
+ {
+  "key": "enemyTook_1",
+  "text": "The neutral flag picked a side. Not ours. Rude.",
+  "mood": "deadpan"
+ },
+ {
+  "key": "enemyTook_2",
+  "text": "Enemy expands. Cool. Cool cool cool.",
+  "mood": "deadpan"
+ },
+ {
+  "key": "enemyTook_3",
+  "text": "Another flag goes teal. I'm not jealous.",
+  "mood": "deadpan"
+ },
+ {
+  "key": "enemyTook_4",
+  "text": "The map is looking very teal lately.",
+  "mood": "deadpan"
+ },
+ {
+  "key": "firstLoss_0",
+  "text": "Man down! Robot down! Somebody is down!",
+  "mood": "shout"
+ },
+ {
+  "key": "firstLoss_1",
+  "text": "First casualty! Tell his mom! Do robots have moms?",
+  "mood": "shout"
+ },
+ {
+  "key": "firstLoss_2",
+  "text": "Ow! That was one of ours!",
+  "mood": "shout"
+ },
+ {
+  "key": "firstKill_0",
+  "text": "First kill! Take that, teal!",
+  "mood": "excited"
+ },
+ {
+  "key": "firstKill_1",
+  "text": "Got one! Look at that scrap fly!",
+  "mood": "excited"
+ },
+ {
+  "key": "firstKill_2",
+  "text": "Boom! One less teal! Love that!",
+  "mood": "excited"
+ },
+ {
+  "key": "unitLost_0",
+  "text": "Another Gary down! We have so many Garys!",
+  "mood": "shout"
+ },
+ {
+  "key": "unitLost_1",
+  "text": "Gary! No no no! He just got promoted! To scrap!",
+  "mood": "shout"
+ },
+ {
+  "key": "unitLost_2",
+  "text": "Gary's gone! Gary owed me money!",
+  "mood": "shout"
+ },
+ {
+  "key": "unitLost_3",
+  "text": "Medic! There is no medic! Sorry!",
+  "mood": "shout"
+ },
+ {
+  "key": "unitLost_4",
+  "text": "They got another one! Rude!",
+  "mood": "shout"
+ },
+ {
+  "key": "unitLost_5",
+  "text": "Argh! Scrap everywhere!",
+  "mood": "shout"
+ },
+ {
+  "key": "unitLost_6",
+  "text": "Ouch! That hurt me too! Emotionally!",
+  "mood": "shout"
+ },
+ {
+  "key": "tankLost_0",
+  "text": "Our tank! He had a tiny face! A TINY FACE!",
+  "mood": "shout"
+ },
+ {
+  "key": "tankLost_1",
+  "text": "Tank down! That is a lot of paperwork!",
+  "mood": "shout"
+ },
+ {
+  "key": "tankLost_2",
+  "text": "They blew up our tank! Monsters!",
+  "mood": "shout"
+ },
+ {
+  "key": "tankKill_0",
+  "text": "Enemy tank destroyed! Kaboom!",
+  "mood": "excited"
+ },
+ {
+  "key": "tankKill_1",
+  "text": "Their tank is toast! Delicious toast!",
+  "mood": "excited"
+ },
+ {
+  "key": "tankKill_2",
+  "text": "Boom! Bye bye, tiny tank face!",
+  "mood": "excited"
+ },
+ {
+  "key": "bloodbath_0",
+  "text": "It's raining robots! Run!",
+  "mood": "shout"
+ },
+ {
+  "key": "bloodbath_1",
+  "text": "Scrap everywhere! Watch your step!",
+  "mood": "shout"
+ },
+ {
+  "key": "bloodbath_2",
+  "text": "Total mayhem! I love it! I hate it!",
+  "mood": "shout"
+ },
+ {
+  "key": "bloodbath_3",
+  "text": "Chaos! Everybody is firing at everybody!",
+  "mood": "shout"
+ },
+ {
+  "key": "baseAttack_0",
+  "text": "Enemy at the gates! Run! Fight! Both!",
+  "mood": "shout"
+ },
+ {
+  "key": "baseAttack_1",
+  "text": "They're at our base! I'm hiding! In the base! Oh no!",
+  "mood": "shout"
+ },
+ {
+  "key": "baseAttack_2",
+  "text": "Intruders in our yard! Attack them!",
+  "mood": "shout"
+ },
+ {
+  "key": "hqHurt_0",
+  "text": "They are hitting our base! Our base!",
+  "mood": "shout"
+ },
+ {
+  "key": "hqHurt_1",
+  "text": "Our base is on fire! Hot take! Literally!",
+  "mood": "shout"
+ },
+ {
+  "key": "hqHurt_2",
+  "text": "Somebody help the headquarters!",
+  "mood": "shout"
+ },
+ {
+  "key": "hqHurt_3",
+  "text": "Base under attack! I'm not brave! Do something!",
+  "mood": "shout"
+ },
+ {
+  "key": "hqCritical_0",
+  "text": "The base is dying! Do something! Anything!",
+  "mood": "shout"
+ },
+ {
+  "key": "hqCritical_1",
+  "text": "The base is almost gone! Panic time!",
+  "mood": "shout"
+ },
+ {
+  "key": "hqCritical_2",
+  "text": "We're doomed! Probably! Maybe! HELP!",
+  "mood": "shout"
+ },
+ {
+  "key": "enemyHqHurt_0",
+  "text": "Their HQ is on fire! I smell victory! And toast!",
+  "mood": "excited"
+ },
+ {
+  "key": "enemyHqHurt_1",
+  "text": "We're smashing their base! Beautiful!",
+  "mood": "excited"
+ },
+ {
+  "key": "enemyHqHurt_2",
+  "text": "Their headquarters is crumbling! Love it!",
+  "mood": "excited"
+ },
+ {
+  "key": "enemyHqHurt_3",
+  "text": "Hit the base! Hit it more!",
+  "mood": "excited"
+ },
+ {
+  "key": "enemyHqCritical_0",
+  "text": "It's almost dead! Finish it! Finish it!",
+  "mood": "excited"
+ },
+ {
+  "key": "enemyHqCritical_1",
+  "text": "One more push! You can do it!",
+  "mood": "excited"
+ },
+ {
+  "key": "enemyHqCritical_2",
+  "text": "Victory is right there! Grab it!",
+  "mood": "excited"
+ },
+ {
+  "key": "comeback_0",
+  "text": "We were dead! Now we are slightly less dead! Progress!",
+  "mood": "excited"
+ },
+ {
+  "key": "comeback_1",
+  "text": "Comeback time! I knew it! I did not!",
+  "mood": "excited"
+ },
+ {
+  "key": "comeback_2",
+  "text": "We're winning?! Nobody tell the enemy!",
+  "mood": "excited"
+ },
+ {
+  "key": "crushing_0",
+  "text": "We have so many robots! They have so few!",
+  "mood": "excited"
+ },
+ {
+  "key": "crushing_1",
+  "text": "We're winning so hard it's embarrassing! For them!",
+  "mood": "excited"
+ },
+ {
+  "key": "crushing_2",
+  "text": "We're crushing them! Sorry! Not sorry!",
+  "mood": "excited"
+ },
+ {
+  "key": "losing_0",
+  "text": "We're outnumbered. By a lot. Like, a lot.",
+  "mood": "worried"
+ },
+ {
+  "key": "losing_1",
+  "text": "They have more robots. That's just unfair.",
+  "mood": "worried"
+ },
+ {
+  "key": "losing_2",
+  "text": "We need more robots. Like, now.",
+  "mood": "worried"
+ },
+ {
+  "key": "losing_3",
+  "text": "Tell my mom I was brave. Or tell her nothing.",
+  "mood": "worried"
+ },
+ {
+  "key": "idle_0",
+  "text": "Nothing's happening. I'll narrate nothing. Nothing!",
+  "mood": "deadpan"
+ },
+ {
+  "key": "idle_1",
+  "text": "It's quiet. Too quiet. Or just quiet.",
+  "mood": "deadpan"
+ },
+ {
+  "key": "idle_2",
+  "text": "Both armies staring. Like two cats and a sofa.",
+  "mood": "deadpan"
+ },
+ {
+  "key": "idle_3",
+  "text": "Hello? Robots? The war is on!",
+  "mood": "deadpan"
+ },
+ {
+  "key": "idle_4",
+  "text": "I'm told to keep talking. So. Weather's nice.",
+  "mood": "deadpan"
+ },
+ {
+  "key": "idle_5",
+  "text": "I'm a microphone with legs. Please advance.",
+  "mood": "deadpan"
+ },
+ {
+  "key": "idle_6",
+  "text": "My antenna's tingling. Probably a bird.",
+  "mood": "deadpan"
+ },
+ {
+  "key": "idle_7",
+  "text": "Any minute now. Any minute. Still waiting.",
+  "mood": "deadpan"
+ },
+ {
+  "key": "idle_8",
+  "text": "I have seen more action at a flag convention.",
+  "mood": "deadpan"
+ },
+ {
+  "key": "idle_9",
+  "text": "Even the explosions called in sick.",
+  "mood": "deadpan"
+ },
+ {
+  "key": "pause_0",
+  "text": "Paused! I will use this time to panic quietly.",
+  "mood": "deadpan"
+ },
+ {
+  "key": "pause_1",
+  "text": "The war is paused. Nobody blink!",
+  "mood": "deadpan"
+ },
+ {
+  "key": "pause_2",
+  "text": "A break? Finally. My legs hurt.",
+  "mood": "deadpan"
+ },
+ {
+  "key": "resume_0",
+  "text": "And we are back! Go, go, go!",
+  "mood": "excited"
+ },
+ {
+  "key": "resume_1",
+  "text": "Resume panicking!",
+  "mood": "excited"
+ },
+ {
+  "key": "victory_0",
+  "text": "VICTORY! We did it! Command will take the credit!",
+  "mood": "excited"
+ },
+ {
+  "key": "victory_1",
+  "text": "We won! I'm crying! It's oil! Just oil!",
+  "mood": "excited"
+ },
+ {
+  "key": "victory_2",
+  "text": "We won! I never doubted! Okay, I doubted!",
+  "mood": "excited"
+ },
+ {
+  "key": "victory_3",
+  "text": "Their HQ is gone! Somebody make a parade!",
+  "mood": "excited"
+ },
+ {
+  "key": "victory_4",
+  "text": "Command reports a glorious victory. Nobody told the troops!",
+  "mood": "excited"
+ },
+ {
+  "key": "victory_5",
+  "text": "We won! My agent will hear about this!",
+  "mood": "excited"
+ },
+ {
+  "key": "defeat_0",
+  "text": "Defeat. Our HQ is gone. This is fine.",
+  "mood": "worried"
+ },
+ {
+  "key": "defeat_1",
+  "text": "We lost. Command says it's not their fault.",
+  "mood": "worried"
+ },
+ {
+  "key": "defeat_2",
+  "text": "It's over. I'm going to hide now.",
+  "mood": "worried"
+ },
+ {
+  "key": "defeat_3",
+  "text": "The enemy wins. I knew it. I said it. Quietly.",
+  "mood": "worried"
+ },
+ {
+  "key": "defeat_4",
+  "text": "Game over, folks. Please exit the war.",
+  "mood": "worried"
+ },
+ {
+  "key": "defeat_5",
+  "text": "We lost. I'd blame Command, but they're blaming me.",
+  "mood": "worried"
+ },
+ {
+  "key": "draw_0",
+  "text": "A draw! Everyone loses! Equal opportunity!",
+  "mood": "deadpan"
+ },
+ {
+  "key": "draw_1",
+  "text": "Both HQs gone! Teamwork, sort of!",
+  "mood": "deadpan"
+ }
+]

@@ -1,9 +1,9 @@
 import type { Sfx } from '../audio/sfx';
-import { LINES, type Cat } from '../data/lines';
+import { LINES, MOOD, type Cat, type Mood } from '../data/lines';
 
 /** minimum real-time gap (ms) before the same category may be spoken again */
 const COOLDOWN: Partial<Record<Cat, number>> = {
-  captureMine: 9000, captureLost: 9000, enemyTook: 15000, tankDown: 14000, bloodbath: 35000, idle: 30000,
+  captureMine: 9000, captureLost: 9000, enemyTook: 15000, tankLost: 12000, tankKill: 12000, unitLost: 9000, baseAttack: 20000, bloodbath: 35000, idle: 30000,
   crushing: 60000, losing: 60000, comeback: 40000, order: 1e9, pause: 8000, resume: 8000,
 };
 const GAP_MS = 3500;
@@ -103,6 +103,7 @@ export class Commentator {
     this.shown = -1;
     this.log.push(entry);
     this.panel.style.display = 'block';
+    this.panel.className = `panel ${MOOD[item.cat]}`; // the transmission frame reacts to his mood too
     if (!this.voiceOn || this.sfx.muted) return;
 
     // Chuck's recorded clip: subtitles and mouth then follow the real length of the audio.
@@ -164,7 +165,7 @@ export class Commentator {
         this.text.textContent = c.text.slice(0, n);
       }
       const talking = !c.waiting && (c.talkUntil ? now < c.talkUntil : n < c.text.length);
-      this.draw(now, el, talking);
+      this.draw(now, el, talking, MOOD[c.cat]);
       if (!c.waiting && el > c.dur) {
         this.cur = null;
         this.lastEnd = now;
@@ -183,9 +184,11 @@ export class Commentator {
 
   // ------------------------------------------------------------- Chuck's face
 
-  private draw(now: number, el: number, talking: boolean) {
+  private draw(now: number, el: number, talking: boolean, mood: Mood) {
     const g = this.g;
     const t = now / 1000;
+    const shout = mood === 'shout';
+    const excited = mood === 'excited';
     g.clearRect(0, 0, 96, 96);
     g.fillStyle = g.createLinearGradient(0, 0, 0, 96);
     (g.fillStyle as CanvasGradient).addColorStop(0, '#203a5c');
@@ -208,6 +211,10 @@ export class Commentator {
       g.arcTo(x, y, x + w, y, r);
       g.closePath();
     };
+
+    // body language: he bounces when excited and shakes when he is shouting
+    g.save();
+    g.translate(shout ? (Math.random() - 0.5) * 3 : 0, shout ? Math.sin(t * 22) * 1.6 : excited ? Math.sin(t * 11) * 1.8 : 0);
 
     // suit, collar, tie, press badge
     rr(6, 70, 84, 40, 12);
@@ -284,15 +291,16 @@ export class Commentator {
 
     // eyes (they wander), eyebrows (they emote)
     const look = Math.sin(t * 0.8) * 1.6;
-    const brow = talking ? Math.sin(t * 6) * 1.2 : 0;
+    const brow = (shout ? 4 : excited ? 2.5 : mood === 'worried' ? 1 : 0) + (talking ? Math.sin(t * 6) * 1.2 : 0);
+    const eyeR = shout ? 7.6 : excited ? 7 : 6.4; // eyes go wide
     for (const x of [38, 58]) {
       g.beginPath();
-      g.arc(x, 36, 6.4, 0, Math.PI * 2);
+      g.arc(x, 36, eyeR, 0, Math.PI * 2);
       g.fillStyle = '#fff';
       g.fill();
       outline(1.6);
       g.beginPath();
-      g.arc(x + look, 36.5, 2.6, 0, Math.PI * 2);
+      g.arc(x + look, 36.5, shout ? 1.9 : 2.6, 0, Math.PI * 2);
       g.fillStyle = ink;
       g.fill();
       g.fillStyle = '#fff';
@@ -351,7 +359,7 @@ export class Commentator {
 
     // talking grille mouth
     const open = talking ? 0.5 + 0.5 * Math.sin(now / 65) : 0;
-    const mh = 3 + open * 8;
+    const mh = (shout ? 6 : excited ? 4 : 3) + open * (shout ? 13 : excited ? 10 : 8); // a shout is a big open mouth
     rr(38, 54, 20, mh, 2.5);
     g.fillStyle = '#1b1d22';
     g.fill();
@@ -391,6 +399,23 @@ export class Commentator {
     g.fillText('WW5', 0, -1.5);
     g.restore();
 
+    // mood extras: sparkles when thrilled, a sweat drop when worried
+    if (excited)
+      for (const [x, y, ph] of [[14, 22, 0], [84, 28, 2], [78, 8, 4], [12, 54, 1]]) {
+        g.fillStyle = `rgba(255,232,120,${0.5 + 0.5 * Math.sin(t * 8 + ph)})`;
+        g.fillRect(x - 1, y - 4, 2, 8);
+        g.fillRect(x - 4, y - 1, 8, 2);
+      }
+    if (mood === 'worried') {
+      g.fillStyle = '#7fc8ff';
+      g.beginPath();
+      g.moveTo(76, 22 + Math.sin(t * 3) * 2);
+      g.quadraticCurveTo(80, 30, 76, 32);
+      g.quadraticCurveTo(72, 30, 76, 22 + Math.sin(t * 3) * 2);
+      g.fill();
+    }
+    g.restore();
+
     // TV treatment: scanlines, vignette, and a burst of static when the transmission starts
     g.fillStyle = 'rgba(0,0,0,0.16)';
     for (let y = 0; y < 96; y += 3) g.fillRect(0, y, 96, 1);
@@ -405,5 +430,9 @@ export class Commentator {
     vg.addColorStop(1, 'rgba(0,0,0,0.45)');
     g.fillStyle = vg;
     g.fillRect(0, 0, 96, 96);
+    if (shout) {
+      g.fillStyle = `rgba(255,50,40,${0.14 + 0.08 * Math.sin(t * 20)})`; // red alert flicker
+      g.fillRect(0, 0, 96, 96);
+    }
   }
 }

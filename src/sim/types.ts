@@ -66,7 +66,7 @@ export type Command =
 
 export type SimEvent =
   | { t: 'shot'; x1: number; y1: number; x2: number; y2: number; hit: boolean; owner: Owner; unit: UnitType }
-  | { t: 'death'; x: number; y: number; big: boolean; owner: Owner }
+  | { t: 'death'; x: number; y: number; big: boolean; owner: Owner; hq?: boolean }
   | { t: 'capture'; territory: number; owner: Owner; prev: Owner }
   | { t: 'spawn'; id: number; owner: Owner }
   | { t: 'victory'; winner: number };

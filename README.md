@@ -54,7 +54,9 @@ All art is original and drawn in code at startup (`src/render/sprites.ts`): funn
 
 ## The war correspondent
 
-**Chuck Sprocket of WW5 News** narrates the war in short animated TV transmissions with typewriter subtitles and a recorded robotic voice: every line has its own audio clip in `public/voice/` (rendered offline by `npx vite-node scripts/make-voice.ts` with espeak-ng + ffmpeg; re-run it when `src/data/lines.ts` changes, a test checks they match). Browser speech is only a fallback. He has 110+ original lines (`src/data/lines.ts`) and reacts to real battlefield events: flags won and lost, factories taken, tanks destroyed, bloodbaths, base damage, comebacks, lopsided armies and long quiet spells. `src/ai/reporter.ts` decides what he talks about (tested headless); `src/render/commentator.ts` presents it.
+**Chuck Sprocket of WW5 News** narrates the war in short animated TV transmissions with typewriter subtitles and a recorded voice. He has 120+ short original lines (`src/data/lines.ts`) and reacts to real battlefield events: he shouts when your robots die or the enemy reaches your base, and cheers when you capture flags, destroy tanks or hit their headquarters. Each line has a mood (calm, deadpan, excited, shout, worried) that changes the delivery (pace, pitch, loudness) and his face. `src/ai/reporter.ts` decides what he talks about (tested headless); `src/render/commentator.ts` presents it.
+
+**Voice:** every line has its own clip in `public/voice/`, rendered offline by `scripts/make-voice.ts` with Piper neural TTS (voice `en_US-joe-medium`, CC0) and ffmpeg: `VOICE_MODEL=en_US-joe-medium.onnx PYTHON=.venv/bin/python npx vite-node scripts/make-voice.ts` (see the script header for setup). Re-run it when the lines change; a test checks they match. `tools/voice/eval.py` transcribes the clips with a speech recogniser as a sanity check. Browser speech is only a fallback.
 
 ## How it works (Stage 1)
 

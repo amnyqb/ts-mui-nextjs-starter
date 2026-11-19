@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { Director } from '../src/ai/reporter';
 import { buildFrontline } from '../src/data/maps';
-import { LINES, LINE_COUNT, type Cat } from '../src/data/lines';
+import { LINES, LINE_COUNT, MOOD, type Cat } from '../src/data/lines';
 import { Match } from '../src/sim/match';
 import type { SimEvent } from '../src/sim/types';
 import { World } from '../src/sim/world';
@@ -16,9 +16,27 @@ describe('reporter script', () => {
     expect(new Set(all).size).toBe(all.length);
     for (const l of all) {
       expect(l.trim().length).toBeGreaterThan(10);
-      expect(l.length).toBeLessThan(200);
+      // short statements: one breath each
+      expect(l.length, l).toBeLessThanOrEqual(80);
+      expect(l.split(/\s+/).length, l).toBeLessThanOrEqual(15);
     }
+    expect(all.reduce((n, l) => n + l.length, 0) / all.length, 'average line length').toBeLessThan(50);
     for (const [cat, lines] of Object.entries(LINES)) expect(lines.length, cat).toBeGreaterThan(0);
+  });
+
+  it('gives every category a mood, and uses all the moods (calm, deadpan, excited, shout, worried)', () => {
+    const moods = new Set<string>();
+    for (const cat of Object.keys(LINES)) {
+      const m = MOOD[cat as Cat];
+      expect(['calm', 'deadpan', 'excited', 'shout', 'worried'], cat).toContain(m);
+      moods.add(m);
+    }
+    expect([...moods].sort()).toEqual(['calm', 'deadpan', 'excited', 'shout', 'worried']);
+  });
+
+  it('shouts about trouble and gets excited about progress', () => {
+    for (const c of ['captureLost', 'unitLost', 'tankLost', 'hqHurt', 'hqCritical', 'baseAttack', 'bloodbath', 'firstLoss'] as Cat[]) expect(MOOD[c], c).toBe('shout');
+    for (const c of ['captureMine', 'tankKill', 'firstKill', 'enemyHqHurt', 'enemyHqCritical', 'comeback', 'crushing', 'victory'] as Cat[]) expect(MOOD[c], c).toBe('excited');
   });
 });
 
@@ -42,14 +60,39 @@ describe('reporter director reacts to real events', () => {
     expect(cats(d, w, [{ t: 'capture', territory: 5, owner: 1, prev: -1 }])).toEqual(['enemyTook']);
   });
 
-  it('reports first blood once, then tanks, ignores ordinary deaths', () => {
+  it('reacts to deaths by whose they are: shouts for ours, cheers for theirs', () => {
     const d = new Director();
     const w = world();
     w.tick = 40;
-    const death = (big: boolean): SimEvent => ({ t: 'death', x: 5, y: 5, big, owner: 0 });
-    expect(cats(d, w, [death(false)])).toEqual(['firstBlood']);
-    expect(cats(d, w, [death(false)])).toEqual([]);
-    expect(cats(d, w, [death(true)])).toEqual(['tankDown']);
+    const death = (big: boolean, owner: number): SimEvent => ({ t: 'death', x: 5, y: 5, big, owner });
+    expect(cats(d, w, [death(false, 0)])).toEqual(['firstLoss']);
+    expect(cats(d, w, [death(false, 0)])).toEqual(['unitLost']);
+    expect(cats(d, w, [death(true, 0)])).toEqual(['tankLost']);
+    expect(cats(d, w, [death(true, 1)])).toEqual(['tankKill']);
+    expect(cats(d, w, [death(false, 1)])).toEqual([]); // an ordinary enemy death is not worth a line
+    const first = new Director();
+    expect(cats(first, w, [death(false, 1)])).toEqual(['firstKill']);
+  });
+
+  it('ignores a headquarters falling (the victory or defeat line covers it)', () => {
+    const d = new Director();
+    const w = world();
+    w.tick = 40;
+    expect(cats(d, w, [{ t: 'death', x: 5, y: 5, big: true, owner: 0, hq: true }])).toEqual([]);
+  });
+
+  it('raises the alarm when enemy robots reach our base, but not constantly', () => {
+    const d = new Director();
+    const w = world();
+    const hq = w.hq(0)!;
+    w.spawnUnit('rifle', 1, hq.x + 6, hq.y + 2);
+    w.tick = 100;
+    const cue = d.consume(w, []).find((c) => c.cat === 'baseAttack');
+    expect(cue?.prio).toBe(2);
+    w.tick = 110;
+    expect(cats(d, w)).not.toContain('baseAttack');
+    w.tick = 100 + 26 * 20;
+    expect(cats(d, w)).toContain('baseAttack');
   });
 
   it('notices a bloodbath: six deaths within four seconds', () => {
@@ -126,7 +169,9 @@ describe('reporter director reacts to real events', () => {
       m.step();
       for (const c of d.consume(m.world, m.world.events)) seen.add(c.cat);
     }
-    for (const must of ['intro', 'intro2', 'firstRobots', 'captureMine', 'captureLost', 'firstBlood'] as Cat[]) expect(seen.has(must), must).toBe(true);
+    for (const must of ['intro', 'intro2', 'firstRobots', 'captureMine', 'captureLost'] as Cat[]) expect(seen.has(must), must).toBe(true);
+    expect(seen.has('firstKill') || seen.has('firstLoss')).toBe(true);
+    expect(seen.has('unitLost') || seen.has('tankLost'), 'he shouts when our robots die').toBe(true);
     expect(seen.has('victory') || seen.has('defeat') || seen.has('draw')).toBe(true);
   });
 });

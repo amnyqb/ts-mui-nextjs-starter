@@ -23,8 +23,10 @@ export class Director {
   private wasBehind = false;
   private lastRatioCheck = 0;
   private lastComeback = -1e9;
+  private lastBaseAlert = -1e9;
 
   reset() {
+    this.lastBaseAlert = -1e9;
     this.lastActivity = 0;
     this.deaths = [];
     this.flags = { intro2: false, firstRobots: false, firstBlood: false, army: false, hqHurt: false, hqCrit: false, eHqHurt: false, eHqCrit: false, order: false };
@@ -59,11 +61,14 @@ export class Director {
         else if (e.prev === -1) push('enemyTook', 0);
       } else if (e.t === 'death') {
         this.lastActivity = tick;
+        if (e.hq) continue; // a headquarters falling is announced by the victory/defeat line
         this.deaths.push(tick);
+        const ours = e.owner === PLAYER;
         if (!this.flags.firstBlood) {
           this.flags.firstBlood = true;
-          push('firstBlood', 1);
-        } else if (e.big) push('tankDown', 1);
+          push(ours ? 'firstLoss' : 'firstKill', ours ? 2 : 1);
+        } else if (e.big) push(ours ? 'tankLost' : 'tankKill', ours ? 2 : 1);
+        else if (ours) push('unitLost', 2); // our robots dying is what makes him shout
       } else if (e.t === 'spawn' && e.owner === PLAYER && !this.flags.firstRobots) {
         this.flags.firstRobots = true;
         push('firstRobots', 1);
@@ -83,6 +88,14 @@ export class Director {
       const mine = w.hq(PLAYER);
       const theirs = w.hq(1);
       const full = BUILDINGS.hq.hp;
+      // enemy robots at our gates: alarm, at most once every 25 s
+      if (mine && mine.hp > 0 && tick - this.lastBaseAlert > 25 * S) {
+        const near = w.units.some((u) => u.owner !== PLAYER && u.hp > 0 && Math.hypot(u.x - mine.x, u.y - mine.y) < 10);
+        if (near) {
+          this.lastBaseAlert = tick;
+          push('baseAttack', 2);
+        }
+      }
       if (mine && mine.hp > 0) {
         if (!this.flags.hqCrit && mine.hp < full * 0.2) {
           this.flags.hqCrit = true;
