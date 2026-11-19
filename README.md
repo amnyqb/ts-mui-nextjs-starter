@@ -58,6 +58,8 @@ All art is original and drawn in code at startup (`src/render/sprites.ts`): funn
 
 **Voice:** every line has its own clip in `public/voice/`, rendered offline by `scripts/make-voice.ts` with Piper neural TTS (voice `en_US-joe-medium`, CC0) and ffmpeg: `VOICE_MODEL=en_US-joe-medium.onnx PYTHON=.venv/bin/python npx vite-node scripts/make-voice.ts` (see the script header for setup). Re-run it when the lines change; a test checks they match. `tools/voice/eval.py` transcribes the clips with a speech recogniser as a sanity check. Browser speech is only a fallback.
 
+**General Grandiose** (`src/data/general.ts`) is an original fictional character: a gold-plated robot general who barges into the broadcast on about a third of events with his own face, his own deeper voice (Piper `en_US-norman-medium`, public domain) and 150+ lines. He brags, claims credit for everything, inflates numbers ("gazillions of robots"), addresses the enemy directly ("Hey, teal! Yes, you!"), and blames Chuck when things go wrong. He is not based on any real person's words, and a test keeps real names and borrowed catchphrases out of his script.
+
 ## How it works (Stage 1)
 
 - **Territories:** each has a flag. A rifle robot touching an enemy or neutral flag captures it, and every factory in it changes owner and resets progress. Headquarters never change hands; destroy them to win.

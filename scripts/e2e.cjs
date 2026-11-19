@@ -102,6 +102,11 @@ async function rightClickTile(page, x, y) {
     const voiced = await page.waitForFunction(() => window.__scrapline.sfx.voicePlayed > 0, null, { timeout: 15000 }).then(() => true).catch(() => false);
     const clips = await S(page, () => window.__scrapline.rep.log.filter((l) => l.clip).length);
     check("Chuck's recorded voice clips play", voiced && clips >= 1, `${clips} spoken line(s) with audio`);
+    // General Grandiose: forced onto the air, with his own voice clip, name and frame
+    await page.evaluate(() => window.__scrapline.rep.say('captureMine', 3, 'general'));
+    const gen = await page.waitForFunction(() => { const l = window.__scrapline.rep.log.slice(-1)[0]; return l.speaker === 'general' && l.clip; }, null, { timeout: 8000 }).then(() => true).catch(() => false);
+    const genUi = await S(page, () => ({ name: document.querySelector('#reporter .name').textContent, cls: document.getElementById('reporter').className }));
+    check('General Grandiose takes over with his own voice clip, name and frame', gen && genUi.name === 'GENERAL GRANDIOSE' && /general/.test(genUi.cls), `${genUi.name} / ${genUi.cls}`);
     await page.keyboard.press('c');
     const off = await S(page, () => ({ en: window.__scrapline.rep.enabled, shown: getComputedStyle(document.getElementById('reporter')).display }));
     const repLabel = await page.locator('#b-rep').innerText();

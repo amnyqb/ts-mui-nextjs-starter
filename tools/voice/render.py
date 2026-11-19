@@ -30,6 +30,13 @@ MOODS = {
 }
 
 
+# per-speaker adjustments on top of the mood settings (multipliers for pitch and length_scale, dB added to loudness)
+VOICE_TUNING = {
+    "chuck":   dict(pitch=1.00, ls=1.00, lufs=0.0),
+    "general": dict(pitch=0.86, ls=0.95, lufs=1.5),
+}
+
+
 def measure_lufs(path: str) -> float:
     r = subprocess.run(["ffmpeg", "-hide_banner", "-nostats", "-i", path, "-af", "ebur128", "-f", "null", "-"], capture_output=True, text=True)
     found = re.findall(r"I:\s+(-?[\d.]+) LUFS", r.stderr)
@@ -63,7 +70,8 @@ def duration(path: str) -> float:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--model", required=True)
+    ap.add_argument("--model", required=True, help="Piper voice for Chuck Sprocket")
+    ap.add_argument("--model-general", help="Piper voice for General Grandiose (needed if lines.json has speaker=general)")
     ap.add_argument("--lines", required=True)
     ap.add_argument("--out", required=True)
     ap.add_argument("--only", help="render just this key (for quick tests)")
@@ -78,11 +86,21 @@ def main() -> None:
         lines = [l for l in lines if l["key"] == a.only]
     out = pathlib.Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
-    voice = PiperVoice.load(a.model)
+    voices = {"chuck": PiperVoice.load(a.model)}
+    if any(l.get("speaker") == "general" for l in lines):
+        if not a.model_general:
+            sys.exit("lines.json has General Grandiose lines: pass --model-general")
+        voices["general"] = PiperVoice.load(a.model_general)
     manifest = {}
     with tempfile.TemporaryDirectory() as tmp:
         for i, l in enumerate(lines):
-            m = MOODS[l["mood"]]
+            who = l.get("speaker", "chuck")
+            voice = voices[who]
+            m = dict(MOODS[l["mood"]])
+            tune = VOICE_TUNING[who]  # the General is lower, brasher and louder than Chuck, in every mood
+            m["pitch"] *= tune["pitch"]
+            m["ls"] *= tune["ls"]
+            m["lufs"] += tune["lufs"]
             raw = f"{tmp}/{l['key']}.wav"
             with wave.open(raw, "wb") as w:
                 voice.synthesize_wav(

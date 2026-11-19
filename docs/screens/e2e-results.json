@@ -42,7 +42,7 @@
   {
     "name": "Chuck Sprocket appears with subtitles",
     "ok": true,
-    "info": "This is Chuck Sprocket. If you can hear me, it's going"
+    "info": "Live from the field of battle. Well, a field. Near some ba"
   },
   {
     "name": "Chuck opens the broadcast",
@@ -58,6 +58,11 @@
     "name": "Chuck's recorded voice clips play",
     "ok": true,
     "info": "1 spoken line(s) with audio"
+  },
+  {
+    "name": "General Grandiose takes over with his own voice clip, name and frame",
+    "ok": true,
+    "info": "GENERAL GRANDIOSE / panel excited general"
   },
   {
     "name": "C key switches commentary off and on",
@@ -102,7 +107,7 @@
   {
     "name": "P pauses the simulation",
     "ok": true,
-    "info": "tick 575"
+    "info": "tick 574"
   },
   {
     "name": "P resumes the simulation",
@@ -157,7 +162,7 @@
   {
     "name": "a UI-driven match reaches a conclusion with an end screen",
     "ok": true,
-    "info": "winner=0 title=VICTORY sim=139s flags 6,2"
+    "info": "winner=0 title=VICTORY sim=183s flags 5,3"
   },
   {
     "name": "no console errors (match session)",
@@ -167,7 +172,7 @@
   {
     "name": "match-1-result",
     "ok": true,
-    "info": "{\"winner\":0,\"secs\":139,\"terr\":[6,2]}"
+    "info": "{\"winner\":0,\"secs\":183,\"terr\":[5,3]}"
   },
   {
     "name": "doing nothing ends in DEFEAT",
@@ -177,7 +182,7 @@
   {
     "name": "restart begins a fresh match",
     "ok": true,
-    "info": "tick 183"
+    "info": "tick 154"
   },
   {
     "name": "no console errors (defeat session)",

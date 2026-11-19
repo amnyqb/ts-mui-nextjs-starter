@@ -1,5 +1,6 @@
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
+import { GENERAL_LINES } from '../src/data/general';
 import { LINES } from '../src/data/lines';
 import { Match } from '../src/sim/match';
 
@@ -7,7 +8,10 @@ describe("Chuck's recorded voice", () => {
   const manifest: Record<string, number> = JSON.parse(readFileSync('public/voice/manifest.json', 'utf8'));
 
   it('has exactly one clip per script line (re-run scripts/make-voice.ts if this fails)', () => {
-    const expected = Object.entries(LINES).flatMap(([cat, lines]) => lines.map((_, i) => `${cat}_${i}`));
+    const expected = [
+      ...Object.entries(LINES).flatMap(([cat, lines]) => lines.map((_, i) => `${cat}_${i}`)),
+      ...Object.entries(GENERAL_LINES).flatMap(([cat, lines]) => (lines ?? []).map((_, i) => `g_${cat}_${i}`)),
+    ];
     expect(Object.keys(manifest).sort()).toEqual(expected.sort());
   });
 
@@ -22,12 +26,13 @@ describe("Chuck's recorded voice", () => {
   });
 
   it('clip length roughly matches line length (guards against truncated speech)', () => {
-    for (const [cat, lines] of Object.entries(LINES))
-      lines.forEach((text, i) => {
-        const secsPerChar = manifest[`${cat}_${i}`] / text.length;
-        expect(secsPerChar, `${cat}_${i}`).toBeGreaterThan(0.03);
-        expect(secsPerChar, `${cat}_${i}`).toBeLessThan(0.2);
-      });
+    const check = (key: string, text: string) => {
+      const secsPerChar = manifest[key] / text.length;
+      expect(secsPerChar, key).toBeGreaterThan(0.03);
+      expect(secsPerChar, key).toBeLessThan(0.2);
+    };
+    for (const [cat, lines] of Object.entries(LINES)) lines.forEach((text, i) => check(`${cat}_${i}`, text));
+    for (const [cat, lines] of Object.entries(GENERAL_LINES)) (lines ?? []).forEach((text, i) => check(`g_${cat}_${i}`, text));
   });
 });
 

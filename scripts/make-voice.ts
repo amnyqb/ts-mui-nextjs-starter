@@ -1,20 +1,32 @@
 /**
- * Renders Chuck Sprocket's voice: one clip per script line into public/voice/ (+ manifest.json), with his mood per line.
- * Engine: Piper neural TTS (tools/voice/render.py). Re-run whenever src/data/lines.ts changes (a test checks they match).
+ * Renders the broadcast voices: one clip per script line into public/voice/ (+ manifest.json), with the mood per line.
+ * Chuck Sprocket (src/data/lines.ts) and General Grandiose (src/data/general.ts) use two different Piper voices.
+ * Engine: Piper neural TTS (tools/voice/render.py). Re-run whenever either script changes (tests check they match).
  *
  *   python3 -m venv .venv && .venv/bin/pip install piper-tts      # once; ffmpeg + ffprobe must be on PATH
- *   # a Piper voice: en_US-joe-medium (CC0). Get the .onnx and .onnx.json from huggingface.co/rhasspy/piper-voices
- *   VOICE_MODEL=/path/to/en_US-joe-medium.onnx PYTHON=.venv/bin/python npx vite-node scripts/make-voice.ts
+ *   # Piper voices (.onnx and .onnx.json) from huggingface.co/rhasspy/piper-voices, both permissively licensed:
+ *   #   Chuck:   en_US-joe-medium  (CC0)         General: en_US-norman-medium  (public domain; pitched lower in render.py)
+ *   VOICE_MODEL=.../en_US-joe-medium.onnx VOICE_MODEL_GENERAL=.../en_US-norman-medium.onnx \
+ *     PYTHON=.venv/bin/python npx vite-node scripts/make-voice.ts
  */
 import { execFileSync } from 'node:child_process';
 import { writeFileSync } from 'node:fs';
-import { LINES, MOOD } from '../src/data/lines';
+import { GENERAL_LINES } from '../src/data/general';
+import { LINES, MOOD, type Cat } from '../src/data/lines';
 
 const model = process.env.VOICE_MODEL;
-if (!model) throw new Error('set VOICE_MODEL to a Piper .onnx voice (see the header of this file)');
+const modelGeneral = process.env.VOICE_MODEL_GENERAL;
+if (!model || !modelGeneral) throw new Error('set VOICE_MODEL and VOICE_MODEL_GENERAL to Piper .onnx voices (see the header of this file)');
 
-const lines = Object.entries(LINES).flatMap(([cat, texts]) =>
-  texts.map((text, i) => ({ key: `${cat}_${i}`, text, mood: MOOD[cat as keyof typeof MOOD] })),
+const chuck = Object.entries(LINES).flatMap(([cat, texts]) =>
+  texts.map((text, i) => ({ key: `${cat}_${i}`, text, mood: MOOD[cat as Cat], speaker: 'chuck' })),
 );
-writeFileSync('tools/voice/lines.json', JSON.stringify(lines, null, 1));
-execFileSync(process.env.PYTHON ?? 'python3', ['tools/voice/render.py', '--model', model, '--lines', 'tools/voice/lines.json', '--out', 'public/voice'], { stdio: 'inherit' });
+const general = Object.entries(GENERAL_LINES).flatMap(([cat, texts]) =>
+  (texts ?? []).map((text, i) => ({ key: `g_${cat}_${i}`, text, mood: MOOD[cat as Cat], speaker: 'general' })),
+);
+writeFileSync('tools/voice/lines.json', JSON.stringify([...chuck, ...general], null, 1));
+execFileSync(
+  process.env.PYTHON ?? 'python3',
+  ['tools/voice/render.py', '--model', model, '--model-general', modelGeneral, '--lines', 'tools/voice/lines.json', '--out', 'public/voice'],
+  { stdio: 'inherit' },
+);
